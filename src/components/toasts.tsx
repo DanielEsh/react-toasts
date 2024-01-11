@@ -1,0 +1,101 @@
+import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+import { useQueue } from '../use-queue.ts'
+import { ToastState } from '../state.ts'
+
+interface ToastsProps {
+  index: number
+  title: string
+  description?: string
+}
+
+const Toast = (props: ToastsProps) => {
+  const toastRef = useRef<HTMLLIElement>(null)
+
+  return (
+    <li
+      ref={toastRef}
+      className="toast"
+      style={
+        {
+          '--index': props.index,
+          '--offset': 14 * props.index,
+        } as CSSProperties
+      }
+    >
+      <div>{props.title}</div>
+      <div>{props.description}</div>
+    </li>
+  )
+}
+
+interface ToastData {
+  id: number
+  title: string
+  description?: string
+}
+
+const initialPropsData: ToastData[] = [
+  {
+    id: 1,
+    title: 'title',
+    description: 'description',
+  },
+  {
+    id: 2,
+    title: 'title',
+    description: 'description',
+  },
+  {
+    id: 3,
+    title: 'title',
+    description: 'description',
+  },
+]
+
+export const Toasts = () => {
+  const [toasts, setToasts] = useState<any[]>([])
+
+  useEffect(() => {
+    return ToastState.subscribe((toast) => {
+      console.log('SUB', toast)
+
+      // Prevent batching, temp solution.
+      setTimeout(() => {
+        ReactDOM.flushSync(() => {
+          setToasts((toasts) => {
+            const indexOfExistingToast = toasts.findIndex(
+              (t) => t.id === toast.id,
+            )
+
+            // Update the toast if it already exists
+            if (indexOfExistingToast !== -1) {
+              return [
+                ...toasts.slice(0, indexOfExistingToast),
+                { ...toasts[indexOfExistingToast], ...toast },
+                ...toasts.slice(indexOfExistingToast + 1),
+              ]
+            }
+
+            return [toast, ...toasts]
+          })
+        })
+      })
+    })
+  }, [])
+
+  return (
+    <section className="toasts-section">
+      <ol className="toasts">
+        {toasts.map((toast, index) => (
+          <Toast
+            key={toast.id}
+            index={index}
+            title={toast.title}
+            description={toast.description}
+          />
+        ))}
+      </ol>
+    </section>
+  )
+}
