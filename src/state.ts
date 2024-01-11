@@ -37,6 +37,17 @@ class Observer {
 
     return id
   }
+
+  dismiss = (id?: number | string) => {
+    if (!id) {
+      this.toasts.forEach((toast) => {
+        this.subscribers.forEach((subscriber) => subscriber({ id: toast.id, dismiss: true }));
+      });
+    }
+
+    this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true }));
+    return id;
+  };
 }
 
 export const ToastState = new Observer()

@@ -1,12 +1,13 @@
+import React from 'react'
 import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { useQueue } from '../use-queue.ts'
 import { ToastState } from '../state.ts'
 
 interface ToastsProps {
   index: number
   title: string
   description?: string
+  onDismiss?: () => void
 }
 
 const Toast = (props: ToastsProps) => {
@@ -25,6 +26,7 @@ const Toast = (props: ToastsProps) => {
     >
       <div>{props.title}</div>
       <div>{props.description}</div>
+      <div className="toast-close" onClick={props.onDismiss}>close</div>
     </li>
   )
 }
@@ -56,9 +58,19 @@ const initialPropsData: ToastData[] = [
 export const Toasts = () => {
   const [toasts, setToasts] = useState<any[]>([])
 
+  const removeToast = React.useCallback(
+      (toast) => setToasts((toasts) => toasts.filter(({ id }) => id !== toast.id)),
+      [],
+  );
+
   useEffect(() => {
     return ToastState.subscribe((toast) => {
       console.log('SUB', toast)
+
+      if ((toast).dismiss) {
+        setToasts((toasts) => toasts.map((t) => (t.id === toast.id ? { ...t, delete: true } : t)));
+        return;
+      }
 
       // Prevent batching, temp solution.
       setTimeout(() => {
@@ -93,6 +105,7 @@ export const Toasts = () => {
             index={index}
             title={toast.title}
             description={toast.description}
+            onDismiss={() => removeToast(toast)}
           />
         ))}
       </ol>

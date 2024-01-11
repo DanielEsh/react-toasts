@@ -3,6 +3,12 @@
   border: 1px solid black;
 }
 
+.button {
+  border: 1px solid black;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
 .toasts-section {
   /*position: fixed;*/
   /*inset: 0;*/
@@ -12,6 +18,9 @@
   position: absolute;
   bottom: 32px;
   right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .toast {
@@ -19,6 +28,7 @@
   --offset: 14;
 
   /*position: absolute;*/
+  position: relative;
   right: 24px;
   bottom: 0;
   z-index: 1;
@@ -26,4 +36,11 @@
   border-radius: 8px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   width: 356px;
+  border: 1px solid black;
+}
+
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 24px;
 }
