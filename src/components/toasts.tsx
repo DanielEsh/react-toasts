@@ -2,6 +2,7 @@ import React from 'react'
 import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { ToastState } from '../state.ts'
+import {useQueue} from "../use-queue.ts";
 
 interface ToastsProps {
   index: number
@@ -57,11 +58,16 @@ const initialPropsData: ToastData[] = [
 
 export const Toasts = () => {
   const [toasts, setToasts] = useState<any[]>([])
+  const {state, queue, add, update} = useQueue<ToastType>({
+    limit: 5,
+  })
 
-  const removeToast = React.useCallback(
-      (toast) => setToasts((toasts) => toasts.filter(({ id }) => id !== toast.id)),
-      [],
-  );
+  const removeToast = (toast: ToastType) =>
+      update((notifications) =>
+          notifications.filter((notification) => {
+            return notification.id !== toast.id
+          }),
+      )
 
   useEffect(() => {
     return ToastState.subscribe((toast) => {
@@ -75,22 +81,23 @@ export const Toasts = () => {
       // Prevent batching, temp solution.
       setTimeout(() => {
         ReactDOM.flushSync(() => {
-          setToasts((toasts) => {
-            const indexOfExistingToast = toasts.findIndex(
-              (t) => t.id === toast.id,
-            )
-
-            // Update the toast if it already exists
-            if (indexOfExistingToast !== -1) {
-              return [
-                ...toasts.slice(0, indexOfExistingToast),
-                { ...toasts[indexOfExistingToast], ...toast },
-                ...toasts.slice(indexOfExistingToast + 1),
-              ]
-            }
-
-            return [toast, ...toasts]
-          })
+          add(toast)
+          // setToasts((toasts) => {
+          //   const indexOfExistingToast = toasts.findIndex(
+          //     (t) => t.id === toast.id,
+          //   )
+          //
+          //   // Update the toast if it already exists
+          //   if (indexOfExistingToast !== -1) {
+          //     return [
+          //       ...toasts.slice(0, indexOfExistingToast),
+          //       { ...toasts[indexOfExistingToast], ...toast },
+          //       ...toasts.slice(indexOfExistingToast + 1),
+          //     ]
+          //   }
+          //
+          //   return [toast, ...toasts]
+          // })
         })
       })
     })
@@ -99,7 +106,8 @@ export const Toasts = () => {
   return (
     <section className="toasts-section">
       <ol className="toasts">
-        {toasts.map((toast, index) => (
+        <div>queue: {queue.length}</div>
+        {state.map((toast, index) => (
           <Toast
             key={toast.id}
             index={index}
