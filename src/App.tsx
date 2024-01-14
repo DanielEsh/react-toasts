@@ -7,7 +7,6 @@ import { AuthLayout } from './layouts/auth-layout.tsx'
 import { Login } from './routes/login.tsx'
 import { lazy, Suspense } from 'react'
 import { PrivateRoute } from './components/PrivateRouter.tsx'
-import { Toasts } from './components/toasts.tsx'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
@@ -80,7 +79,6 @@ export const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <Toasts />
     </>
   )
 }

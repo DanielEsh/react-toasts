@@ -3,7 +3,7 @@ import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { ToastState } from '../state.ts'
 import { useQueue } from '../use-queue.ts'
-import { ToastType } from '../types.ts'
+import { ToastContainerPosition, ToastType } from '../types.ts'
 
 interface ToastsProps {
   index: number
@@ -92,7 +92,12 @@ const Toast = (props: ToastsProps) => {
   )
 }
 
-export const Toasts = () => {
+interface Props {
+  position: ToastContainerPosition
+}
+
+export const Toasts = (props: Props) => {
+  const { position } = props
   const { state, queue, add, update } = useQueue<ToastType>({
     limit: 5,
   })
@@ -142,7 +147,7 @@ export const Toasts = () => {
 
   return (
     <section className="toasts-section">
-      <ol className="toasts">
+      <ol className={`toasts position-${position}`}>
         <div>queue: {queue.length}</div>
         {state.map((toast, index) => (
           <Toast

@@ -44,18 +44,68 @@
   border-radius: 6px;
 }
 
+.button[data-active="true"] {
+  background: var(--gray3);
+  border-color: var(--gray7);
+}
+
 .toasts-section {
   /*position: fixed;*/
   /*inset: 0;*/
 }
 
 .toasts {
-  position: absolute;
+  position: fixed;
   bottom: 32px;
   right: 32px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 356px;
+}
+
+.position-top-left {
+  top: 32px;
+  left: 32px;
+  bottom: unset;
+  right: unset;
+}
+
+.position-top-center {
+  top: 0;
+  left: 50%;
+  bottom: unset;
+  right: unset;
+  transform: translateX(-50%);
+}
+
+.position-top-right {
+  top: 0;
+  left: unset;
+  bottom: unset;
+  right: 0;
+}
+
+.position-bottom-left {
+  top: unset;
+  left: 32px;
+  bottom: 32px;
+  right: unset;
+}
+
+.position-bottom-center {
+  top: unset;
+  left: 50%;
+  bottom: 32px;
+  right: unset;
+  transform: translateX(-50%);
+}
+
+.position-bottom-right {
+  top: unset;
+  left: unset;
+  bottom: 32px;
+  right: 0;
 }
 
 .toast {
