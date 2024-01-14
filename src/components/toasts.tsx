@@ -57,6 +57,16 @@ const Toast = (props: ToastsProps) => {
       >
         close
       </div>
+      {props.duration && (
+        <div
+          className="durationTimer"
+          style={
+            {
+              '--duration': `${props.duration}s`,
+            } as CSSProperties
+          }
+        />
+      )}
     </li>
   )
 }

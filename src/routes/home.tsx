@@ -55,7 +55,6 @@ export default function HomePage() {
     toastFunction('message', {
       duration: 5,
       id: new Date().getTime(),
-      type: 'error',
     })
   }
 
