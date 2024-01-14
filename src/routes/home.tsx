@@ -51,6 +51,14 @@ export default function HomePage() {
     })
   }
 
+  const handleTimerClick = () => {
+    toastFunction('message', {
+      duration: 5,
+      id: new Date().getTime(),
+      type: 'error',
+    })
+  }
+
   console.log('rerender')
 
   return (
@@ -101,6 +109,14 @@ export default function HomePage() {
             onClick={handleErrorClick}
           >
             Error
+          </button>
+        </div>
+        <div className="flex gap-3">
+          <button
+            className="button"
+            onClick={handleTimerClick}
+          >
+            AutoClose
           </button>
         </div>
         <Link to="/categories">To categories</Link>

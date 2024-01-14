@@ -3,4 +3,5 @@ export interface ToastType {
   type?: 'default' | 'success' | 'info' | 'warning' | 'error'
   title: string
   description?: string
+  duration: number
 }

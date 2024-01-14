@@ -8,6 +8,7 @@ import { ToastType } from '../types.ts'
 interface ToastsProps {
   index: number
   type: ToastType['type']
+  duration: ToastType['duration']
   title: string
   description?: string
   onDismiss?: () => void
@@ -15,6 +16,27 @@ interface ToastsProps {
 
 const Toast = (props: ToastsProps) => {
   const toastRef = useRef<HTMLLIElement>(null)
+  const hideTimeout = useRef(0)
+
+  const handleHide = () => {
+    props.onDismiss && props.onDismiss()
+    window.clearTimeout(hideTimeout.current)
+  }
+
+  const handleDelayedHide = () => {
+    if (props.duration) {
+      hideTimeout.current = window.setTimeout(handleHide, props.duration * 1000)
+    }
+  }
+
+  const cancelDelayedHide = () => {
+    clearTimeout(hideTimeout.current)
+  }
+
+  React.useEffect(() => {
+    handleDelayedHide()
+    return cancelDelayedHide
+  }, [props.duration])
 
   return (
     <li
@@ -95,6 +117,7 @@ export const Toasts = () => {
           <Toast
             key={toast.id}
             index={index}
+            duration={toast.duration}
             type={toast.type}
             title={toast.title}
             description={toast.description}
