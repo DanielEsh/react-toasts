@@ -39,6 +39,22 @@
   border: 1px solid black;
 }
 
+.toast._success {
+  background: green;
+}
+
+.toast._info {
+  background: blue;
+}
+
+.toast._warning {
+  background: yellow;
+}
+
+.toast._error {
+  background: red;
+}
+
 .toast-close {
   position: absolute;
   top: 8px;

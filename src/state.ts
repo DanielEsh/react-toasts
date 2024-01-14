@@ -42,13 +42,15 @@ class Observer {
     console.log('STATE DISMISS', id)
     if (!id) {
       this.toasts.forEach((toast) => {
-        this.subscribers.forEach((subscriber) => subscriber({ id: toast.id, dismiss: true }));
-      });
+        this.subscribers.forEach((subscriber) =>
+          subscriber({ id: toast.id, dismiss: true }),
+        )
+      })
     }
 
-    this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true }));
-    return id;
-  };
+    this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true }))
+    return id
+  }
 }
 
 export const ToastState = new Observer()
@@ -58,6 +60,7 @@ export const toastFunction = (message: string, data: any) => {
 
   ToastState.addToast({
     title: message,
+    type: 'default',
     ...data,
     id,
   })

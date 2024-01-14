@@ -4,7 +4,7 @@ export const RootLayout = () => {
   return (
     <div>
       RootLayout
-      <div className="">
+      <div className="p-4">
         <Outlet />
       </div>
     </div>
