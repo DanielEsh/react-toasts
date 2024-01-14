@@ -16,6 +16,7 @@ interface ToastsProps {
 
 const Toast = (props: ToastsProps) => {
   const toastRef = useRef<HTMLLIElement>(null)
+  const toastDurationTimerRef = useRef<HTMLDivElement>(null)
   const hideTimeout = useRef(0)
 
   const handleHide = () => {
@@ -38,6 +39,23 @@ const Toast = (props: ToastsProps) => {
     return cancelDelayedHide
   }, [props.duration])
 
+  const handleHover = () => {
+    console.log('hover')
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'paused'
+    }
+    cancelDelayedHide()
+  }
+
+  const handleHoverLeave = () => {
+    console.log('leave')
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'running'
+      toastDurationTimerRef.current.style.animation
+    }
+    handleDelayedHide()
+  }
+
   return (
     <li
       ref={toastRef}
@@ -48,6 +66,8 @@ const Toast = (props: ToastsProps) => {
           '--offset': 14 * props.index,
         } as CSSProperties
       }
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHoverLeave}
     >
       <div>{props.title}</div>
       <div>{props.description}</div>
@@ -59,6 +79,7 @@ const Toast = (props: ToastsProps) => {
       </div>
       {props.duration && (
         <div
+          ref={toastDurationTimerRef}
           className="durationTimer"
           style={
             {
