@@ -7,6 +7,7 @@ import { ToastContainerPosition, ToastType } from '../types.ts'
 
 interface ToastsProps {
   index: number
+  allToastCount: number
   type: ToastType['type']
   duration: ToastType['duration']
   title: string
@@ -18,6 +19,8 @@ const Toast = (props: ToastsProps) => {
   const toastRef = useRef<HTMLLIElement>(null)
   const toastDurationTimerRef = useRef<HTMLDivElement>(null)
   const hideTimeout = useRef(0)
+
+  const isFront = props.index === 0
 
   const handleHide = () => {
     props.onDismiss && props.onDismiss()
@@ -60,10 +63,14 @@ const Toast = (props: ToastsProps) => {
     <li
       ref={toastRef}
       className={`toast _${props.type}`}
+      data-expanded={true}
+      data-front={isFront}
       style={
         {
           '--index': props.index,
-          '--offset': 14 * props.index,
+          '--toasts-before': props.index,
+          '--z-index': props.allToastCount - props.index,
+          '--offset': 14,
         } as CSSProperties
       }
       onMouseEnter={handleHover}
@@ -153,6 +160,7 @@ export const Toasts = (props: Props) => {
           <Toast
             key={toast.id}
             index={index}
+            allToastCount={state.length}
             duration={toast.duration}
             type={toast.type}
             title={toast.title}
