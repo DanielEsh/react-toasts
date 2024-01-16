@@ -8,6 +8,7 @@ import { ToastContainerPosition, ToastType } from '../types.ts'
 interface ToastsProps {
   index: number
   allToastCount: number
+  expanded: boolean
   type: ToastType['type']
   duration: ToastType['duration']
   title: string
@@ -19,6 +20,13 @@ const Toast = (props: ToastsProps) => {
   const toastRef = useRef<HTMLLIElement>(null)
   const toastDurationTimerRef = useRef<HTMLDivElement>(null)
   const hideTimeout = useRef(0)
+
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    // Trigger enter animation without using CSS animation
+    setMounted(true)
+  }, [])
 
   const isFront = props.index === 0
 
@@ -63,8 +71,9 @@ const Toast = (props: ToastsProps) => {
     <li
       ref={toastRef}
       className={`toast _${props.type}`}
-      data-expanded={true}
+      data-expanded={props.expanded}
       data-front={isFront}
+      data-mounted={mounted}
       style={
         {
           '--index': props.index,
@@ -105,6 +114,7 @@ interface Props {
 
 export const Toasts = (props: Props) => {
   const { position } = props
+  const [expanded, setExpanded] = useState(true)
   const { state, queue, add, update } = useQueue<ToastType>({
     limit: 5,
   })
@@ -152,14 +162,24 @@ export const Toasts = (props: Props) => {
     })
   }, [])
 
+  const toggleExpand = () => {
+    setExpanded(!expanded)
+  }
+
   return (
     <section className="toasts-section">
-      <ol className={`toasts position-${position}`}>
-        <div>queue: {queue.length}</div>
+      <div>queue: {queue.length}</div>
+      <ol
+        className={`toasts position-${position}`}
+        onMouseEnter={toggleExpand}
+        onMouseLeave={toggleExpand}
+        data-expanded={expanded}
+      >
         {state.map((toast, index) => (
           <Toast
             key={toast.id}
             index={index}
+            expanded={expanded}
             allToastCount={state.length}
             duration={toast.duration}
             type={toast.type}

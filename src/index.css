@@ -58,10 +58,14 @@
   position: fixed;
   bottom: 32px;
   right: 32px;
-  /*display: flex;*/
-  /*flex-direction: column-reverse;*/
-  /*gap: 16px;*/
+  display: flex;
+  flex-direction: column-reverse;
   width: 356px;
+}
+
+.toasts[data-expanded="false"] {
+  gap: 16px;
+  transition: gap 0.3s ease;
 }
 
 .position-top-left {
@@ -105,7 +109,7 @@
   top: unset;
   left: unset;
   bottom: 32px;
-  right: 0;
+  right: 32px;
 }
 
 .toast {
@@ -113,12 +117,12 @@
   --offset: 14;
   --z-index: 1;
 
-  position: absolute;
+  /*position: absolute;*/
 
   /*position: absolute;*/
-  /*position: relative;*/
-  right: 24px;
-  bottom: 0;
+  position: relative;
+  /*right: 24px;*/
+  /*bottom: 0;*/
   z-index: var(--z-index);
   padding: 16px;
   border-radius: 8px;
@@ -126,6 +130,11 @@
   width: 356px;
   border: 1px solid var(--normal-border);
   background: var(--normal-bg);
+  transition: transform 0.3s ease;
+
+  &:after {
+    opacity: 0;
+  }
 }
 
 .toast._success {
@@ -154,7 +163,7 @@
 
 .toast[data-expanded="true"] {
   --toasts-before: 0;
-  --gap: 14px;
+  --gap: -36px;
   --scale: var(--toasts-before) * 0.05 + 1;
   --lift: -1;
   --lift-amount: calc(var(--lift) * var(--gap));
@@ -169,13 +178,15 @@
   --y: translateY(0);
 }
 
-.toast[data-front='false'] {
+.toast[data-front='false'][data-expanded="true"] {
   &:after {
     content: "";
     position: absolute;
     inset: 0;
-    background: #fff;
+    background: inherit;
     border-radius: 8px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
   }
 }
 
