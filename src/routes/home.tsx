@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { toastFunction } from '../state.ts'
 import { Section } from '../components/Section.tsx'
 import { TypesActions } from '../components/TypesActions.tsx'
+import { useState } from 'react'
 
 export default function HomePage() {
+  const [animation, setAnimation] = useState(true)
   const handleClick = () => {
     toastFunction('message', {
       id: new Date().getTime(),
@@ -28,9 +30,26 @@ export default function HomePage() {
 
   console.log('rerender')
 
+  const toggleAnimation = () => setAnimation(!animation)
+
   return (
     <div>
       <h1>Home Page</h1>
+
+      <button
+        className="button"
+        onClick={toggleAnimation}
+      >
+        Toggle Animation
+      </button>
+
+      <div
+        className="anim bg-amber-300 w-[300px] h-[300px] flex items-center justify-center rounded-md"
+        data-animation={animation}
+      >
+        <span>test</span>
+      </div>
+
       <div>
         <div className="flex gap-3">
           <button

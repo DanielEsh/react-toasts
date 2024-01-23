@@ -28,6 +28,8 @@ const Toast = (props: ToastsProps) => {
     setMounted(true)
   }, [])
 
+  console.log('rerender toast')
+
   const isFront = props.index === 0
 
   const handleHide = () => {
@@ -67,12 +69,12 @@ const Toast = (props: ToastsProps) => {
     handleDelayedHide()
   }
 
+  // debugger
+
   return (
     <li
       ref={toastRef}
       className={`toast _${props.type}`}
-      data-expanded={props.expanded}
-      data-front={isFront}
       data-mounted={mounted}
       style={
         {
@@ -163,7 +165,7 @@ export const Toasts = (props: Props) => {
   }, [])
 
   const toggleExpand = () => {
-    setExpanded(!expanded)
+    // setExpanded(!expanded)
   }
 
   return (
