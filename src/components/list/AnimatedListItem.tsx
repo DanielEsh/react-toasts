@@ -18,7 +18,7 @@ export const AnimatedListItem = ({ children, onDelete }: Props) => {
     // Добавим задержку перед вызовом onDelete() для завершения анимации
     setTimeout(() => {
       onDelete()
-    }, 1000)
+    }, 300)
   }
 
   return (

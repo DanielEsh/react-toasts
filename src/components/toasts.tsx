@@ -22,13 +22,14 @@ const Toast = (props: ToastsProps) => {
   const hideTimeout = useRef(0)
 
   const [mounted, setMounted] = React.useState(false)
+  const [removed, setRemoved] = React.useState(false)
 
   React.useEffect(() => {
     // Trigger enter animation without using CSS animation
     setMounted(true)
   }, [])
 
-  console.log('rerender toast')
+  console.log('rerender toast', mounted)
 
   const isFront = props.index === 0
 
@@ -69,6 +70,14 @@ const Toast = (props: ToastsProps) => {
     handleDelayedHide()
   }
 
+  const handleRemove = () => {
+    setRemoved(true)
+    // Добавим задержку перед вызовом onDelete() для завершения анимации
+    setTimeout(() => {
+      props.onDismiss && props.onDismiss()
+    }, 300)
+  }
+
   // debugger
 
   return (
@@ -76,6 +85,7 @@ const Toast = (props: ToastsProps) => {
       ref={toastRef}
       className={`toast _${props.type}`}
       data-mounted={mounted}
+      data-removed={removed}
       style={
         {
           '--index': props.index,
@@ -91,7 +101,7 @@ const Toast = (props: ToastsProps) => {
       <div>{props.description}</div>
       <div
         className="toast-close"
-        onClick={props.onDismiss}
+        onClick={handleRemove}
       >
         close
       </div>
@@ -140,26 +150,25 @@ export const Toasts = (props: Props) => {
       // }
 
       // Prevent batching, temp solution.
-      setTimeout(() => {
-        ReactDOM.flushSync(() => {
-          add(toast)
-          // setToasts((toasts) => {
-          //   const indexOfExistingToast = toasts.findIndex(
-          //     (t) => t.id === toast.id,
-          //   )
-          //
-          //   // Update the toast if it already exists
-          //   if (indexOfExistingToast !== -1) {
-          //     return [
-          //       ...toasts.slice(0, indexOfExistingToast),
-          //       { ...toasts[indexOfExistingToast], ...toast },
-          //       ...toasts.slice(indexOfExistingToast + 1),
-          //     ]
-          //   }
-          //
-          //   return [toast, ...toasts]
-          // })
-        })
+
+      ReactDOM.flushSync(() => {
+        add(toast)
+        // setToasts((toasts) => {
+        //   const indexOfExistingToast = toasts.findIndex(
+        //     (t) => t.id === toast.id,
+        //   )
+        //
+        //   // Update the toast if it already exists
+        //   if (indexOfExistingToast !== -1) {
+        //     return [
+        //       ...toasts.slice(0, indexOfExistingToast),
+        //       { ...toasts[indexOfExistingToast], ...toast },
+        //       ...toasts.slice(indexOfExistingToast + 1),
+        //     ]
+        //   }
+        //
+        //   return [toast, ...toasts]
+        // })
       })
     })
   }, [])
