@@ -140,12 +140,18 @@
   --direction: 1;
   --offset: 14;
   --z-index: 1;
+  --toasts-before: 0;
+  --front-toast-height: 0;
+  --lift: -1;
+  --gap: 14px;
+  --lift-amount: calc(var(--lift) * var(--gap));
+  --y: translate(0, 100%);
 
   opacity: 0;
-  transform: translate(0, 100%);
-  /*position: absolute;*/
+  /*transform: translate(0, 100%);*/
+  position: absolute;
   /*--y: translateY(100%);*/
-  /*transform: var(--y);*/
+  transform: var(--y);
 
   /*position: absolute;*/
   /*position: relative;*/
@@ -195,15 +201,21 @@
 /*}*/
 
 .toast[data-mounted='true'] {
-  /*--y: translateY(0);*/
+  --y: translateY(0);
   opacity: 1;
-  transform: translate(0);
+  /*transform: translate(0);*/
   transition: transform .3s, opacity .3s;
 }
 
 .toast[data-removed="true"] {
+  --y: translate(0, 100%);
   opacity: 0;
-  transform: translate(0, 100%);
+}
+
+.toast[data-expanded='false'][data-front='false'] {
+  --scale: var(--toasts-before) * 0.05 + 1;
+  --y: translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));
+  height: var(--front-toast-height);
 }
 
 .toast-close {

@@ -10,3 +10,8 @@ export interface ToastType {
   description?: string
   duration: number
 }
+
+export interface HeightT {
+  height: number
+  toastId: number | string
+}

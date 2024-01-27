@@ -3,7 +3,7 @@ import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { ToastState } from '../state.ts'
 import { useQueue } from '../use-queue.ts'
-import { ToastContainerPosition, ToastType } from '../types.ts'
+import { HeightT, ToastContainerPosition, ToastType } from '../types.ts'
 
 interface ToastsProps {
   index: number
@@ -13,6 +13,8 @@ interface ToastsProps {
   duration: ToastType['duration']
   title: string
   description?: string
+  frontHeight: any
+  setFrontHeight: (height: number) => void
   onDismiss?: () => void
 }
 
@@ -29,9 +31,21 @@ const Toast = (props: ToastsProps) => {
     setMounted(true)
   }, [])
 
-  console.log('rerender toast', mounted)
-
   const isFront = props.index === 0
+
+  React.useLayoutEffect(() => {
+    if (!mounted) return
+    const toastNode = toastRef.current
+    if (!toastNode) return
+
+    const originalHeight = toastNode.style.height
+    toastNode.style.height = 'auto'
+    const newHeight = toastNode.getBoundingClientRect().height
+    toastNode.style.height = originalHeight
+
+    props.setFrontHeight(newHeight)
+  }, [mounted])
+  console.log('rerender toast', mounted)
 
   const handleHide = () => {
     props.onDismiss && props.onDismiss()
@@ -81,42 +95,67 @@ const Toast = (props: ToastsProps) => {
   // debugger
 
   return (
-    <li
-      ref={toastRef}
-      className={`toast _${props.type}`}
-      data-mounted={mounted}
-      data-removed={removed}
-      style={
-        {
-          '--index': props.index,
-          '--toasts-before': props.index,
-          '--z-index': props.allToastCount - props.index,
-          '--offset': 14,
-        } as CSSProperties
-      }
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHoverLeave}
-    >
-      <div>{props.title}</div>
-      <div>{props.description}</div>
-      <div
-        className="toast-close"
-        onClick={handleRemove}
-      >
-        close
-      </div>
-      {props.duration && (
-        <div
-          ref={toastDurationTimerRef}
-          className="durationTimer"
+    <>
+      {isFront ? (
+        <li
+          ref={toastRef}
+          className={`toast _${props.type}`}
+          data-mounted={mounted}
+          data-removed={removed}
+          data-expanded={props.expanded}
+          data-front={isFront}
           style={
             {
-              '--duration': `${props.duration}s`,
+              '--index': props.index,
+              '--toasts-before': props.index,
+              '--z-index': props.allToastCount - props.index,
+              '--offset': 14,
             } as CSSProperties
           }
-        />
+          onMouseEnter={handleHover}
+          onMouseLeave={handleHoverLeave}
+        >
+          <div>{props.title}</div>
+          <div>{props.description}</div>
+          <div
+            className="toast-close"
+            onClick={handleRemove}
+          >
+            close
+          </div>
+          {props.duration && (
+            <div
+              ref={toastDurationTimerRef}
+              className="durationTimer"
+              style={
+                {
+                  '--duration': `${props.duration}s`,
+                } as CSSProperties
+              }
+            />
+          )}
+        </li>
+      ) : (
+        <li
+          className={`toast _${props.type}`}
+          data-mounted={mounted}
+          data-removed={removed}
+          data-expanded={props.expanded}
+          data-front={isFront}
+          style={
+            {
+              '--index': props.index,
+              '--toasts-before': props.index,
+              '--z-index': props.allToastCount - props.index,
+              '--offset': 14,
+              '--front-toast-height': props.frontHeight,
+            } as CSSProperties
+          }
+        >
+          placeholder
+        </li>
       )}
-    </li>
+    </>
   )
 }
 
@@ -126,10 +165,11 @@ interface Props {
 
 export const Toasts = (props: Props) => {
   const { position } = props
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const { state, queue, add, update } = useQueue<ToastType>({
     limit: 5,
   })
+  const [frontHeight, setFrontHeight] = React.useState(0)
 
   const removeToast = (toast: ToastType) =>
     update((notifications) =>
@@ -173,17 +213,13 @@ export const Toasts = (props: Props) => {
     })
   }, [])
 
-  const toggleExpand = () => {
-    // setExpanded(!expanded)
-  }
-
   return (
     <section className="toasts-section">
       <div>queue: {queue.length}</div>
       <ol
         className={`toasts position-${position}`}
-        onMouseEnter={toggleExpand}
-        onMouseLeave={toggleExpand}
+        onMouseEnter={() => setExpanded(true)}
+        onMouseLeave={() => setExpanded(false)}
         data-expanded={expanded}
       >
         {state.map((toast, index) => (
@@ -196,6 +232,8 @@ export const Toasts = (props: Props) => {
             type={toast.type}
             title={toast.title}
             description={toast.description}
+            frontHeight={frontHeight}
+            setFrontHeight={setFrontHeight}
             onDismiss={() => removeToast(toast)}
           />
         ))}
