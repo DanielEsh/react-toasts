@@ -68,16 +68,17 @@ const Toast = (props: ToastsProps) => {
     const newHeight = toastNode.getBoundingClientRect().height
     toastNode.style.height = originalHeight
 
-    props.setFrontHeight(newHeight)
+    if (isFront) {
+      props.setFrontHeight(newHeight)
+    }
 
     setInitialHeight(newHeight)
-
     props.setHeights((heights) => {
       const alreadyExists = heights.find(
         (height) => height.toastId === props.id,
       )
       if (!alreadyExists) {
-        return [{ toastId: props.id, height: newHeight }, ...heights]
+        return [...heights, { toastId: props.id, height: newHeight }]
       } else {
         return heights.map((height) =>
           height.toastId === props.id
@@ -116,7 +117,7 @@ const Toast = (props: ToastsProps) => {
     if (toastNode) {
       const height = toastNode.getBoundingClientRect().height
       setInitialHeight(height)
-      props.setHeights((h: any) => [{ toastId: props.id, height }, ...h])
+      props.setHeights((h: any) => [...h, { toastId: props.id, height }])
 
       return () =>
         props.setHeights((h: any) =>
@@ -142,12 +143,19 @@ const Toast = (props: ToastsProps) => {
     handleDelayedHide()
   }
 
-  const handleRemove = () => {
+  const deleteToast = React.useCallback(() => {
+    // Save the offset for the exit swipe animation
     setRemoved(true)
+    props.setHeights((h) => h.filter((height) => height.toastId !== props.id))
+
     // Добавим задержку перед вызовом onDelete() для завершения анимации
     setTimeout(() => {
       props.onDismiss && props.onDismiss()
     }, 300)
+  }, [removed, props.setHeights, offset])
+
+  const handleRemove = () => {
+    deleteToast()
   }
 
   // debugger
@@ -235,7 +243,7 @@ const Toast = (props: ToastsProps) => {
             '--z-index': props.allToastCount - props.index,
             '--offset': `${offset.current}px`,
             '--initial-height': props.expanded ? 'auto' : `${initialHeight}px`,
-            '--front-toast-height': props.frontHeight,
+            '--front-toast-height': `${props.frontHeight}px`,
           } as CSSProperties
         }
         onMouseEnter={handleHover}
@@ -325,6 +333,7 @@ export const Toasts = (props: Props) => {
       <ol
         className={`toasts position-${position}`}
         onMouseEnter={() => setExpanded(true)}
+        onMouseMove={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
         data-expanded={expanded}
       >
