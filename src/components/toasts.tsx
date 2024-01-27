@@ -9,12 +9,15 @@ interface ToastsProps {
   index: number
   allToastCount: number
   expanded: boolean
+  id: number
   type: ToastType['type']
   duration: ToastType['duration']
   title: string
   description?: string
   frontHeight: any
   setFrontHeight: (height: number) => void
+  heights: any
+  setHeights: any
   onDismiss?: () => void
 }
 
@@ -25,6 +28,7 @@ const Toast = (props: ToastsProps) => {
 
   const [mounted, setMounted] = React.useState(false)
   const [removed, setRemoved] = React.useState(false)
+  const [initialHeight, setInitialHeight] = React.useState(0)
 
   React.useEffect(() => {
     // Trigger enter animation without using CSS animation
@@ -33,10 +37,31 @@ const Toast = (props: ToastsProps) => {
 
   const isFront = props.index === 0
 
+  const heightIndex = React.useMemo(
+    () => props.heights.findIndex((height) => height.toastId === props.id) || 0,
+    [props.heights, props.id],
+  )
+
+  const toastsHeightBefore = React.useMemo(() => {
+    return props.heights.reduce((prev, curr, reducerIndex) => {
+      // Calculate offset up until current  toast
+      if (reducerIndex >= heightIndex) {
+        return prev
+      }
+
+      return prev + curr.height
+    }, 0)
+  }, [props.heights, heightIndex])
+
+  const offset = React.useRef(0)
+  offset.current = React.useMemo(
+    () => heightIndex * 14 + toastsHeightBefore,
+    [heightIndex, toastsHeightBefore],
+  )
+
   React.useLayoutEffect(() => {
     if (!mounted) return
     const toastNode = toastRef.current
-    if (!toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
@@ -44,7 +69,24 @@ const Toast = (props: ToastsProps) => {
     toastNode.style.height = originalHeight
 
     props.setFrontHeight(newHeight)
-  }, [mounted])
+
+    setInitialHeight(newHeight)
+
+    props.setHeights((heights) => {
+      const alreadyExists = heights.find(
+        (height) => height.toastId === props.id,
+      )
+      if (!alreadyExists) {
+        return [{ toastId: props.id, height: newHeight }, ...heights]
+      } else {
+        return heights.map((height) =>
+          height.toastId === props.id
+            ? { ...height, height: newHeight }
+            : height,
+        )
+      }
+    })
+  }, [mounted, props.setHeights, props.id])
   console.log('rerender toast', mounted)
 
   const handleHide = () => {
@@ -66,6 +108,22 @@ const Toast = (props: ToastsProps) => {
     handleDelayedHide()
     return cancelDelayedHide
   }, [props.duration])
+
+  React.useEffect(() => {
+    const toastNode = toastRef.current
+    console.log('use effect', props.heights)
+
+    if (toastNode) {
+      const height = toastNode.getBoundingClientRect().height
+      setInitialHeight(height)
+      props.setHeights((h: any) => [{ toastId: props.id, height }, ...h])
+
+      return () =>
+        props.setHeights((h: any) =>
+          h.filter((height: any) => height.toastId !== props.id),
+        )
+    }
+  }, [props.setHeights, props.id])
 
   const handleHover = () => {
     console.log('hover')
@@ -96,65 +154,113 @@ const Toast = (props: ToastsProps) => {
 
   return (
     <>
-      {isFront ? (
-        <li
-          ref={toastRef}
-          className={`toast _${props.type}`}
-          data-mounted={mounted}
-          data-removed={removed}
-          data-expanded={props.expanded}
-          data-front={isFront}
-          style={
-            {
-              '--index': props.index,
-              '--toasts-before': props.index,
-              '--z-index': props.allToastCount - props.index,
-              '--offset': 14,
-            } as CSSProperties
-          }
-          onMouseEnter={handleHover}
-          onMouseLeave={handleHoverLeave}
+      {/*{isFront && !props.expanded ? (*/}
+      {/*  <li*/}
+      {/*    ref={toastRef}*/}
+      {/*    className={`toast _${props.type}`}*/}
+      {/*    data-mounted={mounted}*/}
+      {/*    data-removed={removed}*/}
+      {/*    data-expanded={props.expanded}*/}
+      {/*    data-front={isFront}*/}
+      {/*    style={*/}
+      {/*      {*/}
+      {/*        '--index': props.index,*/}
+      {/*        '--toasts-before': props.index,*/}
+      {/*        '--z-index': props.allToastCount - props.index,*/}
+      {/*        '--offset': `${offset.current}px`,*/}
+      {/*        '--initial-height': props.expanded*/}
+      {/*          ? 'auto'*/}
+      {/*          : `${initialHeight}px`,*/}
+      {/*      } as CSSProperties*/}
+      {/*    }*/}
+      {/*    onMouseEnter={handleHover}*/}
+      {/*    onMouseLeave={handleHoverLeave}*/}
+      {/*  >*/}
+      {/*    <div>{props.title}</div>*/}
+      {/*    <div>{props.description}</div>*/}
+      {/*    <div*/}
+      {/*      className="toast-close"*/}
+      {/*      onClick={handleRemove}*/}
+      {/*    >*/}
+      {/*      close*/}
+      {/*    </div>*/}
+      {/*    {props.duration && (*/}
+      {/*      <div*/}
+      {/*        ref={toastDurationTimerRef}*/}
+      {/*        className="durationTimer"*/}
+      {/*        style={*/}
+      {/*          {*/}
+      {/*            '--duration': `${props.duration}s`,*/}
+      {/*          } as CSSProperties*/}
+      {/*        }*/}
+      {/*      />*/}
+      {/*    )}*/}
+      {/*  </li>*/}
+      {/*) : (*/}
+      {/*  <li*/}
+      {/*    ref={toastRef}*/}
+      {/*    className={`toast _${props.type}`}*/}
+      {/*    data-mounted={mounted}*/}
+      {/*    data-removed={removed}*/}
+      {/*    data-expanded={props.expanded}*/}
+      {/*    data-front={isFront}*/}
+      {/*    style={*/}
+      {/*      {*/}
+      {/*        '--index': props.index,*/}
+      {/*        '--toasts-before': props.index,*/}
+      {/*        '--z-index': props.allToastCount - props.index,*/}
+      {/*        '--offset': `${offset.current}px`,*/}
+      {/*        '--initial-height': props.expanded*/}
+      {/*          ? 'auto'*/}
+      {/*          : `${initialHeight}px`,*/}
+      {/*        '--front-toast-height': props.frontHeight,*/}
+      {/*      } as CSSProperties*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    placeholder*/}
+      {/*  </li>*/}
+      {/*)}*/}
+
+      <li
+        ref={toastRef}
+        className={`toast _${props.type}`}
+        data-mounted={mounted}
+        data-removed={removed}
+        data-expanded={props.expanded}
+        data-front={isFront}
+        style={
+          {
+            '--index': props.index,
+            '--toasts-before': props.index,
+            '--z-index': props.allToastCount - props.index,
+            '--offset': `${offset.current}px`,
+            '--initial-height': props.expanded ? 'auto' : `${initialHeight}px`,
+            '--front-toast-height': props.frontHeight,
+          } as CSSProperties
+        }
+        onMouseEnter={handleHover}
+        onMouseLeave={handleHoverLeave}
+      >
+        <div>{props.title}</div>
+        <div>{props.description}</div>
+        <div
+          className="toast-close"
+          onClick={handleRemove}
         >
-          <div>{props.title}</div>
-          <div>{props.description}</div>
+          close
+        </div>
+        {props.duration && (
           <div
-            className="toast-close"
-            onClick={handleRemove}
-          >
-            close
-          </div>
-          {props.duration && (
-            <div
-              ref={toastDurationTimerRef}
-              className="durationTimer"
-              style={
-                {
-                  '--duration': `${props.duration}s`,
-                } as CSSProperties
-              }
-            />
-          )}
-        </li>
-      ) : (
-        <li
-          className={`toast _${props.type}`}
-          data-mounted={mounted}
-          data-removed={removed}
-          data-expanded={props.expanded}
-          data-front={isFront}
-          style={
-            {
-              '--index': props.index,
-              '--toasts-before': props.index,
-              '--z-index': props.allToastCount - props.index,
-              '--offset': 14,
-              '--front-toast-height': props.frontHeight,
-            } as CSSProperties
-          }
-        >
-          placeholder
-        </li>
-      )}
+            ref={toastDurationTimerRef}
+            className="durationTimer"
+            style={
+              {
+                '--duration': `${props.duration}s`,
+              } as CSSProperties
+            }
+          />
+        )}
+      </li>
     </>
   )
 }
@@ -170,7 +276,7 @@ export const Toasts = (props: Props) => {
     limit: 5,
   })
   const [frontHeight, setFrontHeight] = React.useState(0)
-
+  const [heights, setHeights] = React.useState<any>([])
   const removeToast = (toast: ToastType) =>
     update((notifications) =>
       notifications.filter((notification) => {
@@ -225,6 +331,7 @@ export const Toasts = (props: Props) => {
         {state.map((toast, index) => (
           <Toast
             key={toast.id}
+            id={toast.id}
             index={index}
             expanded={expanded}
             allToastCount={state.length}
@@ -234,6 +341,8 @@ export const Toasts = (props: Props) => {
             description={toast.description}
             frontHeight={frontHeight}
             setFrontHeight={setFrontHeight}
+            heights={heights}
+            setHeights={setHeights}
             onDismiss={() => removeToast(toast)}
           />
         ))}

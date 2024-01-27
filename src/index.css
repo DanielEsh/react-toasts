@@ -150,6 +150,7 @@
   opacity: 0;
   /*transform: translate(0, 100%);*/
   position: absolute;
+  bottom: 20px;
   /*--y: translateY(100%);*/
   transform: var(--y);
 
@@ -216,6 +217,11 @@
   --scale: var(--toasts-before) * 0.05 + 1;
   --y: translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));
   height: var(--front-toast-height);
+}
+
+.toast[data-mounted='true'][data-expanded='true'] {
+  --y: translateY(calc(var(--lift) * var(--offset)));
+  height: var(--initial-height);
 }
 
 .toast-close {
