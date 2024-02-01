@@ -97,7 +97,10 @@ const Toast = (props: ToastsProps) => {
 
   const handleDelayedHide = () => {
     if (props.duration) {
-      hideTimeout.current = window.setTimeout(handleHide, props.duration * 1000)
+      hideTimeout.current = window.setTimeout(
+        handleRemove,
+        props.duration * 1000,
+      )
     }
   }
 
