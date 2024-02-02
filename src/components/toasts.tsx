@@ -165,71 +165,46 @@ const Toast = (props: ToastsProps) => {
 
   return (
     <>
-      {isFront || props.expanded ? (
-        <li
-          ref={toastRef}
-          className={`toast _${props.type}`}
-          data-mounted={mounted}
-          data-removed={removed}
-          data-expanded={props.expanded}
-          data-front={isFront}
-          style={
-            {
-              '--index': props.index,
-              '--toasts-before': props.index,
-              '--z-index': props.allToastCount - props.index,
-              '--offset': `${offset.current}px`,
-              '--initial-height': props.expanded
-                ? 'auto'
-                : `${initialHeight}px`,
-              '--front-toast-height': `${props.frontHeight}px`,
-            } as CSSProperties
-          }
-          onMouseEnter={handleHover}
-          onMouseLeave={handleHoverLeave}
+      <li
+        ref={toastRef}
+        className={`toast _${props.type}`}
+        data-mounted={mounted}
+        data-removed={removed}
+        data-expanded={props.expanded}
+        data-front={isFront}
+        style={
+          {
+            '--index': props.index,
+            '--toasts-before': props.index,
+            '--z-index': props.allToastCount - props.index,
+            '--offset': `${offset.current}px`,
+            '--initial-height': props.expanded ? 'auto' : `${initialHeight}px`,
+            '--front-toast-height': `${props.frontHeight}px`,
+          } as CSSProperties
+        }
+        onMouseEnter={handleHover}
+        onMouseLeave={handleHoverLeave}
+      >
+        <div>{props.title}</div>
+        <div>{props.description}</div>
+        <div
+          className="toast-close"
+          onClick={handleRemove}
         >
-          <div>{props.title}</div>
-          <div>{props.description}</div>
+          close
+        </div>
+        {props.duration && (
           <div
-            className="toast-close"
-            onClick={handleRemove}
-          >
-            close
-          </div>
-          {props.duration && (
-            <div
-              ref={toastDurationTimerRef}
-              className="durationTimer"
-              style={
-                {
-                  '--duration': `${props.duration}s`,
-                } as CSSProperties
-              }
-            />
-          )}
-        </li>
-      ) : (
-        <li
-          ref={toastRef}
-          className={`toast _${props.type}`}
-          data-mounted={mounted}
-          data-removed={removed}
-          data-expanded={props.expanded}
-          data-front={isFront}
-          style={
-            {
-              '--index': props.index,
-              '--toasts-before': props.index,
-              '--z-index': props.allToastCount - props.index,
-              '--offset': `${offset.current}px`,
-              '--initial-height': props.expanded
-                ? 'auto'
-                : `${initialHeight}px`,
-              '--front-toast-height': `${props.frontHeight}px`,
-            } as CSSProperties
-          }
-        />
-      )}
+            ref={toastDurationTimerRef}
+            className="durationTimer"
+            style={
+              {
+                '--duration': `${props.duration}s`,
+              } as CSSProperties
+            }
+          />
+        )}
+      </li>
 
       {/*<li*/}
       {/*  ref={toastRef}*/}
