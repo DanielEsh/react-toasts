@@ -169,15 +169,6 @@
   background: var(--normal-bg);
 
   transition: transform .3s, opacity .3s, height .3s;
-
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 100%;
-    width: 100%;
-    height: calc(var(--gap) + 1px);
-  }
 }
 
 .toast[data-expanded="true"] {
