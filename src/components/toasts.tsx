@@ -8,7 +8,6 @@ import { HeightT, ToastContainerPosition, ToastType } from '../types.ts'
 interface ToastsProps {
   index: number
   allToastCount: number
-  expanded: boolean
   id: number
   type: ToastType['type']
   duration: ToastType['duration']
@@ -170,7 +169,7 @@ const Toast = (props: ToastsProps) => {
         className={`toast _${props.type}`}
         data-mounted={mounted}
         data-removed={removed}
-        data-expanded={props.expanded}
+        data-expanded={true}
         data-front={isFront}
         style={
           {
@@ -178,7 +177,7 @@ const Toast = (props: ToastsProps) => {
             '--toasts-before': props.index,
             '--z-index': props.allToastCount - props.index,
             '--offset': `${offset.current}px`,
-            '--initial-height': props.expanded ? 'auto' : `${initialHeight}px`,
+            '--initial-height': 'auto',
             '--front-toast-height': `${props.frontHeight}px`,
           } as CSSProperties
         }
@@ -256,7 +255,6 @@ interface Props {
 
 export const Toasts = (props: Props) => {
   const { position } = props
-  const [expanded, setExpanded] = useState(false)
   const { state, queue, add, update } = useQueue<ToastType>({
     limit: 5,
   })
@@ -307,19 +305,12 @@ export const Toasts = (props: Props) => {
   return (
     <section className="toasts-section">
       <div>queue: {queue.length}</div>
-      <ol
-        className={`toasts position-${position}`}
-        onMouseEnter={() => setExpanded(true)}
-        onMouseMove={() => setExpanded(true)}
-        onMouseLeave={() => setExpanded(false)}
-        data-expanded={expanded}
-      >
+      <ol className={`toasts position-${position}`}>
         {state.map((toast, index) => (
           <Toast
             key={toast.id}
             id={toast.id}
             index={index}
-            expanded={expanded}
             allToastCount={state.length}
             duration={toast.duration}
             type={toast.type}
