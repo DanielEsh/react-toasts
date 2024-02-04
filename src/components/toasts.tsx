@@ -54,7 +54,7 @@ const Toast = (props: ToastsProps) => {
 
   const offset = React.useRef(0)
   offset.current = React.useMemo(
-    () => heightIndex * 26 + toastsHeightBefore,
+    () => heightIndex * 16 + toastsHeightBefore,
     [heightIndex, toastsHeightBefore],
   )
 
@@ -160,8 +160,6 @@ const Toast = (props: ToastsProps) => {
     deleteToast()
   }
 
-  // debugger
-
   return (
     <>
       <li
@@ -204,47 +202,6 @@ const Toast = (props: ToastsProps) => {
           />
         )}
       </li>
-
-      {/*<li*/}
-      {/*  ref={toastRef}*/}
-      {/*  className={`toast _${props.type}`}*/}
-      {/*  data-mounted={mounted}*/}
-      {/*  data-removed={removed}*/}
-      {/*  data-expanded={props.expanded}*/}
-      {/*  data-front={isFront}*/}
-      {/*  style={*/}
-      {/*    {*/}
-      {/*      '--index': props.index,*/}
-      {/*      '--toasts-before': props.index,*/}
-      {/*      '--z-index': props.allToastCount - props.index,*/}
-      {/*      '--offset': `${offset.current}px`,*/}
-      {/*      '--initial-height': props.expanded ? 'auto' : `${initialHeight}px`,*/}
-      {/*      '--front-toast-height': `${props.frontHeight}px`,*/}
-      {/*    } as CSSProperties*/}
-      {/*  }*/}
-      {/*  onMouseEnter={handleHover}*/}
-      {/*  onMouseLeave={handleHoverLeave}*/}
-      {/*>*/}
-      {/*  <div>{props.title}</div>*/}
-      {/*  <div>{props.description}</div>*/}
-      {/*  <div*/}
-      {/*    className="toast-close"*/}
-      {/*    onClick={handleRemove}*/}
-      {/*  >*/}
-      {/*    close*/}
-      {/*  </div>*/}
-      {/*  {props.duration && (*/}
-      {/*    <div*/}
-      {/*      ref={toastDurationTimerRef}*/}
-      {/*      className="durationTimer"*/}
-      {/*      style={*/}
-      {/*        {*/}
-      {/*          '--duration': `${props.duration}s`,*/}
-      {/*        } as CSSProperties*/}
-      {/*      }*/}
-      {/*    />*/}
-      {/*  )}*/}
-      {/*</li>*/}
     </>
   )
 }
@@ -271,33 +228,8 @@ export const Toasts = (props: Props) => {
     return ToastState.subscribe((toast) => {
       console.log('SUB', toast)
 
-      // if (toast.dismiss) {
-      //   setToasts((toasts) =>
-      //     toasts.map((t) => (t.id === toast.id ? { ...t, delete: true } : t)),
-      //   )
-      //   return
-      // }
-
-      // Prevent batching, temp solution.
-
       ReactDOM.flushSync(() => {
         add(toast)
-        // setToasts((toasts) => {
-        //   const indexOfExistingToast = toasts.findIndex(
-        //     (t) => t.id === toast.id,
-        //   )
-        //
-        //   // Update the toast if it already exists
-        //   if (indexOfExistingToast !== -1) {
-        //     return [
-        //       ...toasts.slice(0, indexOfExistingToast),
-        //       { ...toasts[indexOfExistingToast], ...toast },
-        //       ...toasts.slice(indexOfExistingToast + 1),
-        //     ]
-        //   }
-        //
-        //   return [toast, ...toasts]
-        // })
       })
     })
   }, [])
