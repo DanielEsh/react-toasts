@@ -11,7 +11,7 @@ export interface ToastType {
   duration: number
 }
 
-export interface HeightT {
+export interface ToastHeightItem {
+  toastId: ToastType['id']
   height: number
-  toastId: number | string
 }

@@ -3,7 +3,7 @@ import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { ToastState } from '../state.ts'
 import { useQueue } from '../use-queue.ts'
-import { HeightT, ToastContainerPosition, ToastType } from '../types.ts'
+import { ToastHeightItem, ToastContainerPosition, ToastType } from '../types.ts'
 
 interface ToastsProps {
   index: number
@@ -27,7 +27,6 @@ const Toast = (props: ToastsProps) => {
 
   const [mounted, setMounted] = React.useState(false)
   const [removed, setRemoved] = React.useState(false)
-  const [initialHeight, setInitialHeight] = React.useState(0)
 
   React.useEffect(() => {
     // Trigger enter animation without using CSS animation
@@ -71,7 +70,6 @@ const Toast = (props: ToastsProps) => {
       props.setFrontHeight(newHeight)
     }
 
-    setInitialHeight(newHeight)
     props.setHeights((heights) => {
       const alreadyExists = heights.find(
         (height) => height.toastId === props.id,
@@ -118,7 +116,7 @@ const Toast = (props: ToastsProps) => {
 
     if (toastNode) {
       const height = toastNode.getBoundingClientRect().height
-      setInitialHeight(height)
+
       props.setHeights((h: any) => [...h, { toastId: props.id, height }])
 
       return () =>
@@ -167,8 +165,6 @@ const Toast = (props: ToastsProps) => {
         className={`toast _${props.type}`}
         data-mounted={mounted}
         data-removed={removed}
-        data-expanded={true}
-        data-front={isFront}
         style={
           {
             '--index': props.index,
@@ -216,7 +212,7 @@ export const Toasts = (props: Props) => {
     limit: 5,
   })
   const [frontHeight, setFrontHeight] = React.useState(0)
-  const [heights, setHeights] = React.useState<any>([])
+  const [heights, setHeights] = React.useState<ToastHeightItem[]>([])
   const removeToast = (toast: ToastType) =>
     update((notifications) =>
       notifications.filter((notification) => {
