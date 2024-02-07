@@ -190,7 +190,9 @@ const Toast = (props: ToastsProps) => {
       toastDurationTimerRef.current.style.animation
     }
     // handleDelayedHide()
-    handleResume()
+    if (props.duration) {
+      handleResume()
+    }
   }
 
   return (
