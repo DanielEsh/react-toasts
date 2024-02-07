@@ -126,23 +126,6 @@ const Toast = (props: ToastsProps) => {
     }
   }, [props.setHeights, props.id])
 
-  const handleHover = () => {
-    console.log('hover')
-    if (toastDurationTimerRef.current) {
-      toastDurationTimerRef.current.style.animationPlayState = 'paused'
-    }
-    cancelDelayedHide()
-  }
-
-  const handleHoverLeave = () => {
-    console.log('leave')
-    if (toastDurationTimerRef.current) {
-      toastDurationTimerRef.current.style.animationPlayState = 'running'
-      toastDurationTimerRef.current.style.animation
-    }
-    handleDelayedHide()
-  }
-
   const deleteToast = React.useCallback(() => {
     // Save the offset for the exit swipe animation
     setRemoved(true)
@@ -156,6 +139,58 @@ const Toast = (props: ToastsProps) => {
 
   const handleRemove = () => {
     deleteToast()
+  }
+
+  const realDuration = props.duration * 1000
+
+  // стартовое время
+  const closeTimerStartTimeRef = React.useRef(0)
+
+  // оставшиеся время
+  const closeTimerRemainingTimeRef = React.useRef(realDuration)
+
+  const closeTimerRef = React.useRef(0)
+
+  const startTimer = (duration: number) => {
+    window.clearTimeout(closeTimerRef.current)
+    closeTimerStartTimeRef.current = new Date().getTime()
+    closeTimerRef.current = window.setTimeout(handleRemove, duration)
+  }
+
+  const handleResume = () => {
+    // стартануть timer с closeTimerRemainingTimeRef
+    // onResume callback
+    startTimer(closeTimerRemainingTimeRef.current)
+  }
+
+  const handlePause = () => {
+    // получить elapsed time
+    // сохранить ее в ref
+    // clear timeout
+    // onPause callback
+    const elapsedTime = new Date().getTime() - closeTimerStartTimeRef.current
+    closeTimerRemainingTimeRef.current =
+      closeTimerRemainingTimeRef.current - elapsedTime
+    window.clearTimeout(closeTimerRef.current)
+  }
+
+  const handleHover = () => {
+    console.log('hover')
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'paused'
+    }
+    // cancelDelayedHide()
+    handlePause()
+  }
+
+  const handleHoverLeave = () => {
+    console.log('leave')
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'running'
+      toastDurationTimerRef.current.style.animation
+    }
+    // handleDelayedHide()
+    handleResume()
   }
 
   return (
