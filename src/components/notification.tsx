@@ -18,8 +18,9 @@ interface Props {
   duration: ToastType['duration']
   title: string
   heights: NotificationHeightItem[]
-  setHeights: any
-  // onChangeHeight: (newHeight: number) => void
+  onChangeHeight: (newHeight: number) => void
+  onRemoveHeights: () => void
+  onAddHeights: (height: number) => void
   onDismiss: () => void
 }
 
@@ -27,8 +28,18 @@ const NOTIFICATIONS_GAP = 16
 const TIME_BEFORE_UNMOUNT = 300
 
 export const Notification = (props: Props) => {
-  const { id, type, title, index, allNotificationsCount, heights, onDismiss } =
-    props
+  const {
+    id,
+    type,
+    title,
+    index,
+    allNotificationsCount,
+    heights,
+    onAddHeights,
+    onChangeHeight,
+    onRemoveHeights,
+    onDismiss,
+  } = props
   const notificationRef = useRef<HTMLLIElement>(null)
 
   const [mounted, setMounted] = useState(false)
@@ -70,38 +81,19 @@ export const Notification = (props: Props) => {
     const newHeight = toastNode.getBoundingClientRect().height
     toastNode.style.height = originalHeight
 
-    // onChangeHeight(newHeight)
-    props.setHeights((heights) => {
-      const alreadyExists = heights.find(
-        (height) => height.toastId === props.id,
-      )
-      if (!alreadyExists) {
-        return [...heights, { toastId: props.id, height: newHeight }]
-      } else {
-        return heights.map((height) =>
-          height.toastId === props.id
-            ? { ...height, height: newHeight }
-            : height,
-        )
-      }
-    })
-  }, [mounted, props.setHeights, id])
+    onChangeHeight(newHeight)
+  }, [mounted, id])
 
   useEffect(() => {
     const toastNode = notificationRef.current
-    console.log('use effect', props.heights)
+    if (!toastNode) return
 
-    if (toastNode) {
-      const height = toastNode.getBoundingClientRect().height
+    const height = toastNode.getBoundingClientRect().height
 
-      props.setHeights((h: any) => [...h, { toastId: props.id, height }])
+    onAddHeights(height)
 
-      return () =>
-        props.setHeights((h: any) =>
-          h.filter((height: any) => height.toastId !== props.id),
-        )
-    }
-  }, [props.setHeights, props.id])
+    return () => onRemoveHeights()
+  }, [props.id])
 
   const deleteToast = useCallback(() => {
     // Save the offset for the exit swipe animation
@@ -176,7 +168,7 @@ export const Notification = (props: Props) => {
   return (
     <li
       ref={notificationRef}
-      className={`toast _${props.type}`}
+      className={`toast _${type}`}
       data-mounted={mounted}
       data-removed={removed}
       style={
@@ -192,7 +184,6 @@ export const Notification = (props: Props) => {
       onMouseLeave={handleHoverLeave}
     >
       <Toast
-        type={type}
         title={title}
         onCloseClick={handleRemove}
       />

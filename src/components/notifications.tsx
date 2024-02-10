@@ -38,6 +38,10 @@ export const Notifications = ({ position }: Props) => {
     })
   }, [])
 
+  const handleAddHeightById = (height: number, id: ToastType['id']) => {
+    setHeights((heights) => [...heights, { toastId: id, height }])
+  }
+
   const handleChangeHeight = (newHeight: number, id?: ToastType['id']) => {
     setHeights((heights) => {
       const alreadyExists = heights.find((height) => height.toastId === id)
@@ -49,6 +53,10 @@ export const Notifications = ({ position }: Props) => {
         )
       }
     })
+  }
+
+  const handleRemoveHeightById = (id: ToastType['id']) => {
+    setHeights((h) => h.filter((height) => height.toastId !== id))
   }
 
   return (
@@ -64,10 +72,13 @@ export const Notifications = ({ position }: Props) => {
             type={toast.type}
             title={toast.title}
             heights={heights}
-            setHeights={setHeights}
-            // onChangeHeight={(newHeight) =>
-            //   handleChangeHeight(newHeight, toast.id)
-            // }
+            onChangeHeight={(newHeight) =>
+              handleChangeHeight(newHeight, toast.id)
+            }
+            onAddHeights={(newHeight) =>
+              handleAddHeightById(newHeight, toast.id)
+            }
+            onRemoveHeights={() => handleRemoveHeightById(toast.id)}
             onDismiss={() => removeToast(toast)}
           />
         ))}
