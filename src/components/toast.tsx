@@ -9,7 +9,7 @@ interface Props {
 
 export const Toast = ({ title, description, type, onCloseClick }: Props) => {
   return (
-    <div className={`toast _${type}`}>
+    <div>
       <div>{title}</div>
       <div>{description}</div>
 

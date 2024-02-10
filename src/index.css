@@ -178,14 +178,14 @@
 }
 
 .toast[data-removed="true"] {
-  --y: translate(0, 100%);
+  --y: translateY(100%) !important;
   opacity: 0;
 }
 
 .toast[data-expanded='false'][data-front='false'] {
   --scale: var(--toasts-before) * 0.05 + 1;
   --y: translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));
-  height: var(--front-toast-height);
+  height: auto;
 }
 
 .toast[data-mounted='true'] {

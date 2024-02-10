@@ -83,11 +83,6 @@ export default function HomePage() {
           </button>
         </div>
         <Link to="/categories">To categories</Link>
-
-        <Toast
-          title={'title'}
-          description={'description'}
-        />
       </div>
     </div>
   )

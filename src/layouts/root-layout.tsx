@@ -1,8 +1,9 @@
 import { Outlet } from 'react-router-dom'
-import { Toasts } from '../components/toasts.tsx'
+// import { Toasts } from '../components/toasts.tsx'
 import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
 import { ToastContainerPosition } from '../types.ts'
+import { Notifications } from '../components/notifications.tsx'
 
 const positions = [
   'top-left',
@@ -43,7 +44,8 @@ export const RootLayout = () => {
         </Section>
         <Outlet />
       </div>
-      <Toasts position={activePosition} />
+      {/*<Toasts position={activePosition} />*/}
+      <Notifications position={activePosition} />
     </div>
   )
 }
