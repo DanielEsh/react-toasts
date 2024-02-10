@@ -9,6 +9,7 @@ import React, {
 } from 'react'
 import { Toast } from './toast.tsx'
 import type { NotificationHeightItem, ToastType } from '../types.ts'
+import { useTimer } from '../use-timer.ts'
 
 interface Props {
   id: ToastType['id']
@@ -32,6 +33,7 @@ export const Notification = (props: Props) => {
     id,
     type,
     title,
+    duration,
     index,
     allNotificationsCount,
     heights,
@@ -41,6 +43,7 @@ export const Notification = (props: Props) => {
     onDismiss,
   } = props
   const notificationRef = useRef<HTMLLIElement>(null)
+  const toastDurationTimerRef = useRef<HTMLDivElement>(null)
 
   const [mounted, setMounted] = useState(false)
   const [removed, setRemoved] = useState(false)
@@ -111,26 +114,24 @@ export const Notification = (props: Props) => {
     deleteToast()
   }
 
-  const realDuration = props.duration * 1000
+  const realDuration = duration * 1000
 
-  // стартовое время
-  const closeTimerStartTimeRef = React.useRef(0)
+  const { startTimer, pauseTimer, clearTimer } = useTimer(
+    realDuration,
+    handleRemove,
+  )
 
-  // оставшиеся время
-  const closeTimerRemainingTimeRef = React.useRef(realDuration)
-
-  const closeTimerRef = React.useRef(0)
-
-  const startTimer = (duration: number) => {
-    window.clearTimeout(closeTimerRef.current)
-    closeTimerStartTimeRef.current = new Date().getTime()
-    closeTimerRef.current = window.setTimeout(handleRemove, duration)
-  }
+  useEffect(() => {
+    if (props.duration) {
+      startTimer()
+    }
+    return clearTimer
+  }, [])
 
   const handleResume = () => {
     // стартануть timer с closeTimerRemainingTimeRef
     // onResume callback
-    startTimer(closeTimerRemainingTimeRef.current)
+    startTimer()
   }
 
   const handlePause = () => {
@@ -138,29 +139,26 @@ export const Notification = (props: Props) => {
     // сохранить ее в ref
     // clear timeout
     // onPause callback
-    const elapsedTime = new Date().getTime() - closeTimerStartTimeRef.current
-    closeTimerRemainingTimeRef.current =
-      closeTimerRemainingTimeRef.current - elapsedTime
-    window.clearTimeout(closeTimerRef.current)
+    pauseTimer()
   }
 
   const handleHover = () => {
     console.log('hover')
-    // if (toastDurationTimerRef.current) {
-    //   toastDurationTimerRef.current.style.animationPlayState = 'paused'
-    // }
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'paused'
+    }
     // cancelDelayedHide()
     handlePause()
   }
 
   const handleHoverLeave = () => {
     console.log('leave')
-    // if (toastDurationTimerRef.current) {
-    //   toastDurationTimerRef.current.style.animationPlayState = 'running'
-    //   toastDurationTimerRef.current.style.animation
-    // }
+    if (toastDurationTimerRef.current) {
+      toastDurationTimerRef.current.style.animationPlayState = 'running'
+      toastDurationTimerRef.current.style.animation
+    }
     // handleDelayedHide()
-    if (props.duration) {
+    if (duration) {
       handleResume()
     }
   }
@@ -187,6 +185,17 @@ export const Notification = (props: Props) => {
         title={title}
         onCloseClick={handleRemove}
       />
+      {duration && (
+        <div
+          ref={toastDurationTimerRef}
+          className="durationTimer"
+          style={
+            {
+              '--duration': `${props.duration}s`,
+            } as CSSProperties
+          }
+        />
+      )}
     </li>
   )
 }
