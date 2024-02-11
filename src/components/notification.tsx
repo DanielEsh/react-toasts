@@ -49,7 +49,6 @@ export const Notification = (props: Props) => {
   const [removed, setRemoved] = useState(false)
 
   useEffect(() => {
-    // Trigger enter animation without using CSS animation
     setMounted(true)
   }, [])
 
@@ -101,11 +100,8 @@ export const Notification = (props: Props) => {
   const deleteToast = useCallback(() => {
     // Save the offset for the exit swipe animation
     setRemoved(true)
-    // props.setHeights((h) => h.filter((height) => height.toastId !== props.id))
 
-    // Добавим задержку перед вызовом onDelete() для завершения анимации
     setTimeout(() => {
-      // dismiss
       onDismiss()
     }, TIME_BEFORE_UNMOUNT)
   }, [removed, offset])
@@ -122,42 +118,33 @@ export const Notification = (props: Props) => {
   )
 
   useEffect(() => {
-    if (props.duration) {
+    if (duration) {
       startTimer()
     }
     return clearTimer
   }, [])
 
   const handleResume = () => {
-    // стартануть timer с closeTimerRemainingTimeRef
-    // onResume callback
     resumeTimer()
   }
 
   const handlePause = () => {
-    // получить elapsed time
-    // сохранить ее в ref
-    // clear timeout
-    // onPause callback
     pauseTimer()
   }
 
   const handleHover = () => {
-    console.log('hover')
     if (toastDurationTimerRef.current) {
       toastDurationTimerRef.current.style.animationPlayState = 'paused'
     }
-    // cancelDelayedHide()
     handlePause()
   }
 
   const handleHoverLeave = () => {
-    console.log('leave')
     if (toastDurationTimerRef.current) {
       toastDurationTimerRef.current.style.animationPlayState = 'running'
       toastDurationTimerRef.current.style.animation
     }
-    // handleDelayedHide()
+
     if (duration) {
       handleResume()
     }
