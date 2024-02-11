@@ -116,7 +116,7 @@ export const Notification = (props: Props) => {
 
   const realDuration = duration * 1000
 
-  const { startTimer, pauseTimer, clearTimer } = useTimer(
+  const { startTimer, pauseTimer, resumeTimer, clearTimer } = useTimer(
     realDuration,
     handleRemove,
   )
@@ -131,7 +131,7 @@ export const Notification = (props: Props) => {
   const handleResume = () => {
     // стартануть timer с closeTimerRemainingTimeRef
     // onResume callback
-    startTimer()
+    resumeTimer()
   }
 
   const handlePause = () => {

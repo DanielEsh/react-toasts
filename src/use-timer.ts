@@ -12,6 +12,15 @@ export function useTimer(duration: number, timeoutCallback: () => void) {
     closeTimerRef.current = window.setTimeout(timeoutCallback, duration)
   }
 
+  const resumeTimer = () => {
+    window.clearTimeout(closeTimerRef.current)
+    closeTimerStartTimeRef.current = new Date().getTime()
+    closeTimerRef.current = window.setTimeout(
+      timeoutCallback,
+      closeTimerRemainingTimeRef.current,
+    )
+  }
+
   const pauseTimer = () => {
     const elapsedTime = new Date().getTime() - closeTimerStartTimeRef.current
     closeTimerRemainingTimeRef.current =
@@ -26,6 +35,7 @@ export function useTimer(duration: number, timeoutCallback: () => void) {
   return {
     startTimer,
     pauseTimer,
+    resumeTimer,
     clearTimer,
   }
 }
