@@ -7,24 +7,25 @@ import { useState } from 'react'
 export default function HomePage() {
   const [animation, setAnimation] = useState(true)
   const handleClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
-      description: 'desc',
+    toastFunction({
+      title: 'Simple',
     })
   }
 
   const handle2Click = () => {
-    toastFunction('message', {
+    toastFunction({
       id: new Date().getTime(),
+      title: 'with description',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     })
   }
 
   const handleTimerClick = () => {
-    toastFunction('message', {
+    toastFunction({
+      title: 'message with timer',
+      description: '5 second timer',
       duration: 5,
-      id: new Date().getTime(),
     })
   }
 

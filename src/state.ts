@@ -1,15 +1,15 @@
+import { CreateNotification, NotificationType } from './types.ts'
+
 let toastsCounter = 1
 
 class Observer {
-  private subscribers: Array<(toast: any) => void>
-  private toasts: any
+  private subscribers: Array<(toast: NotificationType) => void>
 
   constructor() {
     this.subscribers = []
-    this.toasts = []
   }
 
-  subscribe = (subscriber: (toast: any) => void) => {
+  subscribe = (subscriber: (toast: NotificationType) => void) => {
     this.subscribers.push(subscriber)
 
     return () => {
@@ -22,44 +22,17 @@ class Observer {
     this.subscribers.forEach((subscriber) => subscriber(data))
   }
 
-  addToast = (data: any) => {
+  create = (data: NotificationType) => {
     this.publish(data)
-    this.toasts = [...this.toasts, data]
-  }
-
-  create = (data: any) => {
-    const { message, ...rest } = data
-    const id =
-      typeof data?.id === 'number' || data.id?.length > 0
-        ? data.id
-        : toastsCounter++
-    this.addToast({ title: message, ...rest, id })
-
-    return id
-  }
-
-  dismiss = (id?: number | string) => {
-    console.log('STATE DISMISS', id)
-    if (!id) {
-      this.toasts.forEach((toast) => {
-        this.subscribers.forEach((subscriber) =>
-          subscriber({ id: toast.id, dismiss: true }),
-        )
-      })
-    }
-
-    this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true }))
-    return id
   }
 }
 
-export const ToastState = new Observer()
+export const NotificationObserver = new Observer()
 
-export const toastFunction = (message: string, data: any) => {
+export const toastFunction = (data: CreateNotification) => {
   const id = data?.id || toastsCounter++
 
-  ToastState.addToast({
-    title: message,
+  NotificationObserver.create({
     type: 'default',
     ...data,
     id,

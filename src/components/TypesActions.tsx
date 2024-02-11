@@ -2,35 +2,35 @@ import { toastFunction } from '../state.ts'
 
 export const TypesActions = () => {
   const handleDefaultClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
+    toastFunction({
+      title: 'message',
     })
   }
 
   const handleSuccessClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
+    toastFunction({
+      title: 'message',
       type: 'success',
     })
   }
 
   const handleInfoClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
+    toastFunction({
+      title: 'message',
       type: 'info',
     })
   }
 
   const handleWarningClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
+    toastFunction({
+      title: 'message',
       type: 'warning',
     })
   }
 
   const handleErrorClick = () => {
-    toastFunction('message', {
-      id: new Date().getTime(),
+    toastFunction({
+      title: 'message',
       type: 'error',
     })
   }
@@ -69,7 +69,7 @@ export const TypesActions = () => {
         className="button"
         onClick={handleErrorClick}
       >
-        Warning
+        Error
       </button>
     </>
   )

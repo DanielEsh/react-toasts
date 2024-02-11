@@ -15,3 +15,16 @@ export interface NotificationHeightItem {
   toastId: ToastType['id']
   height: number
 }
+
+export interface NotificationType {
+  id: number | string
+  type: 'default' | 'success' | 'info' | 'warning' | 'error'
+  title: string
+  description?: string
+  duration?: number
+}
+
+export type CreateNotification = Omit<NotificationType, 'id' | 'type'> & {
+  id?: number | string
+  type?: 'default' | 'success' | 'info' | 'warning' | 'error'
+}

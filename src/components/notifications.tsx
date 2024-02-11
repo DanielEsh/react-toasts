@@ -1,11 +1,11 @@
 import type {
   ToastContainerPosition,
   NotificationHeightItem,
-  ToastType,
+  NotificationType,
 } from '../types.ts'
 import { useQueue } from '../use-queue.ts'
 import React, { useEffect } from 'react'
-import { ToastState } from '../state.ts'
+import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { Notification } from './notification.tsx'
 
@@ -14,12 +14,12 @@ interface Props {
 }
 
 export const Notifications = ({ position }: Props) => {
-  const { state, add, update } = useQueue<ToastType>({
+  const { state, add, update } = useQueue<NotificationType>({
     limit: 5,
   })
   const [heights, setHeights] = React.useState<NotificationHeightItem[]>([])
 
-  const removeToast = (toast: ToastType) => {
+  const removeToast = (toast: NotificationType) => {
     update((notifications) =>
       notifications.filter((notification) => {
         return notification.id !== toast.id
@@ -29,20 +29,23 @@ export const Notifications = ({ position }: Props) => {
   }
 
   useEffect(() => {
-    return ToastState.subscribe((toast) => {
-      console.log('SUB', toast)
+    return NotificationObserver.subscribe((notification) => {
+      console.log('SUB', notification)
 
       ReactDOM.flushSync(() => {
-        add(toast)
+        add(notification)
       })
     })
   }, [])
 
-  const handleAddHeightById = (height: number, id: ToastType['id']) => {
+  const handleAddHeightById = (height: number, id: NotificationType['id']) => {
     setHeights((heights) => [...heights, { toastId: id, height }])
   }
 
-  const handleChangeHeight = (newHeight: number, id?: ToastType['id']) => {
+  const handleChangeHeight = (
+    newHeight: number,
+    id?: NotificationType['id'],
+  ) => {
     setHeights((heights) => {
       const alreadyExists = heights.find((height) => height.toastId === id)
       if (!alreadyExists) {
@@ -55,7 +58,7 @@ export const Notifications = ({ position }: Props) => {
     })
   }
 
-  const handleRemoveHeightById = (id: ToastType['id']) => {
+  const handleRemoveHeightById = (id: NotificationType['id']) => {
     setHeights((h) => h.filter((height) => height.toastId !== id))
   }
 
@@ -71,6 +74,7 @@ export const Notifications = ({ position }: Props) => {
             duration={toast.duration}
             type={toast.type}
             title={toast.title}
+            description={toast.description}
             heights={heights}
             onChangeHeight={(newHeight) =>
               handleChangeHeight(newHeight, toast.id)

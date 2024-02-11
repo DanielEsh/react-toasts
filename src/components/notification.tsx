@@ -8,16 +8,18 @@ import React, {
   CSSProperties,
 } from 'react'
 import { Toast } from './toast.tsx'
-import type { NotificationHeightItem, ToastType } from '../types.ts'
+import type { NotificationHeightItem } from '../types.ts'
 import { useTimer } from '../use-timer.ts'
+import { NotificationType } from '../types.ts'
 
 interface Props {
-  id: ToastType['id']
+  id: NotificationType['id']
   index: number
   allNotificationsCount: number
-  type: ToastType['type']
-  duration: ToastType['duration']
+  type: NotificationType['type']
+  duration: NotificationType['duration']
   title: string
+  description?: string
   heights: NotificationHeightItem[]
   onChangeHeight: (newHeight: number) => void
   onRemoveHeights: () => void
@@ -33,6 +35,7 @@ export const Notification = (props: Props) => {
     id,
     type,
     title,
+    description,
     duration,
     index,
     allNotificationsCount,
@@ -110,7 +113,7 @@ export const Notification = (props: Props) => {
     deleteToast()
   }
 
-  const realDuration = duration * 1000
+  const realDuration = duration ? duration * 1000 : 0
 
   const { startTimer, pauseTimer, resumeTimer, clearTimer } = useTimer(
     realDuration,
@@ -170,6 +173,7 @@ export const Notification = (props: Props) => {
     >
       <Toast
         title={title}
+        description={description}
         onCloseClick={handleRemove}
       />
       {duration && (
