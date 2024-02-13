@@ -4,20 +4,23 @@ import type {
   NotificationType,
 } from '../types.ts'
 import { useQueue } from '../use-queue.ts'
-import React, { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { Notification } from './notification.tsx'
 
 interface Props {
   position: ToastContainerPosition
+  limit?: number
 }
 
-export const Notifications = ({ position }: Props) => {
+const DEFAULT_LIMIT = 5
+
+export const Notifications = ({ position, limit }: Props) => {
   const { state, add, update } = useQueue<NotificationType>({
-    limit: 5,
+    limit: limit ?? DEFAULT_LIMIT,
   })
-  const [heights, setHeights] = React.useState<NotificationHeightItem[]>([])
+  const [heights, setHeights] = useState<NotificationHeightItem[]>([])
 
   const removeToast = (toast: NotificationType) => {
     update((notifications) =>
