@@ -3,6 +3,7 @@ import { toastFunction } from '../state.ts'
 import { Section } from '../components/Section.tsx'
 import { TypesActions } from '../components/TypesActions.tsx'
 import { useState } from 'react'
+import { Icon } from '../icon.tsx'
 
 export default function HomePage() {
   const [animation, setAnimation] = useState(true)
@@ -83,6 +84,9 @@ export default function HomePage() {
           </button>
         </div>
         <Link to="/categories">To categories</Link>
+
+        <Icon name="check" />
+        <Icon name="diamond" />
       </div>
     </div>
   )
