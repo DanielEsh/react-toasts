@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { Notification } from './notification.tsx'
+import { QueueIndicator } from './queue-indicator.tsx'
 
 interface Props {
   position: ToastContainerPosition
@@ -17,7 +18,7 @@ interface Props {
 const DEFAULT_LIMIT = 5
 
 export const Notifications = ({ position, limit }: Props) => {
-  const { state, add, update } = useQueue<NotificationType>({
+  const { state, queue, add, update } = useQueue<NotificationType>({
     limit: limit ?? DEFAULT_LIMIT,
   })
   const [heights, setHeights] = useState<NotificationHeightItem[]>([])
@@ -68,6 +69,7 @@ export const Notifications = ({ position, limit }: Props) => {
   return (
     <section className="toasts-section">
       <ol className={`toasts position-${position}`}>
+        {queue.length >= 1 && <QueueIndicator count={queue.length} />}
         {state.map((toast, index) => (
           <Notification
             key={toast.id}

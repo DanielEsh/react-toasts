@@ -1,3 +1,5 @@
+import { Icon } from '../icon.tsx'
+
 interface Props {
   title: string
   description?: string
@@ -10,12 +12,12 @@ export const Toast = ({ title, description, onCloseClick }: Props) => {
       <div>{title}</div>
       <div>{description}</div>
 
-      <div
+      <button
         className="toast-close"
         onClick={onCloseClick}
       >
-        close
-      </div>
+        <Icon name="close" />
+      </button>
     </div>
   )
 }

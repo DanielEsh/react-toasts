@@ -55,10 +55,7 @@ export const Notification = (props: Props) => {
     setMounted(true)
   }, [])
 
-  const heightIndex = useMemo(
-    () => props.heights.findIndex((height) => height.toastId === id) || 0,
-    [heights, id],
-  )
+  const heightIndex = index
 
   const notificationHeightBefore = useMemo(() => {
     return heights.reduce((prev, curr, reducerIndex) => {
