@@ -137,6 +137,22 @@
   right: 32px;
 }
 
+.toast-queue {
+  --offset: 0;
+  --gap: 26px;
+  --lift: -1;
+  --y: translateY(calc(var(--lift) * var(--offset)));
+
+  position: absolute;
+  bottom: 0px;
+  transform: var(--y);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
 .toast {
   --direction: 1;
   --offset: 14;

@@ -69,7 +69,12 @@ export const Notifications = ({ position, limit }: Props) => {
   return (
     <section className="toasts-section">
       <ol className={`toasts position-${position}`}>
-        {queue.length >= 1 && <QueueIndicator count={queue.length} />}
+        {queue.length >= 1 && (
+          <QueueIndicator
+            count={queue.length}
+            heights={heights}
+          />
+        )}
         {state.map((toast, index) => (
           <Notification
             key={toast.id}
