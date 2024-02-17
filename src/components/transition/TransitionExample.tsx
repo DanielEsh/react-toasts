@@ -6,9 +6,6 @@ export const TransitionExample = () => {
 
   const [{ status: state, isMounted }, toggle] = useTransition({
     timeout: 500,
-    initialEntered: false,
-    preEnter: true,
-    unmountOnExit,
   })
 
   return (

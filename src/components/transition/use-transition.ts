@@ -32,12 +32,14 @@ export const getState = (status) => ({
   status: STATUS[status],
   isEnter: status < PRE_EXIT,
   isMounted: status !== UNMOUNTED,
-  isResolved: status === ENTERED || status > EXITING,
 })
 
-export const startOrEnd = (unmounted) => (unmounted ? UNMOUNTED : EXITED)
+export const startOrEnd = (unmounted: boolean) => {
+  console.log('startOrEnd', unmounted)
+  return unmounted ? UNMOUNTED : EXITED
+}
 
-export const getEndStatus = (status, unmountOnExit) => {
+export const getEndStatus = (status) => {
   switch (status) {
     case ENTERING:
     case PRE_ENTER:
@@ -45,14 +47,9 @@ export const getEndStatus = (status, unmountOnExit) => {
 
     case EXITING:
     case PRE_EXIT:
-      return startOrEnd(unmountOnExit)
+      return EXITED
   }
 }
-
-export const getTimeout = (timeout) =>
-  typeof timeout === 'object'
-    ? [timeout.enter, timeout.exit]
-    : [timeout, timeout]
 
 export const nextTick = (transitState, status) =>
   setTimeout(() => {
@@ -60,43 +57,40 @@ export const nextTick = (transitState, status) =>
     isNaN(document.body.offsetTop) || transitState(status + 1)
   }, 0)
 
-const updateState = (status, setState, latestState, timeoutId, onChange) => {
-  console.log('updateState')
-  clearTimeout(timeoutId.current)
-  const state = getState(status)
-  setState(state)
-  latestState.current = state
-  onChange && onChange({ current: state })
-}
-
 export const useTransition = ({
   enter = true,
   exit = true,
-  preEnter,
-  preExit,
-  timeout,
-  initialEntered,
-  mountOnEnter,
-  unmountOnExit,
+  preEnter = true,
+  preExit = true,
+  timeout = 500,
   onStateChange: onChange,
-} = {}) => {
-  const [state, setState] = useState(() =>
-    getState(initialEntered ? ENTERED : startOrEnd(mountOnEnter)),
-  )
+}) => {
+  const [state, setState] = useState(getState(ENTERED))
+
+  console.log('INIT', state)
   const latestState = useRef(state)
   const timeoutId = useRef(-1)
 
-  const endTransition = useCallback(() => {
-    console.log('endTransition')
-    const status = getEndStatus(latestState.current._s, unmountOnExit)
-    status && updateState(status, setState, latestState, timeoutId, onChange)
-  }, [onChange, unmountOnExit])
+  const updateState = (status) => {
+    console.log('updateState')
+    clearTimeout(timeoutId.current)
+    const state = getState(status)
+    setState(state)
+    latestState.current = state
+    onChange && onChange({ current: state })
+  }
+
+  const endTransition = () => {
+    console.log('endTransition', latestState.current)
+    const status = getEndStatus(latestState.current._s)
+    status && updateState(status)
+  }
 
   const toggle = useCallback(() => {
     console.log('toggle')
     const transitState = (status) => {
       console.log('transitState', status)
-      updateState(status, setState, latestState, timeoutId, onChange)
+      updateState(status)
 
       switch (status) {
         case ENTERING:
@@ -123,9 +117,7 @@ export const useTransition = ({
 
     const runExitFlow = () => {
       console.log('runExitFlow')
-      transitState(
-        exit ? (preExit ? PRE_EXIT : EXITING) : startOrEnd(unmountOnExit),
-      )
+      transitState(exit ? (preExit ? PRE_EXIT : EXITING) : EXITED)
     }
 
     const enterStage = latestState.current.isEnter
@@ -148,7 +140,6 @@ export const useTransition = ({
     preExit,
     // enterTimeout,
     // exitTimeout,
-    unmountOnExit,
   ])
 
   useEffect(() => () => clearTimeout(timeoutId.current), [])
