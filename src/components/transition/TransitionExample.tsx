@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useMyTransition, useTransition } from './use-transition.ts'
+import { useTransition } from './use-transition.ts'
 
 export const TransitionExample = () => {
   const [unmountOnExit, setUnmountOnExit] = useState(true)
