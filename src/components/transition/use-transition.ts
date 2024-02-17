@@ -61,6 +61,7 @@ export const nextTick = (transitState, status) =>
   }, 0)
 
 const updateState = (status, setState, latestState, timeoutId, onChange) => {
+  console.log('updateState')
   clearTimeout(timeoutId.current)
   const state = getState(status)
   setState(state)
@@ -83,10 +84,10 @@ export const useTransition = ({
     getState(initialEntered ? ENTERED : startOrEnd(mountOnEnter)),
   )
   const latestState = useRef(state)
-  const timeoutId = useRef()
-  const [enterTimeout, exitTimeout] = getTimeout(timeout)
+  const timeoutId = useRef(-1)
 
   const endTransition = useCallback(() => {
+    console.log('endTransition')
     const status = getEndStatus(latestState.current._s, unmountOnExit)
     status && updateState(status, setState, latestState, timeoutId, onChange)
   }, [onChange, unmountOnExit])
@@ -99,13 +100,13 @@ export const useTransition = ({
 
       switch (status) {
         case ENTERING:
-          if (enterTimeout >= 0)
-            timeoutId.current = setTimeout(endTransition, enterTimeout)
+          timeoutId.current = setTimeout(endTransition, timeout)
+
           break
 
         case EXITING:
-          if (exitTimeout >= 0)
-            timeoutId.current = setTimeout(endTransition, exitTimeout)
+          timeoutId.current = setTimeout(endTransition, timeout)
+
           break
 
         case PRE_ENTER:
@@ -145,8 +146,8 @@ export const useTransition = ({
     exit,
     preEnter,
     preExit,
-    enterTimeout,
-    exitTimeout,
+    // enterTimeout,
+    // exitTimeout,
     unmountOnExit,
   ])
 
