@@ -287,3 +287,16 @@
 .basic-transition.exited {
   opacity: 0;
 }
+
+.fade-transition {
+  transition: all 0.5s;
+}
+
+.fade-transition.preEnter,
+.fade-transition.exiting {
+  opacity: 0;
+}
+
+.fade-transition.exited {
+  opacity: 0;
+}

@@ -25,7 +25,7 @@ type Status =
   | 'exiting'
   | 'exited'
 
-interface TransitionState {
+export interface TransitionState {
   status: Status
   isEnter: boolean
   isMounted: boolean
@@ -52,14 +52,18 @@ type TransitionFlow = 'enter' | 'exit'
 
 interface UseTransitionOptions {
   timeout: number
+  initialEntered: boolean
   onStateChange?: (state?: TransitionState) => void
 }
 
 export const useTransition = ({
   timeout = 500,
+  initialEntered = true,
   onStateChange,
 }: UseTransitionOptions) => {
-  const [state, setState] = useState(getState(ENTERED))
+  const [state, setState] = useState(
+    getState(initialEntered ? ENTERED : EXITED),
+  )
 
   console.log('INIT', state)
   const latestState = useRef(state)
