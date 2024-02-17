@@ -271,3 +271,19 @@
   transform: translateY(-20px);
   transition: opacity 1s, transform 1s;
 }
+
+
+.basic-transition {
+  font-size: 3rem;
+  font-weight: 800;
+  transition: all 0.5s;
+}
+
+.basic-transition.preEnter,
+.basic-transition.exiting {
+  opacity: 0;
+}
+
+.basic-transition.exited {
+  opacity: 0;
+}
