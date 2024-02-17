@@ -4,7 +4,10 @@ import { useTransition } from './use-transition.ts'
 export const TransitionExample = () => {
   const [unmountOnExit, setUnmountOnExit] = useState(true)
 
-  const [{ status: state, isMounted }, toggle] = useTransition({
+  const {
+    state: { status: state, isMounted },
+    toggle,
+  } = useTransition({
     timeout: 500,
   })
 

@@ -8,26 +8,30 @@ export const EXITING = 4
 export const EXITED = 5
 export const UNMOUNTED = 6
 
-export const STATUS = [
+export const STATUS: Status[] = [
   'preEnter',
   'entering',
   'entered',
   'preExit',
   'exiting',
   'exited',
-  'unmounted',
 ]
 
-enum MyTransitionStatus {
-  PRE_ENTER = 'pre_enter',
-  ENTERING = 'entering',
-  ENTERED = 'entered',
-  PRE_EXIT = 'pre_exit',
-  EXITING = 'exiting',
-  EXITED = 'exited',
+type Status =
+  | 'preEnter'
+  | 'entering'
+  | 'entered'
+  | 'preExit'
+  | 'exiting'
+  | 'exited'
+
+interface TransitionState {
+  status: Status
+  isEnter: boolean
+  isMounted: boolean
 }
 
-export const getStateByStatusNumber = (status: number) => ({
+export const getState = (status: number): TransitionState => ({
   status: STATUS[status],
   isEnter: status < PRE_EXIT,
   isMounted: status !== UNMOUNTED,
@@ -46,15 +50,16 @@ export const nextTick = (transitState, status) =>
 
 type TransitionFlow = 'enter' | 'exit'
 
+interface UseTransitionOptions {
+  timeout: number
+  onStateChange?: (state?: TransitionState) => void
+}
+
 export const useTransition = ({
-  enter = true,
-  exit = true,
-  preEnter = true,
-  preExit = true,
   timeout = 500,
-  onStateChange: onChange,
-}) => {
-  const [state, setState] = useState(getStateByStatusNumber(ENTERED))
+  onStateChange,
+}: UseTransitionOptions) => {
+  const [state, setState] = useState(getState(ENTERED))
 
   console.log('INIT', state)
   const latestState = useRef(state)
@@ -63,10 +68,10 @@ export const useTransition = ({
   const updateState = (status: number) => {
     console.log('updateState')
     clearTimeout(timeoutId.current)
-    const state = getStateByStatusNumber(status)
+    const state = getState(status)
     setState(state)
     latestState.current = state
-    onChange && onChange({ current: state })
+    onStateChange && onStateChange(state)
   }
 
   const endTransition = (flow: TransitionFlow) => {
@@ -101,12 +106,12 @@ export const useTransition = ({
 
     const runEnterFlow = () => {
       console.log('runEnterFlow')
-      transitState(enter ? (preEnter ? PRE_ENTER : ENTERING) : ENTERED)
+      transitState(PRE_ENTER)
     }
 
     const runExitFlow = () => {
       console.log('runExitFlow')
-      transitState(exit ? (preExit ? PRE_EXIT : EXITING) : EXITED)
+      transitState(PRE_EXIT)
     }
 
     const enterStage = latestState.current.isEnter
@@ -115,24 +120,14 @@ export const useTransition = ({
     enterStage ? runExitFlow() : runEnterFlow()
   }, [
     endTransition,
-    onChange,
-    enter,
-    exit,
-    preEnter,
-    preExit,
     // enterTimeout,
     // exitTimeout,
   ])
 
   useEffect(() => () => clearTimeout(timeoutId.current), [])
 
-  return [state, toggle, endTransition]
+  return {
+    state,
+    toggle,
+  }
 }
-
-// const updateState = (status, setState, latestState, timeoutId, onChange) => {
-//   clearTimeout(timeoutId.current)
-//   const state = getState(status)
-//   setState(state)
-//   latestState.current = state
-//   onChange && onChange({ current: state })
-// }
