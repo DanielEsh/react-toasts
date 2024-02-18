@@ -1,5 +1,5 @@
 import type { NotificationHeightItem } from '../types.ts'
-import React, { CSSProperties, useMemo } from 'react'
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
 
 interface Props {
   count: number
@@ -8,6 +8,17 @@ interface Props {
 
 export const QueueIndicator = (props: Props) => {
   const { count, heights } = props
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+
+    return () => {
+      setTimeout(() => {
+        setMounted(false)
+      }, 0)
+    }
+  }, [])
 
   const heightIndex = heights.length
 
@@ -31,6 +42,7 @@ export const QueueIndicator = (props: Props) => {
   return (
     <div
       className="toast-queue"
+      data-mounted={mounted}
       style={
         {
           '--offset': `${offset.current}px`,
