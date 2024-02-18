@@ -3,6 +3,7 @@ import { AnimatedList } from '../components/list/AnimatedList.tsx'
 import { AnimatedQueue } from '../components/animated-queue/AnimatedQueue.tsx'
 import { TransitionExample } from '../components/transition/TransitionExample.tsx'
 import { Transition } from '../components/transition/Transition.tsx'
+import { DropdownDemo } from '../components/DropdownDemo.tsx'
 
 export default function CategoriesPage() {
   return (
@@ -19,6 +20,8 @@ export default function CategoriesPage() {
           FADE TRANSITION EXAMPLE
         </div>
       </Transition>
+
+      <DropdownDemo />
 
       <div>
         <Link to="/">Back home</Link>

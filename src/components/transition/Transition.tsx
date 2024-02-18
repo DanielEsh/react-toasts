@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { useTransition } from './use-transition.ts'
-import { useDidUpdate } from '../../hooks/use-did-update.ts'
 
 interface Props {
   children: ReactNode
@@ -22,7 +21,7 @@ export const Transition = ({ children }: Props) => {
     state: { status: state },
     toggle,
   } = useTransition({
-    initialEntered: true,
+    initialEntered: false,
     timeout: 500,
   })
 
@@ -30,7 +29,7 @@ export const Transition = ({ children }: Props) => {
 
   useEffect(() => {
     setMounted(true)
-    // toggle()
+    toggle()
   }, [])
 
   return (
@@ -41,7 +40,7 @@ export const Transition = ({ children }: Props) => {
       >
         Toggle
       </button>
-      <div className={`fade-transition ${state}`}>{children}</div>
+      <div className={``}>{children}</div>
     </>
   )
 }
