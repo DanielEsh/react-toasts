@@ -5,12 +5,14 @@ import React, {
   useLayoutEffect,
   useCallback,
   CSSProperties,
+  useState,
 } from 'react'
 import { Toast } from './toast.tsx'
 import type { NotificationHeightItem } from '../types.ts'
 import { useTimer } from '../use-timer.ts'
 import { NotificationType } from '../types.ts'
 import { useControllableState } from '../hooks/use-controllable-state.ts'
+import { NotificationDurationIndicator } from './notification-duration-indicator.tsx'
 
 interface Props {
   id: NotificationType['id']
@@ -120,6 +122,8 @@ export const Notification = (props: Props) => {
     handleRemove,
   )
 
+  const [isPause, setPause] = useState(false)
+
   useEffect(() => {
     if (duration) {
       startTimer()
@@ -128,10 +132,12 @@ export const Notification = (props: Props) => {
   }, [])
 
   const handleResume = () => {
+    setPause(false)
     resumeTimer()
   }
 
   const handlePause = () => {
+    setPause(true)
     pauseTimer()
   }
 
@@ -176,14 +182,9 @@ export const Notification = (props: Props) => {
         onCloseClick={handleRemove}
       />
       {duration && (
-        <div
-          ref={toastDurationTimerRef}
-          className="durationTimer"
-          style={
-            {
-              '--duration': `${props.duration}s`,
-            } as CSSProperties
-          }
+        <NotificationDurationIndicator
+          duration={duration}
+          pause={isPause}
         />
       )}
     </li>
