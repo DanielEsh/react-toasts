@@ -9,6 +9,7 @@ import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { Notification } from './notification.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
+import { NotificationItem } from './notification-item.tsx'
 
 interface Props {
   position: ToastContainerPosition
@@ -81,10 +82,6 @@ export const Notifications = ({ position, limit }: Props) => {
             id={toast.id}
             index={index}
             allNotificationsCount={state.length}
-            duration={toast.duration}
-            type={toast.type}
-            title={toast.title}
-            description={toast.description}
             heights={heights}
             onChangeHeight={(newHeight) =>
               handleChangeHeight(newHeight, toast.id)
@@ -93,8 +90,15 @@ export const Notifications = ({ position, limit }: Props) => {
               handleAddHeightById(newHeight, toast.id)
             }
             onRemoveHeights={() => handleRemoveHeightById(toast.id)}
-            onDismiss={() => removeToast(toast)}
-          />
+          >
+            <NotificationItem
+              type={toast.type}
+              title={toast.title}
+              description={toast.description}
+              duration={toast.duration}
+              onDismiss={() => removeToast(toast)}
+            />
+          </Notification>
         ))}
       </ol>
     </section>

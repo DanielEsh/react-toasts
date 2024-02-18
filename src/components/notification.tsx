@@ -4,24 +4,21 @@ import {
   useMemo,
   useLayoutEffect,
   CSSProperties,
+  ReactNode,
+  useState,
 } from 'react'
 import type { NotificationHeightItem } from '../types.ts'
 import { NotificationType } from '../types.ts'
-import { NotificationItem } from './notification-item.tsx'
 
 interface Props {
   id: NotificationType['id']
   index: number
   allNotificationsCount: number
-  type: NotificationType['type']
-  duration: NotificationType['duration']
-  title: string
-  description?: string
+  children: ReactNode
   heights: NotificationHeightItem[]
   onChangeHeight: (newHeight: number) => void
   onRemoveHeights: () => void
   onAddHeights: (height: number) => void
-  onDismiss: () => void
 }
 
 const NOTIFICATIONS_GAP = 16
@@ -29,19 +26,21 @@ const NOTIFICATIONS_GAP = 16
 export const Notification = (props: Props) => {
   const {
     id,
-    type,
-    title,
-    description,
-    duration,
     index,
     allNotificationsCount,
+    children,
     heights,
     onAddHeights,
     onChangeHeight,
     onRemoveHeights,
-    onDismiss,
   } = props
   const notificationRef = useRef<HTMLLIElement>(null)
+
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const heightIndex = index
 
@@ -64,7 +63,7 @@ export const Notification = (props: Props) => {
 
   useLayoutEffect(() => {
     const toastNode = notificationRef.current
-    if (!toastNode) return
+    if (!mounted || !toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
@@ -72,7 +71,7 @@ export const Notification = (props: Props) => {
     toastNode.style.height = originalHeight
 
     onChangeHeight(newHeight)
-  }, [id])
+  }, [mounted, id])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -98,13 +97,7 @@ export const Notification = (props: Props) => {
         } as CSSProperties
       }
     >
-      <NotificationItem
-        type={type}
-        title={title}
-        description={description}
-        duration={duration}
-        onDismiss={onDismiss}
-      />
+      {children}
     </li>
   )
 }

@@ -168,7 +168,7 @@
   --y: translateY(calc(var(--lift) * var(--offset)));
 
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   transform: var(--y);
   border-radius: 8px;
   width: 100%;

@@ -8,10 +8,8 @@ interface Props {
 
 export const QueueIndicator = (props: Props) => {
   const { count, heights } = props
-  console.log('HEIGHTS', heights)
-  console.log('LAST', heights.at(-1))
 
-  const heightIndex = heights.length + 1
+  const heightIndex = heights.length
 
   const notificationHeightBefore = useMemo(() => {
     return heights.reduce((prev, curr, reducerIndex) => {
