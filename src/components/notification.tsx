@@ -1,6 +1,5 @@
 import React, {
   useRef,
-  useState,
   useEffect,
   useMemo,
   useLayoutEffect,
@@ -11,6 +10,7 @@ import { Toast } from './toast.tsx'
 import type { NotificationHeightItem } from '../types.ts'
 import { useTimer } from '../use-timer.ts'
 import { NotificationType } from '../types.ts'
+import { useControllableState } from '../hooks/use-controllable-state.ts'
 
 interface Props {
   id: NotificationType['id']
@@ -48,11 +48,16 @@ export const Notification = (props: Props) => {
   const notificationRef = useRef<HTMLLIElement>(null)
   const toastDurationTimerRef = useRef<HTMLDivElement>(null)
 
-  const [mounted, setMounted] = useState(false)
-  const [removed, setRemoved] = useState(false)
+  const handleOpenChange = () => {
+    console.log('OPEN CHANGE')
+  }
+
+  const [open = false, setOpen] = useControllableState<boolean>({
+    onChange: handleOpenChange,
+  })
 
   useEffect(() => {
-    setMounted(true)
+    setOpen(true)
   }, [])
 
   const heightIndex = index
@@ -76,7 +81,7 @@ export const Notification = (props: Props) => {
 
   useLayoutEffect(() => {
     const toastNode = notificationRef.current
-    if (!mounted || !toastNode) return
+    if (!open || !toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
@@ -84,7 +89,7 @@ export const Notification = (props: Props) => {
     toastNode.style.height = originalHeight
 
     onChangeHeight(newHeight)
-  }, [mounted, id])
+  }, [open, id])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -98,15 +103,13 @@ export const Notification = (props: Props) => {
   }, [props.id])
 
   const deleteToast = useCallback(() => {
-    // Save the offset for the exit swipe animation
-    setRemoved(true)
-
     setTimeout(() => {
       onDismiss()
     }, TIME_BEFORE_UNMOUNT)
-  }, [removed, offset])
+  }, [offset])
 
   const handleRemove = () => {
+    setOpen(false)
     deleteToast()
   }
 
@@ -154,8 +157,7 @@ export const Notification = (props: Props) => {
     <li
       ref={notificationRef}
       className={`toast _${type}`}
-      data-mounted={mounted}
-      data-removed={removed}
+      data-state={open ? 'open' : 'closed'}
       style={
         {
           '--index': index,
