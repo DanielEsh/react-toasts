@@ -88,6 +88,30 @@
   color: var(--error-text);
 }
 
+.notification-item._success {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
+}
+
+.notification-item._info {
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: var(--info-text);
+}
+
+.notification-item._warning {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: var(--warning-text);
+}
+
+.notification-item._error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+}
+
 .toasts[data-expanded="false"] {
   gap: 16px;
   transition: gap 0.3s ease;
@@ -153,6 +177,35 @@
   padding: 16px;
 }
 
+.notification-position {
+  --direction: 1;
+  --offset: 14;
+  --z-index: 1;
+  --toasts-before: 0;
+  --lift: -1;
+  --gap: 26px;
+  --lift-amount: calc(var(--lift) * var(--gap));
+  --y: translateY(calc(var(--lift) * var(--offset)));
+
+  position: absolute;
+  bottom: 0;
+  z-index: var(--z-index);
+  transform: var(--y);
+  height: auto;
+  transition: transform .3s, opacity .3s, height .3s;
+}
+
+.notification-item {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 356px;
+  border: 1px solid var(--normal-border);
+  background: var(--normal-bg);
+
+  transition: transform .3s, opacity .3s, height .3s;
+}
+
 .toast {
   --direction: 1;
   --offset: 14;
@@ -167,7 +220,7 @@
   opacity: 0;
   /*transform: translate(0, 100%);*/
   position: absolute;
-  bottom: 20px;
+  bottom: 0;
   /*--y: translateY(100%);*/
   transform: var(--y);
 
@@ -327,6 +380,16 @@
 
 .toast[data-state='closed'] {
   --y: translateY(100%) !important;
+  opacity: 0;
+}
+
+.notification-item[data-state='open'] {
+  transform: translateY(0%) !important;
+  opacity: 1;
+}
+
+.notification-item[data-state='closed'] {
+  transform: translateY(100%) !important;
   opacity: 0;
 }
 

@@ -1,18 +1,13 @@
-import React, {
+import {
   useRef,
   useEffect,
   useMemo,
   useLayoutEffect,
-  useCallback,
   CSSProperties,
-  useState,
 } from 'react'
-import { Toast } from './toast.tsx'
 import type { NotificationHeightItem } from '../types.ts'
-import { useTimer } from '../use-timer.ts'
 import { NotificationType } from '../types.ts'
-import { useControllableState } from '../hooks/use-controllable-state.ts'
-import { NotificationDurationIndicator } from './notification-duration-indicator.tsx'
+import { NotificationItem } from './notification-item.tsx'
 
 interface Props {
   id: NotificationType['id']
@@ -30,7 +25,6 @@ interface Props {
 }
 
 const NOTIFICATIONS_GAP = 16
-const TIME_BEFORE_UNMOUNT = 300
 
 export const Notification = (props: Props) => {
   const {
@@ -48,19 +42,6 @@ export const Notification = (props: Props) => {
     onDismiss,
   } = props
   const notificationRef = useRef<HTMLLIElement>(null)
-  const toastDurationTimerRef = useRef<HTMLDivElement>(null)
-
-  const handleOpenChange = () => {
-    console.log('OPEN CHANGE')
-  }
-
-  const [open = false, setOpen] = useControllableState<boolean>({
-    onChange: handleOpenChange,
-  })
-
-  useEffect(() => {
-    setOpen(true)
-  }, [])
 
   const heightIndex = index
 
@@ -75,15 +56,15 @@ export const Notification = (props: Props) => {
     }, 0)
   }, [heights, heightIndex])
 
-  const offset = React.useRef(0)
-  offset.current = React.useMemo(
+  const offset = useRef(0)
+  offset.current = useMemo(
     () => heightIndex * NOTIFICATIONS_GAP + notificationHeightBefore,
     [heightIndex, notificationHeightBefore],
   )
 
   useLayoutEffect(() => {
     const toastNode = notificationRef.current
-    if (!open || !toastNode) return
+    if (!toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
@@ -91,7 +72,7 @@ export const Notification = (props: Props) => {
     toastNode.style.height = originalHeight
 
     onChangeHeight(newHeight)
-  }, [open, id])
+  }, [id])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -102,91 +83,28 @@ export const Notification = (props: Props) => {
     onAddHeights(height)
 
     return () => onRemoveHeights()
-  }, [props.id])
-
-  const deleteToast = useCallback(() => {
-    setTimeout(() => {
-      onDismiss()
-    }, TIME_BEFORE_UNMOUNT)
-  }, [offset])
-
-  const handleRemove = () => {
-    setOpen(false)
-    deleteToast()
-  }
-
-  const realDuration = duration ? duration * 1000 : 0
-
-  const { startTimer, pauseTimer, resumeTimer, clearTimer } = useTimer(
-    realDuration,
-    handleRemove,
-  )
-
-  const [isPause, setPause] = useState(false)
-
-  useEffect(() => {
-    if (duration) {
-      startTimer()
-    }
-    return clearTimer
-  }, [])
-
-  const handleResume = () => {
-    setPause(false)
-    resumeTimer()
-  }
-
-  const handlePause = () => {
-    setPause(true)
-    pauseTimer()
-  }
-
-  const handleHover = () => {
-    if (toastDurationTimerRef.current) {
-      toastDurationTimerRef.current.style.animationPlayState = 'paused'
-    }
-    handlePause()
-  }
-
-  const handleHoverLeave = () => {
-    if (toastDurationTimerRef.current) {
-      toastDurationTimerRef.current.style.animationPlayState = 'running'
-      toastDurationTimerRef.current.style.animation
-    }
-
-    if (duration) {
-      handleResume()
-    }
-  }
+  }, [id])
 
   return (
     <li
       ref={notificationRef}
-      className={`toast _${type}`}
-      data-state={open ? 'open' : 'closed'}
+      className={`notification-position`}
       style={
         {
           '--index': index,
           '--toasts-before': index,
           '--z-index': allNotificationsCount - index,
           '--offset': `${offset.current}px`,
-          '--initial-height': 'auto',
         } as CSSProperties
       }
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHoverLeave}
     >
-      <Toast
+      <NotificationItem
+        type={type}
         title={title}
         description={description}
-        onCloseClick={handleRemove}
+        duration={duration}
+        onDismiss={onDismiss}
       />
-      {duration && (
-        <NotificationDurationIndicator
-          duration={duration}
-          pause={isPause}
-        />
-      )}
     </li>
   )
 }
