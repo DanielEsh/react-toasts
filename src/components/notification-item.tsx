@@ -75,7 +75,7 @@ export const NotificationItem = (props: Props) => {
 
   return (
     <div
-      className={`notification-item _${type}`}
+      className={`notification-item _${type} p-4 drop-shadow-md rounded-lg`}
       data-state={open ? 'open' : 'closed'}
       onMouseEnter={handleHover}
       onMouseLeave={handleHoverLeave}
