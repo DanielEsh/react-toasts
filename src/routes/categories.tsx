@@ -27,6 +27,8 @@ export default function CategoriesPage() {
         <Link to="/">Back home</Link>
       </div>
 
+      <div className="h-[2000px]"></div>
+
       <Outlet />
     </div>
   )
