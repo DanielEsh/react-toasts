@@ -4,6 +4,7 @@ import { Section } from '../components/Section.tsx'
 import { TypesActions } from '../components/TypesActions.tsx'
 import { useState } from 'react'
 import { Icon } from '../icon.tsx'
+import { Toast } from '../components/toast.tsx'
 
 export default function HomePage() {
   const [animation, setAnimation] = useState(true)
@@ -87,6 +88,37 @@ export default function HomePage() {
 
         <Icon name="check" />
         <Icon name="diamond" />
+
+        <div className="flex flex-col gap-3 w-[560px]">
+          <Toast
+            title="default example"
+            description="description"
+          />
+
+          <Toast
+            type="success"
+            title="default example"
+            description="description"
+          />
+
+          <Toast
+            type="info"
+            title="default example"
+            description="description"
+          />
+
+          <Toast
+            type="warning"
+            title="default example"
+            description="description"
+          />
+
+          <Toast
+            type="error"
+            title="default example"
+            description="description"
+          />
+        </div>
       </div>
     </div>
   )

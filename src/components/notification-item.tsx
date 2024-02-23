@@ -75,12 +75,13 @@ export const NotificationItem = (props: Props) => {
 
   return (
     <div
-      className={`notification-item _${type}  dark:bg-red-500`}
+      className={`notification-item`}
       data-state={open ? 'open' : 'closed'}
       onMouseEnter={handleHover}
       onMouseLeave={handleHoverLeave}
     >
       <Toast
+        type={type}
         title={title}
         description={description}
         onCloseClick={handleRemove}
