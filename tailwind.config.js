@@ -6,7 +6,9 @@ export default {
     extend: {
       colors: {
         surface: 'var(--colors-bg-surface)',
+        background: 'var(--colors-background-default)',
         foreground: 'var(--colors-foreground-default)',
+        subtle: 'var(--colors-border-subtle)',
       },
     },
   },

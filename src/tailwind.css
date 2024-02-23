@@ -41,7 +41,9 @@
         --colors-neutral-12: #eee;
 
         --colors-bg-surface: var(--colors-gray-1);
+        --colors-background-default: var(--colors-gray-2);
         --colors-foreground-default: var(--colors-gray-12);
+        --colors-border-subtle: var(--colors-gray-4);
     }
 
     html[data-theme="light"]:root {
@@ -59,6 +61,8 @@
         --colors-neutral-12: #202020;
 
         --colors-bg-surface: var(--colors-white);
+        --colors-background-default: var(--colors-gray-2);
         --colors-foreground-default: var(--colors-gray-12);
+        --colors-border-subtle: var(--colors-gray-4);
     }
 }

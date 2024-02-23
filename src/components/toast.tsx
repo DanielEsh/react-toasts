@@ -8,7 +8,7 @@ interface Props {
 
 export const Toast = ({ title, description, onCloseClick }: Props) => {
   return (
-    <div>
+    <div className="bg-background border border-subtle p-4 drop-shadow-md rounded-lg">
       <div>{title}</div>
       <div>{description}</div>
 
