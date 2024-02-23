@@ -7,6 +7,10 @@ import { AuthLayout } from './layouts/auth-layout.tsx'
 import { Login } from './routes/login.tsx'
 import { lazy, Suspense } from 'react'
 import { PrivateRoute } from './components/PrivateRouter.tsx'
+import {
+  ThemeProvider,
+  useTheme,
+} from './modules/core/dark-mode/use-dark-mode.tsx'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
@@ -76,9 +80,37 @@ const router = createBrowserRouter([
 ])
 
 export const App = () => {
+  // const { theme, setTheme } = useTheme()
+
+  const theme = localStorage.getItem('theme')
+
+  const setTheme = (theme: string) => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }
+
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <ThemeProvider>
+      <>
+        <div className="flex gap-3">
+          <button
+            className="button"
+            onClick={() => setTheme('dark')}
+          >
+            dark
+          </button>
+          <button
+            className="button"
+            onClick={() => setTheme('light')}
+          >
+            light
+          </button>
+          <button className="button">system</button>
+        </div>
+
+        <div>theme: {theme}</div>
+        <RouterProvider router={router} />
+      </>
+    </ThemeProvider>
   )
 }
