@@ -33,8 +33,8 @@ export const Toast = ({
 
   return (
     <div className={classes}>
-      <div>{title}</div>
-      <div>{description}</div>
+      <div className="font-medium">{title}</div>
+      {description && <div className="mt-1 opacity-90">{description}</div>}
 
       <button
         className="toast-close"
