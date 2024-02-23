@@ -92,6 +92,12 @@ export const App = () => {
   return (
     <ThemeProvider>
       <>
+        <div className="bg-surface">TEST</div>
+
+        <div className="flex gap-1">
+          <div></div>
+        </div>
+
         <div className="flex gap-3">
           <button
             className="button"

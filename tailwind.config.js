@@ -3,7 +3,12 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        surface: 'var(--colors-bg-surface)',
+        foreground: 'var(--colors-foreground-default)',
+      },
+    },
   },
   plugins: [],
 }

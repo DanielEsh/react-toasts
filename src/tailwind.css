@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    :root {
+        --colors-white: #fff;
+
+        --colors-gray-1: var(--colors-neutral-1);
+        --colors-gray-2: var(--colors-neutral-2);
+        --colors-gray-3: var(--colors-neutral-3);
+        --colors-gray-4: var(--colors-neutral-4);
+        --colors-gray-5: var(--colors-neutral-5);
+        --colors-gray-6: var(--colors-neutral-6);
+        --colors-gray-7: var(--colors-neutral-7);
+        --colors-gray-8: var(--colors-neutral-8);
+        --colors-gray-9: var(--colors-neutral-9);
+        --colors-gray-10: var(--colors-neutral-10);
+        --colors-gray-11: var(--colors-neutral-11);
+        --colors-gray-12: var(--colors-neutral-12);
+
+    /*
+    Background
+    Foreground
+    */
+    }
+
+    html[data-theme="dark"]:root {
+        --colors-neutral-1: #111;
+        --colors-neutral-2: #191919;
+        --colors-neutral-3: #222;
+        --colors-neutral-4: #2a2a2a;
+        --colors-neutral-5: #313131;
+        --colors-neutral-6: #3a3a3a;
+        --colors-neutral-7: #484848;
+        --colors-neutral-8: #606060;
+        --colors-neutral-9: #6e6e6e;
+        --colors-neutral-10: #7b7b7b;
+        --colors-neutral-11: #b4b4b4;
+        --colors-neutral-12: #eee;
+
+        --colors-bg-surface: var(--colors-gray-1);
+        --colors-foreground-default: var(--colors-gray-12);
+    }
+
+    html[data-theme="light"]:root {
+        --colors-neutral-1: #fcfcfc;
+        --colors-neutral-2: #f9f9f9;
+        --colors-neutral-3: #f0f0f0;
+        --colors-neutral-4: #e8e8e8;
+        --colors-neutral-5: #e0e0e0;
+        --colors-neutral-6: #d9d9d9;
+        --colors-neutral-7: #cecece;
+        --colors-neutral-8: #bbb;
+        --colors-neutral-9: #8d8d8d;
+        --colors-neutral-10: #838383;
+        --colors-neutral-11: #646464;
+        --colors-neutral-12: #202020;
+
+        --colors-bg-surface: var(--colors-white);
+        --colors-foreground-default: var(--colors-gray-12);
+    }
+}
