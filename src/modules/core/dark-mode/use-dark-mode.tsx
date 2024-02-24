@@ -81,11 +81,9 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
   useEffect(() => {
     const media = window.matchMedia(MEDIA)
 
-    // Intentionally use deprecated listener methods to support iOS & old browsers
-    media.addListener(handleMediaQuery)
-    handleMediaQuery(media)
+    media.addEventListener('change', (event) => handleMediaQuery(event))
 
-    return () => media.removeListener(handleMediaQuery)
+    return () => media.removeEventListener('change', handleMediaQuery)
   }, [handleMediaQuery])
 
   const providerValue = useMemo<UseThemeProps>(
