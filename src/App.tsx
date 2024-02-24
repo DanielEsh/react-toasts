@@ -82,7 +82,10 @@ const router = createBrowserRouter([
 
 export const App = () => {
   return (
-    <ThemeProvider isSystemEnabled>
+    <ThemeProvider
+      themes={['light', 'dark', 'system']}
+      supportSystemTheme
+    >
       <>
         <div className="bg-surface">TEST</div>
 

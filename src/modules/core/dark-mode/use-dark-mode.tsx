@@ -20,7 +20,8 @@ const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
   return isDark ? 'dark' : 'light'
 }
 
-const getTheme = (key: string, fallback?: string) => {
+const getThemeFromLs = (key: string, fallback?: string) => {
+  console.log('GET THEME')
   let theme
   try {
     theme = localStorage.getItem(key) || undefined
@@ -40,22 +41,41 @@ export const useTheme = () => useContext(ThemeContext)
 
 interface ThemeProviderProps {
   children: ReactNode
-  isSystemEnabled?: boolean
+  themes: string[]
+  supportSystemTheme?: boolean
 }
 
 export const ThemeProvider = (props: ThemeProviderProps) => {
   const storageKey = 'theme'
   const defaultTheme = 'system'
 
-  const [theme, setTheme] = useState(() => getTheme(storageKey, defaultTheme))
-  const [resolvedTheme, setResolvedTheme] = useState(() => getTheme(storageKey))
+  const [theme, setTheme] = useState(() =>
+    getThemeFromLs(storageKey, defaultTheme),
+  )
+  const [resolvedTheme, setResolvedTheme] = useState(() =>
+    getThemeFromLs(storageKey),
+  )
 
-  const applyTheme = (theme?: string) => {
+  const _resolveTheme = (theme: string) => {
     let resolved = theme
 
-    if (resolved === 'system' && props.isSystemEnabled) {
+    if (resolved === 'system' && props.supportSystemTheme) {
       resolved = getSystemTheme()
+      return resolved
     }
+
+    if (props.themes.includes(theme)) {
+      resolved = theme
+    } else {
+      resolved = defaultTheme
+    }
+
+    return resolved
+  }
+
+  const applyTheme = (theme?: string) => {
+    console.log('applyTheme', theme)
+    const resolved = _resolveTheme(theme ?? '')
 
     localStorage.setItem('theme', theme!)
     document.documentElement.dataset.theme = resolved
@@ -71,7 +91,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       const resolved = getSystemTheme(e)
       setResolvedTheme(resolved)
 
-      if (theme === 'system' && props.isSystemEnabled) {
+      if (theme === 'system' && props.supportSystemTheme) {
         applyTheme('system')
       }
     },
@@ -85,6 +105,23 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
     return () => media.removeEventListener('change', handleMediaQuery)
   }, [handleMediaQuery])
+
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      console.log('Handle storage', event)
+      if (event.key !== storageKey) {
+        return
+      }
+
+      // If default theme set, use it if localstorage === null (happens on local storage manual deletion)
+      const theme = event.newValue || defaultTheme
+      const resolved = _resolveTheme(theme)
+      setTheme(resolved)
+    }
+
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [setTheme])
 
   const providerValue = useMemo<UseThemeProps>(
     () => ({
