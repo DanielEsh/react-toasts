@@ -7,11 +7,8 @@ import { AuthLayout } from './layouts/auth-layout.tsx'
 import { Login } from './routes/login.tsx'
 import { lazy, Suspense } from 'react'
 import { PrivateRoute } from './components/PrivateRouter.tsx'
-import {
-  ThemeProvider,
-  useTheme,
-} from './modules/core/dark-mode/use-dark-mode.tsx'
-import { DarkModeToggle } from './modules/core/dark-mode/DarkModeToggle.tsx'
+import { ThemeProvider } from './modules/core/themes'
+import { DarkModeToggle } from './modules/core/themes/DarkModeToggle.tsx'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
@@ -80,12 +77,15 @@ const router = createBrowserRouter([
   },
 ])
 
+const enum Theme {
+  light = 'light',
+  dark = 'dark',
+  system = 'system',
+}
+
 export const App = () => {
   return (
-    <ThemeProvider
-      themes={['light', 'dark', 'system']}
-      supportSystemTheme
-    >
+    <ThemeProvider themes={[Theme.light, Theme.dark, Theme.system]}>
       <>
         <div className="bg-surface">TEST</div>
 

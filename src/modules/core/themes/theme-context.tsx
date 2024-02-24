@@ -1,80 +1,55 @@
 import {
   createContext,
-  ReactNode,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react'
+import type { Theme } from './types.ts'
+import { getSystemTheme, getThemeFromLs } from './helpers.ts'
+import { MEDIA } from './constants.ts'
 
 export interface UseThemeProps {
-  theme?: string
-  resolvedTheme?: string
-  setTheme: any
+  theme: Theme
+  resolvedTheme: Theme
+  setTheme: Dispatch<SetStateAction<string>>
 }
 
-const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
-  if (!e) e = window.matchMedia(MEDIA)
-  const isDark = e.matches
-  return isDark ? 'dark' : 'light'
-}
-
-const getThemeFromLs = (key: string, fallback?: string) => {
-  console.log('GET THEME')
-  let theme
-  try {
-    theme = localStorage.getItem(key) || undefined
-  } catch (e) {
-    // Unsupported
-  }
-  return theme || fallback
-}
-
-const colorSchemes = ['light', 'dark']
-const MEDIA = '(prefers-color-scheme: dark)'
-
-const ThemeContext = createContext<UseThemeProps>({
-  setTheme: () => {},
-})
-export const useTheme = () => useContext(ThemeContext)
+export const ThemeContext = createContext<UseThemeProps | undefined>(undefined)
 
 interface ThemeProviderProps {
   children: ReactNode
-  themes: string[]
-  supportSystemTheme?: boolean
+  themes: Theme[]
+  storageKey?: string
+  fallbackTheme?: string
 }
 
-export const ThemeProvider = (props: ThemeProviderProps) => {
-  const storageKey = 'theme'
-  const defaultTheme = 'system'
-
+export const ThemeProvider = ({
+  children,
+  themes,
+  storageKey = 'theme',
+  fallbackTheme = 'system',
+}: ThemeProviderProps) => {
   const [theme, setTheme] = useState(() =>
-    getThemeFromLs(storageKey, defaultTheme),
+    getThemeFromLs(storageKey, fallbackTheme),
   )
-  const [resolvedTheme, setResolvedTheme] = useState(() =>
-    getThemeFromLs(storageKey),
-  )
+  const [resolvedTheme, setResolvedTheme] = useState('')
 
   const _resolveTheme = (theme: string) => {
     let resolved = theme
 
-    if (resolved === 'system' && props.supportSystemTheme) {
+    if (resolved === 'system') {
       resolved = getSystemTheme()
       return resolved
     }
 
-    if (props.themes.includes(theme)) {
-      resolved = theme
-    } else {
-      resolved = defaultTheme
-    }
-
-    return resolved
+    return themes.includes(theme) ? theme : fallbackTheme
   }
 
   const applyTheme = (theme?: string) => {
-    console.log('applyTheme', theme)
     const resolved = _resolveTheme(theme ?? '')
 
     localStorage.setItem('theme', theme!)
@@ -91,7 +66,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       const resolved = getSystemTheme(e)
       setResolvedTheme(resolved)
 
-      if (theme === 'system' && props.supportSystemTheme) {
+      if (theme === 'system') {
         applyTheme('system')
       }
     },
@@ -108,13 +83,11 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
-      console.log('Handle storage', event)
       if (event.key !== storageKey) {
         return
       }
 
-      // If default theme set, use it if localstorage === null (happens on local storage manual deletion)
-      const theme = event.newValue || defaultTheme
+      const theme = event.newValue || fallbackTheme
       const resolved = _resolveTheme(theme)
       setTheme(resolved)
     }
@@ -134,9 +107,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   return (
     <ThemeContext.Provider value={providerValue}>
-      {props.children}
+      {children}
     </ThemeContext.Provider>
   )
 }
-
-export function useDarkMode() {}

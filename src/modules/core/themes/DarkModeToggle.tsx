@@ -1,4 +1,4 @@
-import { useTheme } from './use-dark-mode.tsx'
+import { useTheme } from './index.ts'
 
 export const DarkModeToggle = () => {
   const { theme, setTheme } = useTheme()
