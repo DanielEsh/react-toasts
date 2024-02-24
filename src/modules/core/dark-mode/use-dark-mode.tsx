@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -64,6 +65,28 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
   useEffect(() => {
     applyTheme(theme)
   }, [theme])
+
+  const handleMediaQuery = useCallback(
+    (e: MediaQueryListEvent | MediaQueryList) => {
+      const resolved = getSystemTheme(e)
+      setResolvedTheme(resolved)
+
+      if (theme === 'system' && props.isSystemEnabled) {
+        applyTheme('system')
+      }
+    },
+    [theme],
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia(MEDIA)
+
+    // Intentionally use deprecated listener methods to support iOS & old browsers
+    media.addListener(handleMediaQuery)
+    handleMediaQuery(media)
+
+    return () => media.removeListener(handleMediaQuery)
+  }, [handleMediaQuery])
 
   const providerValue = useMemo<UseThemeProps>(
     () => ({
