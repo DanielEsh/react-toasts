@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { FadeAnimation } from './fade.tsx'
+import { SlideDown } from './slide-down.tsx'
 
 interface Props {
   children: ReactNode
@@ -8,11 +8,11 @@ interface Props {
 
 export const FramerAnimatedListItem = ({ children, onDelete }: Props) => {
   return (
-    <FadeAnimation>
+    <SlideDown>
       <li className="bg-amber-300 p-4 border border-amber-400">
         {children}
         <button onClick={onDelete}>Удалить</button>
       </li>
-    </FadeAnimation>
+    </SlideDown>
   )
 }
