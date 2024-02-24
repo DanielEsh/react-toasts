@@ -17,12 +17,6 @@
   --normal-text: var(--gray12);
 }
 
-
-html[data-theme="dark"] body {
-  /*background-color: #18191a;*/
-  /*color: #cad1d8;*/
-}
-
 html[data-theme="dark"] ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -31,7 +25,6 @@ html[data-theme="dark"] ::-webkit-scrollbar {
 }
 
 html[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  /*background-color: #666;*/
   background: #fff;
   border-radius: 5px;
 }

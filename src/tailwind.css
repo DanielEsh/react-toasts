@@ -59,6 +59,8 @@
         --colors-background-default: var(--colors-gray-2);
         --colors-foreground-default: var(--colors-gray-12);
         --colors-border-subtle: var(--colors-gray-4);
+
+        color-scheme: dark;
     }
 
     html[data-theme="light"]:root {
@@ -79,5 +81,7 @@
         --colors-background-default: var(--colors-gray-2);
         --colors-foreground-default: var(--colors-gray-12);
         --colors-border-subtle: var(--colors-gray-4);
+
+        color-scheme: light;
     }
 }
