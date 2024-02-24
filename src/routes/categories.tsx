@@ -7,6 +7,7 @@ import { DropdownDemo } from '../components/DropdownDemo.tsx'
 import { FadeAnimation } from '../components/framer/fade.tsx'
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import { FramerAnimatedList } from '../components/framer/framer-animated-list.tsx'
 
 export default function CategoriesPage() {
   const [fade, setFade] = useState(false)
@@ -40,6 +41,8 @@ export default function CategoriesPage() {
           </FadeAnimation>
         )}
       </AnimatePresence>
+
+      <FramerAnimatedList />
 
       <div>
         <Link to="/">Back home</Link>
