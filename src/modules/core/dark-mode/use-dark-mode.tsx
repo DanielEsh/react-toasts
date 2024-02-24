@@ -3,11 +3,13 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 
 export interface UseThemeProps {
   theme?: string
+  resolvedTheme?: string
   setTheme: any
 }
 
@@ -30,26 +32,50 @@ const getTheme = (key: string, fallback?: string) => {
 const colorSchemes = ['light', 'dark']
 const MEDIA = '(prefers-color-scheme: dark)'
 
-const ThemeContext = createContext<UseThemeProps | undefined>(undefined)
-const defaultContext: UseThemeProps = { setTheme: () => {} }
-export const useTheme = () => useContext(ThemeContext) ?? defaultContext
+const ThemeContext = createContext<UseThemeProps>({
+  setTheme: () => {},
+})
+export const useTheme = () => useContext(ThemeContext)
 
 interface ThemeProviderProps {
   children: ReactNode
+  isSystemEnabled?: boolean
 }
 
 export const ThemeProvider = (props: ThemeProviderProps) => {
   const storageKey = 'theme'
   const defaultTheme = 'system'
+
   const [theme, setTheme] = useState(() => getTheme(storageKey, defaultTheme))
+  const [resolvedTheme, setResolvedTheme] = useState(() => getTheme(storageKey))
+
+  const applyTheme = (theme?: string) => {
+    let resolved = theme
+
+    if (resolved === 'system' && props.isSystemEnabled) {
+      resolved = getSystemTheme()
+    }
+
+    localStorage.setItem('theme', theme!)
+    document.documentElement.dataset.theme = resolved
+    setResolvedTheme(resolved)
+  }
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('theme', theme!)
+    applyTheme(theme)
   }, [theme])
 
+  const providerValue = useMemo<UseThemeProps>(
+    () => ({
+      theme,
+      resolvedTheme,
+      setTheme,
+    }),
+    [theme],
+  )
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={providerValue}>
       {props.children}
     </ThemeContext.Provider>
   )

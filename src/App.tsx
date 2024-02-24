@@ -11,6 +11,7 @@ import {
   ThemeProvider,
   useTheme,
 } from './modules/core/dark-mode/use-dark-mode.tsx'
+import { DarkModeToggle } from './modules/core/dark-mode/DarkModeToggle.tsx'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
@@ -80,41 +81,16 @@ const router = createBrowserRouter([
 ])
 
 export const App = () => {
-  // const { theme, setTheme } = useTheme()
-
-  const theme = localStorage.getItem('theme')
-
-  const setTheme = (theme: string) => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('theme', theme)
-  }
-
   return (
-    <ThemeProvider>
+    <ThemeProvider isSystemEnabled>
       <>
         <div className="bg-surface">TEST</div>
+
+        <DarkModeToggle />
 
         <div className="flex gap-1">
           <div></div>
         </div>
-
-        <div className="flex gap-3">
-          <button
-            className="button"
-            onClick={() => setTheme('dark')}
-          >
-            dark
-          </button>
-          <button
-            className="button"
-            onClick={() => setTheme('light')}
-          >
-            light
-          </button>
-          <button className="button">system</button>
-        </div>
-
-        <div>theme: {theme}</div>
         <RouterProvider router={router} />
       </>
     </ThemeProvider>
