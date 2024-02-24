@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom'
 import { Notification } from './notification.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
 import { NotificationItem } from './notification-item.tsx'
+import { AnimatePresence } from 'framer-motion'
 
 interface Props {
   position: ToastContainerPosition
@@ -70,36 +71,41 @@ export const Notifications = ({ position, limit }: Props) => {
   return (
     <section className="toasts-section">
       <ol className={`toasts position-${position}`}>
-        {queue.length >= 1 && (
-          <QueueIndicator
-            count={queue.length}
-            heights={heights}
-          />
-        )}
-        {state.map((toast, index) => (
-          <Notification
-            key={toast.id}
-            id={toast.id}
-            index={index}
-            allNotificationsCount={state.length}
-            heights={heights}
-            onChangeHeight={(newHeight) =>
-              handleChangeHeight(newHeight, toast.id)
-            }
-            onAddHeights={(newHeight) =>
-              handleAddHeightById(newHeight, toast.id)
-            }
-            onRemoveHeights={() => handleRemoveHeightById(toast.id)}
-          >
-            <NotificationItem
-              type={toast.type}
-              title={toast.title}
-              description={toast.description}
-              duration={toast.duration}
-              onDismiss={() => removeToast(toast)}
+        <AnimatePresence>
+          {queue.length >= 1 && (
+            <QueueIndicator
+              count={queue.length}
+              heights={heights}
             />
-          </Notification>
-        ))}
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {state.map((toast, index) => (
+            <Notification
+              key={toast.id}
+              id={toast.id}
+              index={index}
+              allNotificationsCount={state.length}
+              heights={heights}
+              onChangeHeight={(newHeight) =>
+                handleChangeHeight(newHeight, toast.id)
+              }
+              onAddHeights={(newHeight) =>
+                handleAddHeightById(newHeight, toast.id)
+              }
+              onRemoveHeights={() => handleRemoveHeightById(toast.id)}
+            >
+              <NotificationItem
+                type={toast.type}
+                title={toast.title}
+                description={toast.description}
+                duration={toast.duration}
+                onDismiss={() => removeToast(toast)}
+              />
+            </Notification>
+          ))}
+        </AnimatePresence>
       </ol>
     </section>
   )

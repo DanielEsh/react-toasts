@@ -2,8 +2,8 @@ import { Toast } from './toast.tsx'
 import { NotificationDurationIndicator } from './notification-duration-indicator.tsx'
 import { useEffect, useState } from 'react'
 import { useTimer } from '../use-timer.ts'
-import { useControllableState } from '../hooks/use-controllable-state.ts'
 import { NotificationType } from '../types.ts'
+import { SlideDown } from './framer/slide-down.tsx'
 
 interface Props {
   type: NotificationType['type']
@@ -13,25 +13,14 @@ interface Props {
   onDismiss: () => void
 }
 
-const TIME_BEFORE_UNMOUNT = 300
-
 export const NotificationItem = (props: Props) => {
   const { type, title, description, duration, onDismiss } = props
 
-  const [open = false, setOpen] = useControllableState({})
-
-  useEffect(() => {
-    setOpen(true)
-  }, [])
-
   const deleteToast = () => {
-    setTimeout(() => {
-      onDismiss()
-    }, TIME_BEFORE_UNMOUNT)
+    onDismiss()
   }
 
   const handleRemove = () => {
-    setOpen(false)
     deleteToast()
   }
 
@@ -74,24 +63,25 @@ export const NotificationItem = (props: Props) => {
   }
 
   return (
-    <div
-      className={`notification-item`}
-      data-state={open ? 'open' : 'closed'}
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHoverLeave}
-    >
-      <Toast
-        type={type}
-        title={title}
-        description={description}
-        onCloseClick={handleRemove}
-      />
-      {duration && (
-        <NotificationDurationIndicator
-          duration={duration}
-          pause={isPause}
+    <SlideDown>
+      <div
+        className={`notification-item`}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleHoverLeave}
+      >
+        <Toast
+          type={type}
+          title={title}
+          description={description}
+          onCloseClick={handleRemove}
         />
-      )}
-    </div>
+        {duration && (
+          <NotificationDurationIndicator
+            duration={duration}
+            pause={isPause}
+          />
+        )}
+      </div>
+    </SlideDown>
   )
 }
