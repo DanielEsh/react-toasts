@@ -1,8 +1,9 @@
+import type { ReactNode } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Icon } from '../icon.tsx'
 import { classNames } from '../shared/utils/class-names.ts'
 
-const toastVariants = cva('border p-4 drop-shadow-md rounded-lg', {
+const toastVariants = cva('flex gap-3 border p-4 drop-shadow-md rounded-lg', {
   variants: {
     type: {
       default: 'bg-background border-subtle',
@@ -10,6 +11,7 @@ const toastVariants = cva('border p-4 drop-shadow-md rounded-lg', {
       info: 'bg-info-1 border-info-2 text-info-3',
       warning: 'bg-warning-1 border-warning-2 text-warning-3',
       error: 'bg-error-1 border-error-2 text-error-3',
+      loading: 'bg-background border-subtle',
     },
     defaultVariants: {
       type: 'default',
@@ -19,12 +21,14 @@ const toastVariants = cva('border p-4 drop-shadow-md rounded-lg', {
 
 interface Props extends VariantProps<typeof toastVariants> {
   title: string
+  icon?: ReactNode
   description?: string
   onCloseClick?: () => void
 }
 
 export const Toast = ({
   type = 'default',
+  icon,
   title,
   description,
   onCloseClick,
@@ -33,15 +37,20 @@ export const Toast = ({
 
   return (
     <div className={classes}>
-      <div className="font-medium">{title}</div>
-      {description && <div className="mt-1 opacity-90">{description}</div>}
+      {icon && <div className="flex-shrink">{icon}</div>}
 
-      <button
-        className="toast-close"
-        onClick={onCloseClick}
-      >
-        <Icon name="close" />
-      </button>
+      <div>
+        <div className="font-medium">{title}</div>
+        {type === 'loading' && <div>Loading...</div>}
+        {description && <div className="mt-1 opacity-90">{description}</div>}
+
+        <button
+          className="toast-close"
+          onClick={onCloseClick}
+        >
+          <Icon name="close" />
+        </button>
+      </div>
     </div>
   )
 }

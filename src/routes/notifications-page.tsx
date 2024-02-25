@@ -1,6 +1,7 @@
 import { BaseButton } from '../shared/ui'
 import {
   createNotificationWithDescription,
+  createNotificationWithType,
   simpleNotifications,
 } from '../notification-helpers.ts'
 import { toastFunction, updateNotification } from '../state.ts'
@@ -10,6 +11,7 @@ export const NotificationsPage = () => {
     toastFunction({
       id: 'for-updated',
       title: 'Simple notification',
+      type: 'loading',
     })
   }
 
@@ -35,6 +37,24 @@ export const NotificationsPage = () => {
 
         <BaseButton onClick={createNotificationWithDescription}>
           Notification with description
+        </BaseButton>
+      </div>
+
+      <div className="flex gap-3">
+        <BaseButton onClick={() => createNotificationWithType('success')}>
+          Success notification
+        </BaseButton>
+
+        <BaseButton onClick={() => createNotificationWithType('info')}>
+          Info notification
+        </BaseButton>
+
+        <BaseButton onClick={() => createNotificationWithType('warning')}>
+          Warning notification
+        </BaseButton>
+
+        <BaseButton onClick={() => createNotificationWithType('error')}>
+          Error notification
         </BaseButton>
       </div>
     </div>

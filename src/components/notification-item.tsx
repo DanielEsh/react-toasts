@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTimer } from '../use-timer.ts'
 import { NotificationType } from '../types.ts'
 import { SlideDown } from './framer/slide-down.tsx'
+import { Icon } from '../icon.tsx'
 
 interface Props {
   type: NotificationType['type']
@@ -62,6 +63,19 @@ export const NotificationItem = (props: Props) => {
     }
   }
 
+  const renderIcon = () => {
+    const tempMap = {
+      success: 'success',
+      info: 'info',
+      warning: 'warning',
+      error: 'error',
+      default: null,
+      loading: 'react',
+    }
+
+    return tempMap[type] && <Icon name={tempMap[type]} />
+  }
+
   return (
     <SlideDown>
       <div
@@ -72,6 +86,7 @@ export const NotificationItem = (props: Props) => {
         <Toast
           type={type}
           title={title}
+          icon={renderIcon()}
           description={description}
           onCloseClick={handleRemove}
         />

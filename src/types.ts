@@ -5,7 +5,7 @@ export type ToastContainerPosition = `${VerticalPosition}-${HorizontalPosition}`
 
 export interface ToastType {
   id?: number | string
-  type?: 'default' | 'success' | 'info' | 'warning' | 'error'
+  type?: 'default' | 'success' | 'info' | 'warning' | 'error' | 'loading'
   title: string
   description?: string
   duration: number
@@ -18,7 +18,7 @@ export interface NotificationHeightItem {
 
 export interface NotificationType {
   id: number | string
-  type: 'default' | 'success' | 'info' | 'warning' | 'error'
+  type: 'default' | 'success' | 'info' | 'warning' | 'error' | 'loading'
   title: string
   description?: string
   duration?: number
@@ -26,5 +26,5 @@ export interface NotificationType {
 
 export type CreateNotification = Omit<NotificationType, 'id' | 'type'> & {
   id?: number | string
-  type?: 'default' | 'success' | 'info' | 'warning' | 'error'
+  type?: 'default' | 'success' | 'info' | 'warning' | 'error' | 'loading'
 }
