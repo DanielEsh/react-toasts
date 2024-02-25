@@ -25,6 +25,10 @@ class Observer {
   create = (data: NotificationType) => {
     this.publish(data)
   }
+
+  update = (id: NotificationType['id']) => {
+    this.publish(id)
+  }
 }
 
 export const NotificationObserver = new Observer()
@@ -38,4 +42,8 @@ export const toastFunction = (data: CreateNotification) => {
     id,
   })
   return id
+}
+
+export const updateNotification = (id: NotificationType['id']) => {
+  NotificationObserver.update(id)
 }

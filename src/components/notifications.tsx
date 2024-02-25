@@ -38,6 +38,24 @@ export const Notifications = ({ position, limit }: Props) => {
     return NotificationObserver.subscribe((notification) => {
       console.log('SUB', notification)
 
+      if (notification === 'for-updated') {
+        update((state) => {
+          return state.map((item) => {
+            if (item.id === 'for-updated') {
+              return {
+                ...item,
+                ...{
+                  description: 'new description',
+                },
+              }
+            }
+
+            return item
+          })
+        })
+        return
+      }
+
       ReactDOM.flushSync(() => {
         add(notification)
       })
