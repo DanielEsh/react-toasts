@@ -65,15 +65,15 @@ export const NotificationItem = (props: Props) => {
 
   const renderIcon = () => {
     const tempMap = {
-      success: 'success',
-      info: 'info',
-      warning: 'warning',
-      error: 'error',
+      success: <Icon name={'success'} />,
+      info: <Icon name={'info'} />,
+      warning: <Icon name={'warning'} />,
+      error: <Icon name={'error'} />,
       default: null,
-      loading: 'react',
+      loading: null,
     }
 
-    return tempMap[type] && <Icon name={tempMap[type]} />
+    return tempMap[type]
   }
 
   return (
