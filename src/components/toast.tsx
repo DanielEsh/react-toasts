@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority'
 import { Icon } from '../icon.tsx'
-import { classNames } from '../class-names.ts'
+import { classNames } from '../shared/utils/class-names.ts'
 
 const toastVariants = cva('border p-4 drop-shadow-md rounded-lg', {
   variants: {

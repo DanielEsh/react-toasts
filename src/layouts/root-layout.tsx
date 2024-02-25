@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
 import { ToastContainerPosition } from '../types.ts'
 import { Notifications } from '../components/notifications.tsx'
+import { Header } from './header.tsx'
 
 const positions = [
   'top-left',
@@ -26,6 +27,7 @@ export const RootLayout = () => {
   return (
     <div>
       RootLayout
+      <Header />
       <div className="p-4">
         <Section
           title="Positions"
