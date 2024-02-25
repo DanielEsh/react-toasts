@@ -11,6 +11,7 @@ export const NotificationsPage = () => {
     toastFunction({
       id: 'for-updated',
       title: 'Simple notification',
+      description: 'Loading...',
       type: 'loading',
     })
   }

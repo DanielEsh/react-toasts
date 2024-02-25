@@ -45,6 +45,7 @@ export const Notifications = ({ position, limit }: Props) => {
               return {
                 ...item,
                 ...{
+                  type: 'success',
                   description: 'new description',
                 },
               }

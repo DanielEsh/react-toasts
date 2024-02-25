@@ -47,7 +47,6 @@ export const Toast = ({
 
       <div>
         <div className="font-medium">{title}</div>
-        {type === 'loading' && <div>Loading...</div>}
         {description && <div className="mt-1 opacity-90">{description}</div>}
 
         <button
