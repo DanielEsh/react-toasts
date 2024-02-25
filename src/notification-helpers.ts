@@ -23,6 +23,7 @@ export const createNotificationWithType = (type: NotificationType['type']) => {
     id: new Date().getTime(),
     title: `Simple ${type} notification`,
     type: type,
+    duration: 5,
     description: 'Simple notification with description and default style.',
   })
 }

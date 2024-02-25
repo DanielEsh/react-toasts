@@ -92,6 +92,7 @@ export const NotificationItem = (props: Props) => {
         />
         {duration && (
           <NotificationDurationIndicator
+            type={type}
             duration={duration}
             pause={isPause}
           />

@@ -260,14 +260,8 @@ body {
   right: 24px;
 }
 
-.durationTimer {
+.duration-timer {
   --duration: 5s;
-
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 10px;
-  background: aqua;
   animation: closeAnimation var(--duration);
 }
 
