@@ -1,4 +1,5 @@
 import { BaseButton } from '../shared/ui'
+import { Link } from 'react-router-dom'
 
 export const Header = () => {
   return (
@@ -7,6 +8,7 @@ export const Header = () => {
         <div>HEADER</div>
 
         <div>
+          <Link to={'notifications'}>to notifications</Link>
           <BaseButton> Button 1</BaseButton>
           <BaseButton> Button 2</BaseButton>
         </div>
