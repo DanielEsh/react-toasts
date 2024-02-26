@@ -192,8 +192,6 @@ body {
 
 .notification-item {
   width: 356px;
-  /*border: 1px solid var(--normal-border);*/
-  /*background: var(--normal-bg);*/
 
   transition: transform .3s, opacity .3s, height .3s;
 }
