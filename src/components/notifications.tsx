@@ -38,7 +38,7 @@ export const Notifications = ({ position, limit }: Props) => {
     return NotificationObserver.subscribe((notification) => {
       console.log('SUB', notification)
 
-      if (notification === 'for-updated') {
+      if (notification === 'for-updated' || notification === 'promise') {
         update((state) => {
           return state.map((item) => {
             if (item.id === 'for-updated') {
@@ -47,6 +47,18 @@ export const Notifications = ({ position, limit }: Props) => {
                 ...{
                   type: 'success',
                   description: 'new description',
+                },
+              }
+            }
+
+            if (item.id === 'promise') {
+              return {
+                ...item,
+                ...{
+                  type: 'success',
+                  duration: 5,
+                  title: 'success promise',
+                  description: 'success loading',
                 },
               }
             }

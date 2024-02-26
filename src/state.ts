@@ -32,10 +32,17 @@ class Observer {
 
   promise = (promise: Promise<NotificationType>, data?: NotificationType) => {
     console.log('LOADING...', promise)
+    this.create({
+      id: 'promise',
+      title: 'promise',
+      type: 'loading',
+      description: 'Loading...',
+    })
 
     promise
       .then((response) => {
         console.log('RESPONSE', response)
+        this.update('promise')
       })
       .catch((error) => {
         console.log('error', error)
