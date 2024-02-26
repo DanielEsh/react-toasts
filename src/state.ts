@@ -29,6 +29,18 @@ class Observer {
   update = (id: NotificationType['id']) => {
     this.publish(id)
   }
+
+  promise = (promise: Promise<NotificationType>, data?: NotificationType) => {
+    console.log('LOADING...', promise)
+
+    promise
+      .then((response) => {
+        console.log('RESPONSE', response)
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
+  }
 }
 
 export const NotificationObserver = new Observer()
@@ -46,4 +58,8 @@ export const toastFunction = (data: CreateNotification) => {
 
 export const updateNotification = (id: NotificationType['id']) => {
   NotificationObserver.update(id)
+}
+
+export const promiseNotification = (promise: Promise<NotificationType>) => {
+  NotificationObserver.promise(promise)
 }

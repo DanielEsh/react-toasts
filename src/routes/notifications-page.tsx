@@ -4,7 +4,11 @@ import {
   createNotificationWithType,
   simpleNotifications,
 } from '../notification-helpers.ts'
-import { toastFunction, updateNotification } from '../state.ts'
+import {
+  promiseNotification,
+  toastFunction,
+  updateNotification,
+} from '../state.ts'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -20,6 +24,24 @@ export const NotificationsPage = () => {
     updateNotification('for-updated')
   }
 
+  const handlePromiseSuccess = () => {
+    const promise = () =>
+      new Promise((resolve) =>
+        setTimeout(() => resolve({ title: 'test' }), 2000),
+      )
+
+    promiseNotification(promise())
+  }
+
+  const handlePromiseError = () => {
+    const promise = () =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject({ title: 'test' }), 2000),
+      )
+
+    promiseNotification(promise())
+  }
+
   return (
     <div>
       <span>NotificationsPage</span>
@@ -29,6 +51,9 @@ export const NotificationsPage = () => {
         <BaseButton onClick={showUpdatedNotification}>Create</BaseButton>
 
         <BaseButton onClick={handleUpdate}>Update</BaseButton>
+
+        <BaseButton onClick={handlePromiseSuccess}>Promise success</BaseButton>
+        <BaseButton onClick={handlePromiseError}>Promise error</BaseButton>
       </div>
 
       <div className="flex gap-3">
