@@ -46,6 +46,7 @@ class Observer {
       })
       .catch((error) => {
         console.log('error', error)
+        this.update('promise')
       })
   }
 }

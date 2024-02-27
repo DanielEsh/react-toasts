@@ -39,7 +39,7 @@ export const NotificationItem = (props: Props) => {
       startTimer()
     }
     return clearTimer
-  }, [])
+  }, [duration])
 
   const handleResume = () => {
     setPause(false)
