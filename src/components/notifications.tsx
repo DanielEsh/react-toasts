@@ -38,40 +38,26 @@ export const Notifications = ({ position, limit }: Props) => {
     return NotificationObserver.subscribe((notification) => {
       console.log('SUB', notification)
 
-      if (notification === 'for-updated' || notification === 'promise') {
+      if (notification.action === 'create') {
+        ReactDOM.flushSync(() => {
+          add(notification.data)
+        })
+      }
+
+      if (notification.action === 'update') {
         update((state) => {
           return state.map((item) => {
-            if (item.id === 'for-updated') {
+            if (item.id === notification.id) {
               return {
-                ...item,
-                ...{
-                  type: 'success',
-                  description: 'new description',
-                },
-              }
-            }
-
-            if (item.id === 'promise') {
-              return {
-                ...item,
-                ...{
-                  type: 'success',
-                  duration: 5,
-                  title: 'success promise',
-                  description: 'success loading',
-                },
+                ...notification.data,
+                id: item.id,
               }
             }
 
             return item
           })
         })
-        return
       }
-
-      ReactDOM.flushSync(() => {
-        add(notification)
-      })
     })
   }, [])
 

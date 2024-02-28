@@ -1,15 +1,21 @@
 import { CreateNotification, NotificationType } from './types.ts'
 
+interface NotificationPayload {
+  action: 'create' | 'update'
+  id?: NotificationType['id']
+  data: NotificationType
+}
+
 let toastsCounter = 1
 
 class Observer {
-  private subscribers: Array<(toast: NotificationType) => void>
+  private subscribers: Array<(toast: NotificationPayload) => void>
 
   constructor() {
     this.subscribers = []
   }
 
-  subscribe = (subscriber: (toast: NotificationType) => void) => {
+  subscribe = (subscriber: (payload: NotificationPayload) => void) => {
     this.subscribers.push(subscriber)
 
     return () => {
@@ -18,22 +24,32 @@ class Observer {
     }
   }
 
-  publish = (data: any) => {
-    this.subscribers.forEach((subscriber) => subscriber(data))
+  publish = (payload: NotificationPayload) => {
+    this.subscribers.forEach((subscriber) => subscriber(payload))
   }
 
   create = (data: NotificationType) => {
-    this.publish(data)
+    this.publish({
+      action: 'create',
+      data,
+    })
   }
 
-  update = (id: NotificationType['id']) => {
-    this.publish(id)
+  update = (id: NotificationType['id'], data: NotificationType) => {
+    this.publish({
+      action: 'update',
+      id,
+      data,
+    })
   }
 
-  promise = (promise: Promise<NotificationType>, data?: NotificationType) => {
+  promise = (promise: Promise<NotificationType>) => {
     console.log('LOADING...', promise)
+
+    const id = new Date().getTime()
+
     this.create({
-      id: 'promise',
+      id: id,
       title: 'promise',
       type: 'loading',
       description: 'Loading...',
@@ -42,11 +58,11 @@ class Observer {
     promise
       .then((response) => {
         console.log('RESPONSE', response)
-        this.update('promise')
+        this.update(id, response)
       })
       .catch((error) => {
         console.log('error', error)
-        this.update('promise')
+        this.update(id, error)
       })
   }
 }
@@ -64,8 +80,11 @@ export const toastFunction = (data: CreateNotification) => {
   return id
 }
 
-export const updateNotification = (id: NotificationType['id']) => {
-  NotificationObserver.update(id)
+export const updateNotification = (
+  id: NotificationType['id'],
+  data: NotificationType,
+) => {
+  NotificationObserver.update(id, data)
 }
 
 export const promiseNotification = (promise: Promise<NotificationType>) => {

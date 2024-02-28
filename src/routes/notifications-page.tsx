@@ -21,13 +21,21 @@ export const NotificationsPage = () => {
   }
 
   const handleUpdate = () => {
-    updateNotification('for-updated')
+    updateNotification('for-updated', {
+      id: 'for-updated',
+      type: 'warning',
+      title: 'Updated on warning',
+      description: 'description',
+    })
   }
 
   const handlePromiseSuccess = () => {
     const promise = () =>
       new Promise((resolve) =>
-        setTimeout(() => resolve({ title: 'test' }), 2000),
+        setTimeout(
+          () => resolve({ title: 'test', type: 'success', duration: 5 }),
+          2000,
+        ),
       )
 
     promiseNotification(promise())
@@ -36,7 +44,10 @@ export const NotificationsPage = () => {
   const handlePromiseError = () => {
     const promise = () =>
       new Promise((_, reject) =>
-        setTimeout(() => reject({ title: 'test' }), 2000),
+        setTimeout(
+          () => reject({ title: 'test', type: 'error', duration: 5 }),
+          2000,
+        ),
       )
 
     promiseNotification(promise())
