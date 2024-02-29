@@ -17,12 +17,8 @@ interface Props {
 export const NotificationItem = (props: Props) => {
   const { type, title, description, duration, onDismiss } = props
 
-  const deleteToast = () => {
-    onDismiss()
-  }
-
   const handleRemove = () => {
-    deleteToast()
+    onDismiss()
   }
 
   const realDuration = duration ? duration * 1000 : 0

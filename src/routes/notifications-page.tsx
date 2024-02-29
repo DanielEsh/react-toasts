@@ -9,6 +9,7 @@ import {
   toastFunction,
   updateNotification,
 } from '../state.ts'
+import { NotificationType } from '../types.ts'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -26,12 +27,13 @@ export const NotificationsPage = () => {
       type: 'warning',
       title: 'Updated on warning',
       description: 'description',
+      duration: 5,
     })
   }
 
   const handlePromiseSuccess = () => {
     const promise = () =>
-      new Promise((resolve) =>
+      new Promise<NotificationType>((resolve) =>
         setTimeout(
           () => resolve({ title: 'test', type: 'success', duration: 5 }),
           2000,
@@ -43,7 +45,7 @@ export const NotificationsPage = () => {
 
   const handlePromiseError = () => {
     const promise = () =>
-      new Promise((_, reject) =>
+      new Promise<NotificationType>((_, reject) =>
         setTimeout(
           () => reject({ title: 'test', type: 'error', duration: 5 }),
           2000,

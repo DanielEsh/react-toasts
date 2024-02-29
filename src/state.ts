@@ -57,11 +57,9 @@ class Observer {
 
     promise
       .then((response) => {
-        console.log('RESPONSE', response)
         this.update(id, response)
       })
       .catch((error) => {
-        console.log('error', error)
         this.update(id, error)
       })
   }

@@ -3,38 +3,38 @@ export interface SpritesMap {
     | 'check'
     | 'close'
     | 'diamond'
-    | 'error'
-    | 'info'
     | 'react'
     | 'search'
     | 'shopping-bag'
-    | 'success'
     | 'warning'
+    | 'error'
+    | 'success'
+    | 'info'
 }
 export const SPRITES_META: {
   sprite: Array<
     | 'check'
     | 'close'
     | 'diamond'
-    | 'error'
-    | 'info'
     | 'react'
     | 'search'
     | 'shopping-bag'
-    | 'success'
     | 'warning'
+    | 'error'
+    | 'success'
+    | 'info'
   >
 } = {
   sprite: [
     'check',
     'close',
     'diamond',
-    'error',
-    'info',
     'react',
     'search',
     'shopping-bag',
-    'success',
     'warning',
+    'error',
+    'success',
+    'info',
   ],
 }

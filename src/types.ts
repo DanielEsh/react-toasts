@@ -17,7 +17,7 @@ export interface NotificationHeightItem {
 }
 
 export interface NotificationType {
-  id: number | string
+  id?: number | string
   type: 'default' | 'success' | 'info' | 'warning' | 'error' | 'loading'
   title: string
   description?: string
