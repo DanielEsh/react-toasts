@@ -50,9 +50,10 @@ export const Notifications = ({ position, limit }: Props) => {
         update((state) => {
           return state.map((item) => {
             if (item.id === notification.id) {
+              // TODO
               return {
-                id: item.id,
                 ...notification.data,
+                id: item.id,
               }
             }
 
@@ -102,7 +103,7 @@ export const Notifications = ({ position, limit }: Props) => {
         <AnimatePresence>
           {state.map((toast, index) => (
             <NotificationPosition
-              key={toast.id}
+              key={`${toast.id}${toast.type}`}
               id={toast.id}
               index={index}
               allNotificationsCount={state.length}
