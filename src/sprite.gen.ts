@@ -3,11 +3,11 @@ export interface SpritesMap {
     | 'check'
     | 'close'
     | 'diamond'
-    | 'error'
-    | 'info'
     | 'react'
     | 'search'
     | 'shopping-bag'
+    | 'error'
+    | 'info'
     | 'success'
     | 'warning'
 }
@@ -16,11 +16,11 @@ export const SPRITES_META: {
     | 'check'
     | 'close'
     | 'diamond'
-    | 'error'
-    | 'info'
     | 'react'
     | 'search'
     | 'shopping-bag'
+    | 'error'
+    | 'info'
     | 'success'
     | 'warning'
   >
@@ -29,11 +29,11 @@ export const SPRITES_META: {
     'check',
     'close',
     'diamond',
-    'error',
-    'info',
     'react',
     'search',
     'shopping-bag',
+    'error',
+    'info',
     'success',
     'warning',
   ],

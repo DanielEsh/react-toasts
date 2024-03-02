@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 // import { Toasts } from '../components/toasts.tsx'
 import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
-import { ToastContainerPosition } from '../notification/types.ts'
+import { NotificationsContainerPosition } from '../notification'
 import { Notifications } from '../notification/ui/notifications.tsx'
 import { Header } from './header.tsx'
 
@@ -17,9 +17,9 @@ const positions = [
 
 export const RootLayout = () => {
   const [activePosition, setActivePosition] =
-    useState<ToastContainerPosition>('bottom-right')
+    useState<NotificationsContainerPosition>('bottom-right')
 
-  const handlePositionChange = (position: ToastContainerPosition) => {
+  const handlePositionChange = (position: NotificationsContainerPosition) => {
     if (activePosition === position) return
     setActivePosition(position)
   }

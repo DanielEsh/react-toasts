@@ -14,7 +14,8 @@ export enum NOTIFICATION_TYPE {
 }
 
 export interface NotificationData {
-  id: number | string
+  // TODO: должно быть обязательное
+  id?: number | string
   type: NOTIFICATION_TYPE
   title: string
   description?: string

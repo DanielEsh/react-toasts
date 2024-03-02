@@ -50,10 +50,9 @@ export const Notifications = ({ position, limit }: Props) => {
         update((state) => {
           return state.map((item) => {
             if (item.id === notification.id) {
-              // TODO
               return {
-                ...notification.data,
                 id: item.id,
+                ...notification.data,
               }
             }
 
