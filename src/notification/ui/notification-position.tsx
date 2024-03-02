@@ -8,10 +8,10 @@ import {
   useState,
 } from 'react'
 import type { NotificationHeightItem } from '../types.ts'
-import { NotificationType } from '../types.ts'
+import { NotificationData } from '../types.ts'
 
 interface Props {
-  id: NotificationType['id']
+  id: NotificationData['id']
   index: number
   allNotificationsCount: number
   children: ReactNode
@@ -23,7 +23,7 @@ interface Props {
 
 const NOTIFICATIONS_GAP = 16
 
-export const Notification = (props: Props) => {
+export const NotificationPosition = (props: Props) => {
   const {
     id,
     index,

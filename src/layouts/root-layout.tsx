@@ -2,8 +2,8 @@ import { Outlet } from 'react-router-dom'
 // import { Toasts } from '../components/toasts.tsx'
 import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
-import { ToastContainerPosition } from '../types.ts'
-import { Notifications } from '../components/notifications.tsx'
+import { ToastContainerPosition } from '../notification/types.ts'
+import { Notifications } from '../notification/ui/notifications.tsx'
 import { Header } from './header.tsx'
 
 const positions = [

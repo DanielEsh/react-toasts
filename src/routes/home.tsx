@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { toastFunction } from '../state.ts'
+import { toastFunction } from '../notification/state.ts'
 import { Section } from '../components/Section.tsx'
 import { TypesActions } from '../components/TypesActions.tsx'
 import { useState } from 'react'

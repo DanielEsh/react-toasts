@@ -1,8 +1,7 @@
-import { toastFunction } from './state.ts'
-import { NotificationType } from './types.ts'
+import { createNotification, type NotificationData } from './notification'
 
 export const simpleNotifications = () => {
-  toastFunction({
+  createNotification({
     id: new Date().getTime(),
     title: 'Simple notification',
     description: 'Simple notification with description and default style.',
@@ -10,7 +9,7 @@ export const simpleNotifications = () => {
 }
 
 export const createNotificationWithDescription = () => {
-  toastFunction({
+  createNotification({
     id: 'description',
     title: 'with description',
     description:
@@ -18,8 +17,8 @@ export const createNotificationWithDescription = () => {
   })
 }
 
-export const createNotificationWithType = (type: NotificationType['type']) => {
-  toastFunction({
+export const createNotificationWithType = (type: NotificationData['type']) => {
+  createNotification({
     id: new Date().getTime(),
     title: `Simple ${type} notification`,
     type: type,

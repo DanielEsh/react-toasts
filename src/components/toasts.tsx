@@ -1,9 +1,13 @@
 import React from 'react'
 import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { ToastState } from '../state.ts'
+import { ToastState } from '../notification/state.ts'
 import { useQueue } from '../use-queue.ts'
-import { ToastHeightItem, ToastContainerPosition, ToastType } from '../types.ts'
+import {
+  ToastHeightItem,
+  ToastContainerPosition,
+  ToastType,
+} from '../notification/types.ts'
 
 interface ToastsProps {
   index: number

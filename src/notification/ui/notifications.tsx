@@ -1,37 +1,39 @@
 import type {
-  ToastContainerPosition,
+  NotificationsContainerPosition,
   NotificationHeightItem,
-  NotificationType,
+  NotificationData,
 } from '../types.ts'
-import { useQueue } from '../use-queue.ts'
+import { useQueue } from '../../use-queue.ts'
 import { useState, useEffect } from 'react'
 import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
-import { Notification } from './notification.tsx'
+import { NotificationPosition } from './notification-position.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
 import { NotificationItem } from './notification-item.tsx'
 import { AnimatePresence } from 'framer-motion'
 
 interface Props {
-  position: ToastContainerPosition
+  position: NotificationsContainerPosition
   limit?: number
 }
 
 const DEFAULT_LIMIT = 5
 
 export const Notifications = ({ position, limit }: Props) => {
-  const { state, queue, add, update } = useQueue<NotificationType>({
+  const { state, queue, add, update } = useQueue<NotificationData>({
     limit: limit ?? DEFAULT_LIMIT,
   })
   const [heights, setHeights] = useState<NotificationHeightItem[]>([])
 
-  const removeToast = (toast: NotificationType) => {
+  const removeToast = (notificationData: NotificationData) => {
     update((notifications) =>
       notifications.filter((notification) => {
-        return notification.id !== toast.id
+        return notification.id !== notificationData.id
       }),
     )
-    setHeights((h) => h.filter((height) => height.toastId !== toast.id))
+    setHeights((h) =>
+      h.filter((height) => height.toastId !== notificationData.id),
+    )
   }
 
   useEffect(() => {
@@ -61,13 +63,13 @@ export const Notifications = ({ position, limit }: Props) => {
     })
   }, [])
 
-  const handleAddHeightById = (height: number, id: NotificationType['id']) => {
+  const handleAddHeightById = (height: number, id: NotificationData['id']) => {
     setHeights((heights) => [...heights, { toastId: id, height }])
   }
 
   const handleChangeHeight = (
     newHeight: number,
-    id?: NotificationType['id'],
+    id: NotificationData['id'],
   ) => {
     setHeights((heights) => {
       const alreadyExists = heights.find((height) => height.toastId === id)
@@ -81,7 +83,7 @@ export const Notifications = ({ position, limit }: Props) => {
     })
   }
 
-  const handleRemoveHeightById = (id: NotificationType['id']) => {
+  const handleRemoveHeightById = (id: NotificationData['id']) => {
     setHeights((h) => h.filter((height) => height.toastId !== id))
   }
 
@@ -99,7 +101,7 @@ export const Notifications = ({ position, limit }: Props) => {
 
         <AnimatePresence>
           {state.map((toast, index) => (
-            <Notification
+            <NotificationPosition
               key={toast.id}
               id={toast.id}
               index={index}
@@ -120,7 +122,7 @@ export const Notifications = ({ position, limit }: Props) => {
                 duration={toast.duration}
                 onDismiss={() => removeToast(toast)}
               />
-            </Notification>
+            </NotificationPosition>
           ))}
         </AnimatePresence>
       </ol>

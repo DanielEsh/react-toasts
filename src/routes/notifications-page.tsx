@@ -5,26 +5,27 @@ import {
   simpleNotifications,
 } from '../notification-helpers.ts'
 import {
+  createNotification,
+  NOTIFICATION_TYPE,
+  type NotificationData,
   promiseNotification,
-  toastFunction,
   updateNotification,
-} from '../state.ts'
-import { NotificationType } from '../types.ts'
+} from '../notification'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
-    toastFunction({
+    createNotification({
       id: 'for-updated',
       title: 'Simple notification',
       description: 'Loading...',
-      type: 'loading',
+      type: NOTIFICATION_TYPE.LOADING,
     })
   }
 
   const handleUpdate = () => {
     updateNotification('for-updated', {
       id: 'for-updated',
-      type: 'warning',
+      type: NOTIFICATION_TYPE.WARNING,
       title: 'Updated on warning',
       description: 'description',
       duration: 5,
@@ -33,9 +34,15 @@ export const NotificationsPage = () => {
 
   const handlePromiseSuccess = () => {
     const promise = () =>
-      new Promise<NotificationType>((resolve) =>
+      new Promise<NotificationData>((resolve) =>
         setTimeout(
-          () => resolve({ title: 'test', type: 'success', duration: 5 }),
+          () =>
+            resolve({
+              id: 'new-id',
+              title: 'test',
+              type: NOTIFICATION_TYPE.SUCCESS,
+              duration: 5,
+            }),
           2000,
         ),
       )
@@ -45,13 +52,13 @@ export const NotificationsPage = () => {
 
   const handlePromiseError = () => {
     const promise = () =>
-      new Promise<NotificationType>((_, reject) =>
+      new Promise<NotificationData>((_, reject) =>
         setTimeout(
           () =>
             reject({
-              type: 'update-promise',
+              id: 'update-promise',
               title: 'test',
-              type: 'error',
+              type: NOTIFICATION_TYPE.ERROR,
               duration: 5,
             }),
           2000,
@@ -88,19 +95,27 @@ export const NotificationsPage = () => {
       </div>
 
       <div className="flex gap-3">
-        <Button onClick={() => createNotificationWithType('success')}>
+        <Button
+          onClick={() => createNotificationWithType(NOTIFICATION_TYPE.SUCCESS)}
+        >
           Success notification
         </Button>
 
-        <Button onClick={() => createNotificationWithType('info')}>
+        <Button
+          onClick={() => createNotificationWithType(NOTIFICATION_TYPE.INFO)}
+        >
           Info notification
         </Button>
 
-        <Button onClick={() => createNotificationWithType('warning')}>
+        <Button
+          onClick={() => createNotificationWithType(NOTIFICATION_TYPE.WARNING)}
+        >
           Warning notification
         </Button>
 
-        <Button onClick={() => createNotificationWithType('error')}>
+        <Button
+          onClick={() => createNotificationWithType(NOTIFICATION_TYPE.ERROR)}
+        >
           Error notification
         </Button>
       </div>

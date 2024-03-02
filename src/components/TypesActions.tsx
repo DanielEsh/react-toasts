@@ -1,4 +1,4 @@
-import { toastFunction } from '../state.ts'
+import { toastFunction } from '../notification/state.ts'
 
 export const TypesActions = () => {
   const handleDefaultClick = () => {

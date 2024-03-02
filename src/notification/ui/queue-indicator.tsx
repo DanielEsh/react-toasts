@@ -1,6 +1,6 @@
 import type { NotificationHeightItem } from '../types.ts'
 import React, { CSSProperties, useMemo } from 'react'
-import { SlideDown } from './framer/slide-down.tsx'
+import { SlideDown } from '../../components/framer/slide-down.tsx'
 
 interface Props {
   count: number

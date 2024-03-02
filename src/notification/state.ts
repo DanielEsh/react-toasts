@@ -1,9 +1,13 @@
-import { CreateNotification, NotificationType } from './types.ts'
+import {
+  CreateNotification,
+  NOTIFICATION_TYPE,
+  NotificationData,
+} from './types.ts'
 
 interface NotificationPayload {
   action: 'create' | 'update'
-  id?: NotificationType['id']
-  data: NotificationType
+  id?: NotificationData['id']
+  data: NotificationData
 }
 
 let toastsCounter = 1
@@ -28,14 +32,14 @@ class Observer {
     this.subscribers.forEach((subscriber) => subscriber(payload))
   }
 
-  create = (data: NotificationType) => {
+  create = (data: NotificationData) => {
     this.publish({
       action: 'create',
       data,
     })
   }
 
-  update = (id: NotificationType['id'], data: NotificationType) => {
+  update = (id: NotificationData['id'], data: NotificationData) => {
     this.publish({
       action: 'update',
       id,
@@ -43,15 +47,15 @@ class Observer {
     })
   }
 
-  promise = (promise: Promise<NotificationType>) => {
+  promise = (promise: Promise<NotificationData>) => {
     console.log('LOADING...', promise)
 
-    const id = new Date().getTime()
+    const id = toastsCounter++
 
     this.create({
       id: id,
       title: 'promise',
-      type: 'loading',
+      type: NOTIFICATION_TYPE.LOADING,
       description: 'Loading...',
     })
 
@@ -67,11 +71,11 @@ class Observer {
 
 export const NotificationObserver = new Observer()
 
-export const toastFunction = (data: CreateNotification) => {
+export const createNotification = (data: CreateNotification) => {
   const id = data?.id || toastsCounter++
 
-  NotificationObserver.create({
-    type: 'default',
+  NotificationObserver.create(<NotificationData>{
+    type: NOTIFICATION_TYPE.DEFAULT,
     ...data,
     id,
   })
@@ -79,12 +83,12 @@ export const toastFunction = (data: CreateNotification) => {
 }
 
 export const updateNotification = (
-  id: NotificationType['id'],
-  data: NotificationType,
+  id: NotificationData['id'],
+  data: NotificationData,
 ) => {
   NotificationObserver.update(id, data)
 }
 
-export const promiseNotification = (promise: Promise<NotificationType>) => {
+export const promiseNotification = (promise: Promise<NotificationData>) => {
   NotificationObserver.promise(promise)
 }

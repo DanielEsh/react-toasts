@@ -1,13 +1,13 @@
-import { Toast } from './toast.tsx'
-import { NotificationDurationIndicator } from './notification-duration-indicator.tsx'
+import { Toast } from '../../components/toast.tsx'
+import { NotificationDurationIndicator } from '../../components/notification-duration-indicator.tsx'
 import { useEffect, useState } from 'react'
-import { useTimer } from '../use-timer.ts'
-import { NotificationType } from '../types.ts'
-import { SlideDown } from './framer/slide-down.tsx'
-import { Icon } from '../icon.tsx'
+import { useTimer } from '../../use-timer.ts'
+import { NotificationData } from '../types.ts'
+import { SlideDown } from '../../components/framer/slide-down.tsx'
+import { Icon } from '../../icon.tsx'
 
 interface Props {
-  type: NotificationType['type']
+  type: NotificationData['type']
   title: string
   description?: string
   duration?: number
