@@ -5,6 +5,15 @@ export default {
   theme: {
     extend: {
       colors: {
+        gray: {
+          100: 'var(--colors-gray-12)',
+        },
+        neutral: {
+          100: 'var(--colors-neutral-1)',
+          900: 'var(--colors-neutral-12)',
+        },
+        white: 'var(--color-white)',
+
         surface: 'var(--colors-bg-surface)',
         background: 'var(--colors-background-default)',
         foreground: 'var(--colors-foreground-default)',

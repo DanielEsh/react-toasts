@@ -31,6 +31,7 @@ export const NotificationItem = (props: Props) => {
   const [isPause, setPause] = useState(false)
 
   useEffect(() => {
+    console.log('USE EFFECT', duration)
     if (duration) {
       startTimer()
     }

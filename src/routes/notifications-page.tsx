@@ -1,4 +1,4 @@
-import { BaseButton } from '../shared/ui'
+import { Button } from '../shared/ui'
 import {
   createNotificationWithDescription,
   createNotificationWithType,
@@ -47,7 +47,13 @@ export const NotificationsPage = () => {
     const promise = () =>
       new Promise<NotificationType>((_, reject) =>
         setTimeout(
-          () => reject({ title: 'test', type: 'error', duration: 5 }),
+          () =>
+            reject({
+              type: 'update-promise',
+              title: 'test',
+              type: 'error',
+              duration: 5,
+            }),
           2000,
         ),
       )
@@ -59,42 +65,44 @@ export const NotificationsPage = () => {
     <div>
       <span>NotificationsPage</span>
 
+      <div className="w-[800px] h-[200px] flex items-center justify-center border border-amber-400 bg-lime-400 dark:bg-red-500">
+        CONTAINER
+      </div>
+
       <h2>Updated</h2>
       <div className="flex gap-3">
-        <BaseButton onClick={showUpdatedNotification}>Create</BaseButton>
+        <Button onClick={showUpdatedNotification}>Create</Button>
 
-        <BaseButton onClick={handleUpdate}>Update</BaseButton>
+        <Button onClick={handleUpdate}>Update</Button>
 
-        <BaseButton onClick={handlePromiseSuccess}>Promise success</BaseButton>
-        <BaseButton onClick={handlePromiseError}>Promise error</BaseButton>
+        <Button onClick={handlePromiseSuccess}>Promise success</Button>
+        <Button onClick={handlePromiseError}>Promise error</Button>
       </div>
 
       <div className="flex gap-3">
-        <BaseButton onClick={simpleNotifications}>
-          Simple notification
-        </BaseButton>
+        <Button onClick={simpleNotifications}>Simple notification</Button>
 
-        <BaseButton onClick={createNotificationWithDescription}>
+        <Button onClick={createNotificationWithDescription}>
           Notification with description
-        </BaseButton>
+        </Button>
       </div>
 
       <div className="flex gap-3">
-        <BaseButton onClick={() => createNotificationWithType('success')}>
+        <Button onClick={() => createNotificationWithType('success')}>
           Success notification
-        </BaseButton>
+        </Button>
 
-        <BaseButton onClick={() => createNotificationWithType('info')}>
+        <Button onClick={() => createNotificationWithType('info')}>
           Info notification
-        </BaseButton>
+        </Button>
 
-        <BaseButton onClick={() => createNotificationWithType('warning')}>
+        <Button onClick={() => createNotificationWithType('warning')}>
           Warning notification
-        </BaseButton>
+        </Button>
 
-        <BaseButton onClick={() => createNotificationWithType('error')}>
+        <Button onClick={() => createNotificationWithType('error')}>
           Error notification
-        </BaseButton>
+        </Button>
       </div>
     </div>
   )
