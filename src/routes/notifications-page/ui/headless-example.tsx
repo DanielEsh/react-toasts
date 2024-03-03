@@ -9,6 +9,7 @@ import {
 import { Icon } from '../../../icon.tsx'
 import { createNotification } from '../../../notification'
 import { SlideDown } from '../../../components/framer/slide-down.tsx'
+import { NotificationRenderFn } from '../../../notification/types.ts'
 
 interface ToastRootProps {
   children?: ReactNode
@@ -20,7 +21,7 @@ interface ToastRootRef {
 
 export const ToastRoot = forwardRef<ToastRootRef, ToastRootProps>(
   function ToastRoot(_, forwardedRef) {
-    const customNotification = (toast, onRemove) => {
+    const customNotification: NotificationRenderFn = (toast, onRemove) => {
       const handleClick = () => {
         console.log('CLICK', toast)
         onRemove()

@@ -16,7 +16,7 @@ export enum NOTIFICATION_TYPE {
 }
 
 export interface NotificationRemoveFn {
-  (notificationData: NotificationData): void
+  (): void
 }
 
 export interface NotificationRenderFn {
