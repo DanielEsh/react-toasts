@@ -14,6 +14,7 @@ import {
 import { HeadlessExample } from './ui/headless-example.tsx'
 import { TypesExample } from '@/routes/notifications-page/ui/types-example.tsx'
 import { BaseExample } from '@/routes/notifications-page/ui/base-example.tsx'
+import { PromiseExample } from '@/routes/notifications-page/ui/promise-example.tsx'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -84,6 +85,8 @@ export const NotificationsPage = () => {
       <BaseExample />
 
       <TypesExample />
+
+      <PromiseExample />
 
       <h2>Updated</h2>
       <div className="flex gap-3">
