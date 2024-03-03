@@ -3,7 +3,7 @@ import type {
   NotificationHeightItem,
   NotificationData,
 } from '../types.ts'
-import { useQueue } from '../../use-queue.ts'
+import { useQueue } from '@/use-queue.ts'
 import { useState, useEffect } from 'react'
 import { NotificationObserver } from '../state.ts'
 import ReactDOM from 'react-dom'

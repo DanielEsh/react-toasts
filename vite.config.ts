@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'url'
 import react from '@vitejs/plugin-react-swc'
 import svg from '@neodx/svg/vite'
 
@@ -14,5 +15,10 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
 })
