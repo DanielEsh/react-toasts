@@ -12,7 +12,11 @@ interface ToastRootProps {
   children?: ReactNode
 }
 
-export const ToastRoot = forwardRef<HTMLDivElement, ToastRootProps>(
+interface ToastRootRef {
+  add: () => void
+}
+
+export const ToastRoot = forwardRef<ToastRootRef, ToastRootProps>(
   function ToastRoot(_, forwardedRef) {
     const add = () => {
       console.log('ADD')
@@ -25,7 +29,7 @@ export const ToastRoot = forwardRef<HTMLDivElement, ToastRootProps>(
     })
 
     return (
-      <div ref={forwardedRef}>
+      <div>
         <span>ToastRoot</span>
       </div>
     )
@@ -37,11 +41,13 @@ interface ListItem {
 }
 
 export const HeadlessExample = () => {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<ToastRootRef>(null)
   const [list, setList] = useState<ListItem[]>([])
 
   const handleClick = () => {
-    ref.current.add()
+    if (ref.current) {
+      ref.current.add()
+    }
 
     setList((prevState) => {
       return [
