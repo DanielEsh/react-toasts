@@ -13,6 +13,7 @@ import {
 } from '@/notification'
 import { HeadlessExample } from './ui/headless-example.tsx'
 import { TypesExample } from '@/routes/notifications-page/ui/types-example.tsx'
+import { BaseExample } from '@/routes/notifications-page/ui/base-example.tsx'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -79,6 +80,8 @@ export const NotificationsPage = () => {
       </div>
 
       <HeadlessExample />
+
+      <BaseExample />
 
       <TypesExample />
 

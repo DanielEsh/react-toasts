@@ -20,7 +20,7 @@ const descriptionMap: Record<NOTIFICATION_TYPE, string> = {
   loading: 'Loading...',
 }
 
-const handleMakeNotification = (type: NOTIFICATION_TYPE) => {
+const makeNotification = (type: NOTIFICATION_TYPE) => {
   createNotification({
     id: getUid(),
     title: titlesMap[type],
@@ -35,45 +35,45 @@ export const TypesExample = () => {
     <div className="my-6">
       <h2 className="mb-6 text-2xl">Types</h2>
 
-      <div className="flex gap-3 ">
+      <div className="flex gap-3">
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.DEFAULT)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.DEFAULT)}
         >
           Default
         </Button>
 
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.SUCCESS)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.SUCCESS)}
         >
           Success
         </Button>
 
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.INFO)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.INFO)}
         >
           Info
         </Button>
 
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.WARNING)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.WARNING)}
         >
           Warning
         </Button>
 
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.ERROR)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.ERROR)}
         >
           Error
         </Button>
 
         <Button
           size="lg"
-          onClick={() => handleMakeNotification(NOTIFICATION_TYPE.LOADING)}
+          onClick={() => makeNotification(NOTIFICATION_TYPE.LOADING)}
         >
           Loading
         </Button>
