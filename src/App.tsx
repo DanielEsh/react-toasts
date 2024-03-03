@@ -9,7 +9,7 @@ import { lazy, Suspense } from 'react'
 import { PrivateRoute } from './components/PrivateRouter.tsx'
 import { ThemeProvider } from './modules/core/themes'
 import { DarkModeToggle } from './modules/core/themes/DarkModeToggle.tsx'
-import { NotificationsPage } from './routes/notifications-page.tsx'
+import { NotificationsPage } from '@/routes/notifications-page'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {

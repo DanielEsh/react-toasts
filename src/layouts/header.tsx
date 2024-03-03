@@ -1,10 +1,10 @@
-import { Button } from '../shared/ui'
+import { Button } from '@/shared/ui'
 import { Link } from 'react-router-dom'
 
 export const Header = () => {
   return (
-    <div className="h-[64px] ">
-      <div className="mx-auto flex w-[1600px] justify-between">
+    <div className="h-[64px]">
+      <div className="container flex justify-between">
         <div>HEADER</div>
 
         <div>

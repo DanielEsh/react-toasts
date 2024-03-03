@@ -1,17 +1,18 @@
-import { Button } from '../shared/ui'
+import { Button } from '@/shared/ui'
 import {
   createNotificationWithDescription,
   createNotificationWithType,
   simpleNotifications,
-} from '../notification-helpers.ts'
+} from '../../notification-helpers.ts'
 import {
   createNotification,
   NOTIFICATION_TYPE,
   type NotificationData,
   promiseNotification,
   updateNotification,
-} from '../notification'
-import { HeadlessExample } from './notifications-page/ui/headless-example.tsx'
+} from '@/notification'
+import { HeadlessExample } from './ui/headless-example.tsx'
+import { TypesExample } from '@/routes/notifications-page/ui/types-example.tsx'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -70,14 +71,16 @@ export const NotificationsPage = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <span>NotificationsPage</span>
 
-      <div className="dark:bg-red-500 flex h-[200px] w-[800px] items-center justify-center border border-amber-400 bg-lime-400">
+      <div className="flex h-[200px] w-[800px] items-center justify-center border border-amber-400 bg-lime-400 dark:bg-red-500">
         CONTAINER
       </div>
 
       <HeadlessExample />
+
+      <TypesExample />
 
       <h2>Updated</h2>
       <div className="flex gap-3">

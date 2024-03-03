@@ -83,4 +83,9 @@
 
     color-scheme: light;
   }
+
+  .container {
+    max-width: 85rem;
+    margin: 0 auto;
+  }
 }
