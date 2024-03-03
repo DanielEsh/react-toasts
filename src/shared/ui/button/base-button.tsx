@@ -1,5 +1,10 @@
-import { forwardRef, ButtonHTMLAttributes, ReactNode, ElementType } from 'react'
-import { VariantProps, cva } from 'class-variance-authority'
+import {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type ReactNode,
+  type ElementType,
+} from 'react'
+import { type VariantProps, cva } from 'class-variance-authority'
 import { classNames } from '../../utils'
 
 const buttonVariants = cva(

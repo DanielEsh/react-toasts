@@ -2,7 +2,7 @@ import { Toast } from '../../components/toast.tsx'
 import { NotificationDurationIndicator } from '../../components/notification-duration-indicator.tsx'
 import { useEffect, useState } from 'react'
 import { useTimer } from '../../use-timer.ts'
-import { NotificationData } from '../types.ts'
+import type { NotificationData } from '../types.ts'
 import { SlideDown } from '../../components/framer/slide-down.tsx'
 import { Icon } from '../../icon.tsx'
 

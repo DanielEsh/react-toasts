@@ -1,5 +1,5 @@
-import { CSSProperties, useEffect, useRef } from 'react'
-import { cva, VariantProps } from 'class-variance-authority'
+import { type CSSProperties, useEffect, useRef } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { classNames } from '../shared/utils'
 
 interface Props {

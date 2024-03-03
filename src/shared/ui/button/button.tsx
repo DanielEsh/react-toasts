@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { BaseButton, BaseButtonProps } from './base-button.tsx'
+import { BaseButton, type BaseButtonProps } from './base-button.tsx'
 
 const COMPONENT_NAME = 'BaseButton'
 

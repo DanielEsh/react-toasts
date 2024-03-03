@@ -3,12 +3,12 @@ import {
   useEffect,
   useMemo,
   useLayoutEffect,
-  CSSProperties,
-  ReactNode,
+  type CSSProperties,
+  type ReactNode,
   useState,
 } from 'react'
 import type { NotificationHeightItem } from '../types.ts'
-import { NotificationData } from '../types.ts'
+import type { NotificationData } from '../types.ts'
 
 interface Props {
   id: NotificationData['id']

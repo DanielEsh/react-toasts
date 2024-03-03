@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { cva, VariantProps } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from '../icon.tsx'
 import { classNames } from '../shared/utils'
 import { Loader } from './loader.tsx'

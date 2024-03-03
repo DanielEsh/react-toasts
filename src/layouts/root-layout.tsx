@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 // import { Toasts } from '../components/toasts.tsx'
 import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
-import { NotificationsContainerPosition } from '../notification'
+import type { NotificationsContainerPosition } from '../notification'
 import { Notifications } from '../notification/ui/notifications.tsx'
 import { Header } from './header.tsx'
 

@@ -1,7 +1,7 @@
 import { Button } from '../../../shared/ui'
 import {
   forwardRef,
-  ReactNode,
+  type ReactNode,
   useImperativeHandle,
   useRef,
   useState,
@@ -9,7 +9,7 @@ import {
 import { Icon } from '../../../icon.tsx'
 import { createNotification } from '../../../notification'
 import { SlideDown } from '../../../components/framer/slide-down.tsx'
-import { NotificationRenderFn } from '../../../notification/types.ts'
+import type { NotificationRenderFn } from '../../../notification/types.ts'
 
 interface ToastRootProps {
   children?: ReactNode

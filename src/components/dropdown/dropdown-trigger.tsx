@@ -1,4 +1,8 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import {
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  forwardRef,
+} from 'react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 
 const COMPONENT_NAME = 'DropdownTrigger'

@@ -1,7 +1,7 @@
 import {
-  CreateNotification,
+  type CreateNotification,
   NOTIFICATION_TYPE,
-  NotificationData,
+  type NotificationData,
 } from './types.ts'
 
 interface NotificationPayload {
