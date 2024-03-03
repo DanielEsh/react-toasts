@@ -11,6 +11,7 @@ import {
   promiseNotification,
   updateNotification,
 } from '../notification'
+import { HeadlessExample } from './notifications-page/ui/headless-example.tsx'
 
 export const NotificationsPage = () => {
   const showUpdatedNotification = () => {
@@ -38,7 +39,7 @@ export const NotificationsPage = () => {
         setTimeout(
           () =>
             resolve({
-              id: 'new-id',
+              id: new Date().getTime(),
               title: 'test',
               type: NOTIFICATION_TYPE.SUCCESS,
               duration: 5,
@@ -56,7 +57,7 @@ export const NotificationsPage = () => {
         setTimeout(
           () =>
             reject({
-              id: 'update-promise',
+              id: new Date().getTime(),
               title: 'test',
               type: NOTIFICATION_TYPE.ERROR,
               duration: 5,
@@ -75,6 +76,8 @@ export const NotificationsPage = () => {
       <div className="w-[800px] h-[200px] flex items-center justify-center border border-amber-400 bg-lime-400 dark:bg-red-500">
         CONTAINER
       </div>
+
+      <HeadlessExample />
 
       <h2>Updated</h2>
       <div className="flex gap-3">

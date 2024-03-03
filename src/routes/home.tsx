@@ -1,35 +1,10 @@
 import { Link } from 'react-router-dom'
-import { toastFunction } from '../notification/state.ts'
-import { Section } from '../components/Section.tsx'
-import { TypesActions } from '../components/TypesActions.tsx'
 import { useState } from 'react'
 import { Icon } from '../icon.tsx'
 import { Toast } from '../components/toast.tsx'
 
 export default function HomePage() {
   const [animation, setAnimation] = useState(true)
-  const handleClick = () => {
-    toastFunction({
-      title: 'Simple',
-    })
-  }
-
-  const handle2Click = () => {
-    toastFunction({
-      id: new Date().getTime(),
-      title: 'with description',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    })
-  }
-
-  const handleTimerClick = () => {
-    toastFunction({
-      title: 'message with timer',
-      description: '5 second timer',
-      duration: 5,
-    })
-  }
 
   console.log('rerender')
 
@@ -54,36 +29,6 @@ export default function HomePage() {
       </div>
 
       <div>
-        <div className="flex gap-3">
-          <button
-            className="button"
-            onClick={handleClick}
-          >
-            Add Toast
-          </button>
-          <button
-            className="button"
-            onClick={handle2Click}
-          >
-            Add Large description toast
-          </button>
-        </div>
-
-        <Section
-          title="Types"
-          description="description"
-        >
-          <TypesActions />
-        </Section>
-
-        <div className="flex gap-3">
-          <button
-            className="button"
-            onClick={handleTimerClick}
-          >
-            AutoClose
-          </button>
-        </div>
         <Link to="/categories">To categories</Link>
 
         <Icon name="check" />
