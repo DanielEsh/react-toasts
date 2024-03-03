@@ -27,7 +27,7 @@ export default function CategoriesPage() {
       <AnimatePresence>
         {fade && (
           <FadeAnimation key="fade">
-            <div className="bg-amber-300 w-[700px] h-[200px] flex items-center justify-center">
+            <div className="flex h-[200px] w-[700px] items-center justify-center bg-amber-300">
               FADE MOTION EXAMPLE
             </div>
           </FadeAnimation>

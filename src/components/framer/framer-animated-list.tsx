@@ -25,7 +25,7 @@ export const FramerAnimatedList = () => {
       >
         Добавить элемент
       </button>
-      <ol className="list flex flex-col w-[480px] gap-4">
+      <ol className="list flex w-[480px] flex-col gap-4">
         <AnimatePresence>
           {items.map((item, index) => (
             <FramerAnimatedListItem

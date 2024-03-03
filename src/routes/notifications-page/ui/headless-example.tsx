@@ -107,7 +107,7 @@ export const HeadlessExample = () => {
         return (
           <div
             key={idx}
-            className="flex items-center justify-center rounded-md gap-3 bg-amber-300 w-[200px]"
+            className="flex w-[200px] items-center justify-center gap-3 rounded-md bg-amber-300"
           >
             <span>{item.name}</span>
             <Button

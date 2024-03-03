@@ -7,7 +7,7 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
 export function Icon({ name, className, viewBox, ...props }: IconProps) {
   return (
     <svg
-      className="w-[24px] h-[24px]"
+      className="h-[24px] w-[24px]"
       viewBox={viewBox}
       focusable="false"
       aria-hidden

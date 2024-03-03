@@ -1,52 +1,47 @@
 :root {
-  --gray1: hsl(0,0%,99%);
-  --gray2: hsl(0,0%,97.3%);
-  --gray3: hsl(0,0%,95.1%);
-  --gray4: hsl(0,0%,93%);
-  --gray5: hsl(0,0%,90.9%);
-  --gray6: hsl(0,0%,88.7%);
-  --gray7: hsl(0,0%,85.8%);
-  --gray8: hsl(0,0%,78%);
-  --gray9: hsl(0,0%,56.1%);
-  --gray10: hsl(0,0%,52.3%);
-  --gray11: hsl(0,0%,43.5%);
-  --gray12: hsl(0,0%,9%);
+  --gray1: hsl(0, 0%, 99%);
+  --gray2: hsl(0, 0%, 97.3%);
+  --gray3: hsl(0, 0%, 95.1%);
+  --gray4: hsl(0, 0%, 93%);
+  --gray5: hsl(0, 0%, 90.9%);
+  --gray6: hsl(0, 0%, 88.7%);
+  --gray7: hsl(0, 0%, 85.8%);
+  --gray8: hsl(0, 0%, 78%);
+  --gray9: hsl(0, 0%, 56.1%);
+  --gray10: hsl(0, 0%, 52.3%);
+  --gray11: hsl(0, 0%, 43.5%);
+  --gray12: hsl(0, 0%, 9%);
 
   --normal-bg: #fff;
   --normal-border: var(--gray4);
   --normal-text: var(--gray12);
 }
 
-html[data-theme="dark"] ::-webkit-scrollbar {
+html[data-theme='dark'] ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
   display: block;
   background: #1e2023;
 }
 
-html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+html[data-theme='dark'] ::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 5px;
 }
 
-html[data-theme="dark"] ::-webkit-scrollbar-track {
+html[data-theme='dark'] ::-webkit-scrollbar-track {
   background: var(--colors-bg-surface);
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-  'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-bottom: 500px;
 }
-
-
-
-
-
-
 
 .page {
   padding: 12px;
@@ -59,7 +54,7 @@ body {
   border-radius: 6px;
 }
 
-.button[data-active="true"] {
+.button[data-active='true'] {
   background: var(--gray3);
   border-color: var(--gray7);
 }
@@ -103,7 +98,7 @@ body {
   color: var(--error-text);
 }
 
-.toasts[data-expanded="false"] {
+.toasts[data-expanded='false'] {
   gap: 16px;
   transition: gap 0.3s ease;
 }
@@ -169,7 +164,9 @@ body {
   justify-content: center;
   padding: 16px;
 
-  transition: transform .3s, opacity .3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
 }
 
 .notification-position {
@@ -187,13 +184,19 @@ body {
   z-index: var(--z-index);
   transform: var(--y);
   height: auto;
-  transition: transform .3s, opacity .3s, height .3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s,
+    height 0.3s;
 }
 
 .notification-item {
   width: 356px;
 
-  transition: transform .3s, opacity .3s, height .3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s,
+    height 0.3s;
 }
 
 .toast {
@@ -227,7 +230,10 @@ body {
   border: 1px solid var(--normal-border);
   background: var(--normal-bg);
 
-  transition: transform .3s, opacity .3s, height .3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s,
+    height 0.3s;
 }
 
 .toast[data-mounted='true'] {
@@ -243,7 +249,8 @@ body {
 
 .toast[data-expanded='false'][data-front='false'] {
   /*--scale: var(--toasts-before) * 0.05 + 1;*/
-  --y: translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));
+  --y: translateY(calc(var(--lift-amount) * var(--toasts-before)))
+    scale(calc(-1 * var(--scale)));
   height: auto;
 }
 
@@ -276,21 +283,22 @@ body {
 .anim {
   opacity: 0;
   transform: translate(0, 100%);
-  transition: opacity .3s, transform .3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
-.anim[data-animation="true"] {
+.anim[data-animation='true'] {
   transform: translate(0);
   opacity: 1;
 }
 
-
-
-
 .list-item {
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 1s, transform 1s;
+  transition:
+    opacity 1s,
+    transform 1s;
 }
 
 .list-item.mounted {
@@ -306,9 +314,10 @@ body {
 .list-item-exit-active {
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 1s, transform 1s;
+  transition:
+    opacity 1s,
+    transform 1s;
 }
-
 
 .basic-transition {
   font-size: 3rem;

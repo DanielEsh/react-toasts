@@ -23,7 +23,7 @@ export const AnimatedListItem = ({ children, onDelete }: Props) => {
 
   return (
     <li
-      className={`list-item bg-amber-300 p-4 border border-amber-400 ${
+      className={`list-item border border-amber-400 bg-amber-300 p-4 ${
         mounted && !isDeleting ? 'mounted' : ''
       }`}
     >

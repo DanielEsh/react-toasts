@@ -76,7 +76,7 @@ export const NotificationItem = (props: Props) => {
   return (
     <SlideDown>
       <div
-        className={`notification-item relative z-10 rounded-lg overflow-hidden`}
+        className={`notification-item relative z-10 overflow-hidden rounded-lg`}
         onMouseEnter={handleHover}
         onMouseLeave={handleHoverLeave}
       >

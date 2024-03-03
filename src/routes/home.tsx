@@ -22,7 +22,7 @@ export default function HomePage() {
       </button>
 
       <div
-        className="anim bg-amber-300 w-[300px] h-[300px] flex items-center justify-center rounded-md"
+        className="anim flex h-[300px] w-[300px] items-center justify-center rounded-md bg-amber-300"
         data-animation={animation}
       >
         <span>test</span>
@@ -34,7 +34,7 @@ export default function HomePage() {
         <Icon name="check" />
         <Icon name="diamond" />
 
-        <div className="flex flex-col gap-3 w-[560px]">
+        <div className="flex w-[560px] flex-col gap-3">
           <Toast
             title="default example"
             description="description"

@@ -9,7 +9,7 @@ interface Props {
 export const FramerAnimatedListItem = ({ children, onDelete }: Props) => {
   return (
     <SlideDown>
-      <li className="bg-amber-300 p-4 border border-amber-400">
+      <li className="border border-amber-400 bg-amber-300 p-4">
         {children}
         <button onClick={onDelete}>Удалить</button>
       </li>

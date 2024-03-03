@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const Header = () => {
   return (
     <div className="h-[64px] ">
-      <div className="flex justify-between w-[1600px] mx-auto">
+      <div className="mx-auto flex w-[1600px] justify-between">
         <div>HEADER</div>
 
         <div>

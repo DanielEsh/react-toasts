@@ -73,7 +73,7 @@ export const NotificationsPage = () => {
     <div>
       <span>NotificationsPage</span>
 
-      <div className="w-[800px] h-[200px] flex items-center justify-center border border-amber-400 bg-lime-400 dark:bg-red-500">
+      <div className="dark:bg-red-500 flex h-[200px] w-[800px] items-center justify-center border border-amber-400 bg-lime-400">
         CONTAINER
       </div>
 

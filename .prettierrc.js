@@ -1,3 +1,5 @@
+import * as tailwindcssPlugin from 'prettier-plugin-tailwindcss'
+
 export default {
   tabWidth: 2,
   singleQuote: true,
@@ -6,4 +8,6 @@ export default {
   singleAttributePerLine: true,
   trailingComma: 'all',
   endOfLine: 'auto',
+
+  plugins: [tailwindcssPlugin],
 }

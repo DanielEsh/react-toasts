@@ -44,7 +44,7 @@ export const AnimatedQueue = () => {
     <div>
       <button onClick={handleAddItem}>Добавить элемент</button>
       <button onClick={cleanQueue}>Очистить очередь</button>
-      <ol className="list flex flex-col w-[480px] gap-4">
+      <ol className="list flex w-[480px] flex-col gap-4">
         {items.map((item, index) => (
           <AnimatedListItem
             key={item.id}
