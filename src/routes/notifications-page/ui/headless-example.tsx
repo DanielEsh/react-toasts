@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { Icon } from '../../../icon.tsx'
 
 interface ToastRootProps {
   children?: ReactNode
@@ -52,17 +53,36 @@ export const HeadlessExample = () => {
     })
   }
 
+  const handleRemove = (index: number) => {
+    setList((prevState) => {
+      return prevState.filter((_, itemIdx) => itemIdx !== index)
+    })
+  }
+
   return (
     <div>
       <span>HEADLESS EXAMPLE</span>
 
       <ToastRoot ref={ref} />
 
-      {list.map((item, idx) => {
-        return <div key={idx}>{item.name}</div>
-      })}
-
       <Button onClick={handleClick}>Create Headless Toast</Button>
+
+      {list.map((item, idx) => {
+        return (
+          <div
+            key={idx}
+            className="flex items-center justify-center rounded-md gap-3 bg-amber-300 w-[200px]"
+          >
+            <span>{item.name}</span>
+            <Button
+              size="xs"
+              onClick={() => handleRemove(idx)}
+            >
+              <Icon name="close" />
+            </Button>
+          </div>
+        )
+      })}
     </div>
   )
 }
