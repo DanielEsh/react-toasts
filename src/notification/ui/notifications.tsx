@@ -88,6 +88,20 @@ export const Notifications = ({ position, limit }: Props) => {
     setHeights((h) => h.filter((height) => height.toastId !== id))
   }
 
+  const renderNotification = (notification: NotificationData) => {
+    return notification.render ? (
+      notification.render(notification, () => removeToast(notification))
+    ) : (
+      <NotificationItem
+        type={notification.type}
+        title={notification.title}
+        description={notification.description}
+        duration={notification.duration}
+        onDismiss={() => removeToast(notification)}
+      />
+    )
+  }
+
   return (
     <section className="toasts-section">
       <ol className={`toasts position-${position}`}>
@@ -116,15 +130,7 @@ export const Notifications = ({ position, limit }: Props) => {
               }
               onRemoveHeights={() => handleRemoveHeightById(toast.id)}
             >
-              {toast.render(() => removeToast(toast)) || (
-                <NotificationItem
-                  type={toast.type}
-                  title={toast.title}
-                  description={toast.description}
-                  duration={toast.duration}
-                  onDismiss={() => removeToast(toast)}
-                />
-              )}
+              {renderNotification(toast)}
             </NotificationPosition>
           ))}
         </AnimatePresence>

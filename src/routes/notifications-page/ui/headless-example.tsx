@@ -20,9 +20,9 @@ interface ToastRootRef {
 
 export const ToastRoot = forwardRef<ToastRootRef, ToastRootProps>(
   function ToastRoot(_, forwardedRef) {
-    const customNotification = (onRemove) => {
+    const customNotification = (toast, onRemove) => {
       const handleClick = () => {
-        console.log('CLICK', onRemove)
+        console.log('CLICK', toast)
         onRemove()
       }
 

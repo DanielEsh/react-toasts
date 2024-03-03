@@ -15,6 +15,14 @@ export enum NOTIFICATION_TYPE {
   LOADING = 'loading',
 }
 
+export interface NotificationRemoveFn {
+  (notificationData: NotificationData): void
+}
+
+export interface NotificationRenderFn {
+  (toast: NotificationData, onRemove: NotificationRemoveFn): ReactElement
+}
+
 export interface NotificationData {
   // TODO: должно быть обязательное
   id?: number | string
@@ -22,7 +30,7 @@ export interface NotificationData {
   title: string
   description?: string
   duration?: number
-  render?: (onRemove: any) => ReactElement
+  render?: NotificationRenderFn
 }
 
 export interface NotificationHeightItem {
