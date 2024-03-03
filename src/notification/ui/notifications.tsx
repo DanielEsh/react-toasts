@@ -84,6 +84,7 @@ export const Notifications = ({ position, limit }: Props) => {
   }
 
   const handleRemoveHeightById = (id: NotificationData['id']) => {
+    console.log('handleRemoveHeightById', id)
     setHeights((h) => h.filter((height) => height.toastId !== id))
   }
 
@@ -115,13 +116,15 @@ export const Notifications = ({ position, limit }: Props) => {
               }
               onRemoveHeights={() => handleRemoveHeightById(toast.id)}
             >
-              <NotificationItem
-                type={toast.type}
-                title={toast.title}
-                description={toast.description}
-                duration={toast.duration}
-                onDismiss={() => removeToast(toast)}
-              />
+              {toast.render(() => removeToast(toast)) || (
+                <NotificationItem
+                  type={toast.type}
+                  title={toast.title}
+                  description={toast.description}
+                  duration={toast.duration}
+                  onDismiss={() => removeToast(toast)}
+                />
+              )}
             </NotificationPosition>
           ))}
         </AnimatePresence>

@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react'
 import { Icon } from '../../../icon.tsx'
+import { createNotification } from '../../../notification'
+import { SlideDown } from '../../../components/framer/slide-down.tsx'
 
 interface ToastRootProps {
   children?: ReactNode
@@ -18,8 +20,35 @@ interface ToastRootRef {
 
 export const ToastRoot = forwardRef<ToastRootRef, ToastRootProps>(
   function ToastRoot(_, forwardedRef) {
+    const customNotification = (onRemove) => {
+      const handleClick = () => {
+        console.log('CLICK', onRemove)
+        onRemove()
+      }
+
+      return (
+        <SlideDown>
+          <div className="bg-blue-500">
+            <span>HEADLESS</span>
+
+            <Button
+              size="xs"
+              onClick={handleClick}
+            >
+              <Icon name="close" />
+            </Button>
+          </div>
+        </SlideDown>
+      )
+    }
+
     const add = () => {
       console.log('ADD')
+      createNotification({
+        id: `headless${new Date().getTime()}`,
+        duration: 5,
+        render: customNotification,
+      })
     }
 
     useImperativeHandle(forwardedRef, () => {

@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react'
+
 type VerticalPosition = 'top' | 'bottom'
 type HorizontalPosition = 'left' | 'center' | 'right'
 
@@ -20,6 +22,7 @@ export interface NotificationData {
   title: string
   description?: string
   duration?: number
+  render?: (onRemove: any) => ReactElement
 }
 
 export interface NotificationHeightItem {
