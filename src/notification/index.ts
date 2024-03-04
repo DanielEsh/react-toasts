@@ -9,4 +9,5 @@ export {
   type CreateNotification,
   type NotificationData,
   type NotificationsContainerPosition,
+  type NotificationRenderFn,
 } from './types.ts'
