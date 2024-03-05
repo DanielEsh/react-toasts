@@ -1,4 +1,5 @@
 import { Dropdown } from './dropdown'
+import { Button } from '@/shared/ui'
 
 export const DropdownDemo = () => {
   const handleNewTabClick = () => {
@@ -12,10 +13,10 @@ export const DropdownDemo = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <button className="button">Open Menu</button>
+        <Button>Open Menu</Button>
       </Dropdown.Trigger>
 
-      <Dropdown.Content>
+      <Dropdown.Content asChild>
         <Dropdown.Item onClick={handleNewTabClick}>New Tab</Dropdown.Item>
         <Dropdown.Item onClick={handleNewWindowClick}>New Window</Dropdown.Item>
         <Dropdown.Item>New Private Window</Dropdown.Item>

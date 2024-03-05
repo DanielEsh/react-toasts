@@ -6,6 +6,8 @@ import { FadeAnimation } from '../components/framer/fade.tsx'
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { FramerAnimatedList } from '../components/framer/framer-animated-list.tsx'
+import { FadeTransition } from '@/shared/ui/transition/fade.tsx'
+import { Button } from '@/shared/ui'
 
 export default function CategoriesPage() {
   const [fade, setFade] = useState(false)
@@ -35,6 +37,23 @@ export default function CategoriesPage() {
       </AnimatePresence>
 
       <FramerAnimatedList />
+
+      <h2>Transitions</h2>
+
+      <div>fade</div>
+      <div>scale</div>
+
+      <Button onClick={() => setFade(!fade)}>Fade example</Button>
+
+      <AnimatePresence>
+        {fade && (
+          <FadeTransition>
+            <div className="flex h-[200px] w-[700px] items-center justify-center bg-amber-300">
+              FADE MOTION EXAMPLE
+            </div>
+          </FadeTransition>
+        )}
+      </AnimatePresence>
 
       <div>
         <Link to="/">Back home</Link>

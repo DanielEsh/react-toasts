@@ -20,10 +20,11 @@ export const DropdownContent = forwardRef<
         side="bottom"
         align="end"
         sideOffset={8}
-        className="dropdown-content min-w-[8rem] overflow-hidden rounded-md border bg-white shadow-md"
+        className="dropdown-content min-w-[8rem] overflow-hidden rounded-md border bg-gray-100 text-neutral-100 shadow-md"
         {...restProps}
       >
         {children}
+        <DropdownMenuPrimitive.Arrow className="fill-gray-100" />
       </DropdownMenuPrimitive.Content>
     </DropdownMenuPrimitive.Portal>
   )
