@@ -1,10 +1,13 @@
-import { Toast } from '../../components/toast.tsx'
-import { NotificationDurationIndicator } from '../../components/notification-duration-indicator.tsx'
-import { useEffect, useState } from 'react'
-import { useTimer } from '../../use-timer.ts'
+import { Toast } from '@/components/toast.tsx'
+import {
+  NotificationDurationIndicator,
+  type NotificationDurationRef,
+} from '@/components/notification-duration-indicator.tsx'
+import { useEffect, useRef } from 'react'
+import { useTimer } from '@/use-timer.ts'
 import type { NotificationData } from '../types.ts'
 import { SlideDown } from '../../components/framer/slide-down.tsx'
-import { Icon } from '../../icon.tsx'
+import { Icon } from '@/icon.tsx'
 
 interface Props {
   type: NotificationData['type']
@@ -15,6 +18,7 @@ interface Props {
 }
 
 export const NotificationItem = (props: Props) => {
+  const durationIndicatorRef = useRef<NotificationDurationRef>(null)
   const { type, title, description, duration, onDismiss } = props
 
   const handleRemove = () => {
@@ -28,8 +32,6 @@ export const NotificationItem = (props: Props) => {
     handleRemove,
   )
 
-  const [isPause, setPause] = useState(false)
-
   useEffect(() => {
     console.log('USE EFFECT', duration)
     if (duration) {
@@ -39,17 +41,19 @@ export const NotificationItem = (props: Props) => {
   }, [duration])
 
   const handleResume = () => {
-    setPause(false)
+    if (!durationIndicatorRef.current) return
+    durationIndicatorRef.current.resume()
     resumeTimer()
   }
 
   const handlePause = () => {
-    setPause(true)
+    if (!durationIndicatorRef.current) return
+    durationIndicatorRef.current.pause()
     pauseTimer()
   }
 
   const handleHover = () => {
-    if (duration && !isPause) {
+    if (duration) {
       handlePause()
     }
   }
@@ -89,9 +93,9 @@ export const NotificationItem = (props: Props) => {
         />
         {duration && (
           <NotificationDurationIndicator
+            ref={durationIndicatorRef}
             type={type}
             duration={duration}
-            pause={isPause}
           />
         )}
       </div>

@@ -1,11 +1,12 @@
-import { type CSSProperties, useEffect, useRef } from 'react'
+import {
+  type CSSProperties,
+  type ForwardRefRenderFunction,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { classNames } from '@/shared/utils'
-
-interface Props {
-  duration: number
-  pause: boolean
-}
 
 const notificationDurationVariants = cva(
   'duration-timer absolute bottom-0 left-0 h-[6px]',
@@ -28,19 +29,18 @@ const notificationDurationVariants = cva(
 
 interface Props extends VariantProps<typeof notificationDurationVariants> {
   duration: number
-  pause: boolean
 }
 
-export const NotificationDurationIndicator = ({
-  type,
-  duration,
-  pause,
-}: Props) => {
-  const toastDurationTimerRef = useRef<HTMLDivElement>(null)
+export interface NotificationDurationRef {
+  pause: () => void
+  resume: () => void
+}
 
-  useEffect(() => {
-    pause ? handlePause() : handleResume()
-  }, [pause])
+const NotificationDurationIndicatorImpl: ForwardRefRenderFunction<
+  NotificationDurationRef,
+  Props
+> = ({ type, duration }, forwardedRef) => {
+  const toastDurationTimerRef = useRef<HTMLDivElement>(null)
 
   const handlePause = () => {
     toastDurationTimerRef.current!.style.animationPlayState = 'paused'
@@ -50,6 +50,11 @@ export const NotificationDurationIndicator = ({
     toastDurationTimerRef.current!.style.animationPlayState = 'running'
     toastDurationTimerRef.current!.style.animation
   }
+
+  useImperativeHandle(forwardedRef, () => ({
+    pause: handlePause,
+    resume: handleResume,
+  }))
 
   const classes = classNames(notificationDurationVariants({ type }))
 
@@ -65,3 +70,8 @@ export const NotificationDurationIndicator = ({
     />
   )
 }
+
+export const NotificationDurationIndicator = forwardRef<
+  NotificationDurationRef,
+  Props
+>(NotificationDurationIndicatorImpl)
