@@ -1,6 +1,6 @@
 import { type CSSProperties, useEffect, useRef } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { classNames } from '../shared/utils'
+import { classNames } from '@/shared/utils'
 
 interface Props {
   duration: number
@@ -12,7 +12,7 @@ const notificationDurationVariants = cva(
   {
     variants: {
       type: {
-        default: 'bg-white',
+        default: 'bg-gray-100',
         success: 'bg-success-3',
         info: 'bg-info-3',
         warning: 'bg-warning-3',
