@@ -15,19 +15,23 @@ export const TRANSITION_DEFAULTS = {
 
 interface Props {
   children: ReactNode
+  className?: string
 }
 
-const fade: Variants = {
+const scaleVariant: Variants = {
   enter: {
+    scale: 0.5,
     opacity: 0,
   },
   animate: {
+    scale: 1,
     opacity: 1,
     transition: {
       duration: 0.5,
     },
   },
   exit: {
+    scale: 0.5,
     opacity: 0,
     transition: {
       duration: 0.5,
@@ -35,24 +39,20 @@ const fade: Variants = {
   },
 }
 
-const fadeConfig = {
+const scaleTransition = {
   initial: 'enter',
   animate: 'animate',
   exit: 'exit',
-  variants: fade,
+  variants: scaleVariant,
 }
 
-export const FadeAnimation = ({ children }: Props) => {
-  // return (
-  //   <motion.div
-  //     initial="enter"
-  //     animate="animate"
-  //     exit="exit"
-  //     variants={fade}
-  //   >
-  //     {children}
-  //   </motion.div>
-  // )
-
-  return <motion.div {...fadeConfig}>{children}</motion.div>
+export const ScaleAnimation = ({ children, className }: Props) => {
+  return (
+    <motion.div
+      className={className}
+      {...scaleTransition}
+    >
+      {children}
+    </motion.div>
+  )
 }
