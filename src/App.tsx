@@ -10,6 +10,7 @@ import { PrivateRoute } from './components/PrivateRouter.tsx'
 import { ThemeProvider } from './modules/core/themes'
 import { DarkModeToggle } from './modules/core/themes/DarkModeToggle.tsx'
 import { NotificationsPage } from '@/routes/notifications-page'
+import { SandboxPage } from '@/routes/sandbox-page'
 
 // const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
         element: <Login />,
       },
     ],
+  },
+  {
+    path: '/sandbox',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <SandboxPage />
+      </Suspense>
+    ),
   },
 ])
 
