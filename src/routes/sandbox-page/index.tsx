@@ -3,6 +3,8 @@ import { ScaleDemo } from '@/routes/sandbox-page/ui/scale-demo.tsx'
 import { ScaleDownDemo } from '@/routes/sandbox-page/ui/scale-down-demo.tsx'
 import { SlideUpDemo } from '@/routes/sandbox-page/ui/slide-up-demo.tsx'
 import { SlideDownDemo } from '@/routes/sandbox-page/ui/slide-down-demo.tsx'
+import { SlideRightDemo } from '@/routes/sandbox-page/ui/slide-right-demo.tsx'
+import { SlideLeftDemo } from '@/routes/sandbox-page/ui/slide-left-demo.tsx'
 
 export const SandboxPage = () => {
   return (
@@ -14,6 +16,8 @@ export const SandboxPage = () => {
       <ScaleDownDemo />
       <SlideDownDemo />
       <SlideUpDemo />
+      <SlideRightDemo />
+      <SlideLeftDemo />
     </div>
   )
 }
