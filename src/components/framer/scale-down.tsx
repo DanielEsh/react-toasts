@@ -8,7 +8,7 @@ interface Props {
 
 const scaleDownVariant: Variants = {
   enter: {
-    scale: 0.5,
+    scale: 0,
     y: '100%',
     opacity: 0,
   },
@@ -17,7 +17,15 @@ const scaleDownVariant: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      scale: {
+        duration: 0.5,
+      },
+      y: {
+        duration: 0.5,
+      },
+      opacity: {
+        duration: 0.3,
+      },
     },
   },
   exit: {
@@ -25,7 +33,15 @@ const scaleDownVariant: Variants = {
     opacity: 0,
     y: '100%',
     transition: {
-      duration: 0.5,
+      scale: {
+        duration: 0.5,
+      },
+      y: {
+        duration: 0.5,
+      },
+      opacity: {
+        duration: 0.3,
+      },
     },
   },
 }

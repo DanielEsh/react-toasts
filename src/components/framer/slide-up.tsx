@@ -6,13 +6,13 @@ interface Props {
   className?: string
 }
 
-export const SlideDown = ({ children, className }: Props) => {
+export const SlideUp = ({ children, className }: Props) => {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: '100%' }}
+      initial={{ opacity: 0, y: '-100%' }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: '100%' }}
+      exit={{ opacity: 0, y: '-100%' }}
       transition={{ duration: 0.3 }}
     >
       {children}
