@@ -5,6 +5,7 @@ import { Section } from '../components/Section.tsx'
 import type { NotificationsContainerPosition } from '../notification'
 import { Notifications } from '../notification/ui/notifications.tsx'
 import { Header } from './header.tsx'
+import { NotificationObserver } from '@/notification/state.ts'
 
 const positions = [
   'top-left',
@@ -46,7 +47,10 @@ export const RootLayout = () => {
         <Outlet />
       </div>
       {/*<Toasts position={activePosition} />*/}
-      <Notifications position={activePosition} />
+      <Notifications
+        position={activePosition}
+        observer={NotificationObserver}
+      />
     </div>
   )
 }

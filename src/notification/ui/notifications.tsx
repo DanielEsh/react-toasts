@@ -4,8 +4,8 @@ import type {
   NotificationData,
 } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect, useCallback } from 'react'
-import { NotificationObserver, NotificationPayload } from '../state.ts'
+import { useState, useEffect } from 'react'
+import { type Observer } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
@@ -15,11 +15,12 @@ import { AnimatePresence } from 'framer-motion'
 interface Props {
   position: NotificationsContainerPosition
   limit?: number
+  observer: Observer
 }
 
 const DEFAULT_LIMIT = 5
 
-export const Notifications = ({ position, limit }: Props) => {
+export const Notifications = ({ position, limit, observer }: Props) => {
   const { state, queue, add, update } = useQueue<NotificationData>({
     limit: limit ?? DEFAULT_LIMIT,
   })
@@ -46,7 +47,7 @@ export const Notifications = ({ position, limit }: Props) => {
   }
 
   useEffect(() => {
-    return NotificationObserver.subscribe((notification) => {
+    return observer.subscribe((notification) => {
       console.log('SUB', notification)
 
       if (notification.action === 'create') {
