@@ -80,7 +80,7 @@ export const NotificationItem = (props: Props) => {
   return (
     <ScaleDownTransition>
       <div
-        className={`notification-item relative z-10 overflow-hidden rounded-lg`}
+        className={`notification-item w-notification relative z-10 overflow-hidden rounded-lg`}
         onMouseEnter={handleHover}
         onMouseLeave={handleHoverLeave}
       >

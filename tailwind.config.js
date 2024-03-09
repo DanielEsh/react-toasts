@@ -35,6 +35,9 @@ export default {
         'error-2': 'var(--error-border)',
         'error-3': 'var(--error-text)',
       },
+      spacing: {
+        notification: '356px',
+      },
     },
   },
   plugins: [],

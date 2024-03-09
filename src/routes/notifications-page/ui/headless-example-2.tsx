@@ -5,7 +5,7 @@ import { Icon } from '@/icon.tsx'
 
 const HeadlessToast2: NotificationRenderFn = (_, onRemove) => {
   return (
-    <div className="flex rounded-lg border border-subtle drop-shadow-md">
+    <div className="flex w-[434px] rounded-lg border border-subtle drop-shadow-md">
       <div className="flex flex-col gap-2 p-4">
         <p>Receive notifications</p>
         <p>
@@ -44,7 +44,7 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
 
   return (
     <SlideDownTransition>
-      <div className="flex rounded-lg border border-subtle p-4 drop-shadow-md">
+      <div className="flex w-[384px] rounded-lg border border-subtle p-4 drop-shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -104,7 +104,7 @@ export const Notifications = ({ position, limit }: Props) => {
 
   return (
     <section className="toasts-section">
-      <ol className={`toasts position-${position}`}>
+      <ol className={`toasts`}>
         <AnimatePresence>
           {queue.length >= 1 && (
             <QueueIndicator

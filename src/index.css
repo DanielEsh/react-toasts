@@ -66,12 +66,15 @@ body {
 
 .toasts {
   position: fixed;
-  bottom: 32px;
   right: 32px;
+  bottom: 32px;
   /*display: flex;*/
   /*flex-direction: column-reverse;*/
-  width: 356px;
-  background: red;
+  /*width: 356px;*/
+  /*background: red;*/
+  display: flex;
+  align-content: flex-end;
+  justify-content: flex-end;
 }
 
 .toast._success {

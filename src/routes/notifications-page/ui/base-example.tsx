@@ -2,6 +2,13 @@ import { createNotification } from '@/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
 
+const makeBaseNotificationInfinity = () => {
+  createNotification({
+    id: getUid(),
+    title: 'Simple notification',
+  })
+}
+
 const makeBaseNotification = () => {
   createNotification({
     id: getUid(),
@@ -28,9 +35,16 @@ export const BaseExample = () => {
       <div className="flex gap-3">
         <Button
           size="lg"
+          onClick={makeBaseNotificationInfinity}
+        >
+          Simple notification (infinity)
+        </Button>
+
+        <Button
+          size="lg"
           onClick={makeBaseNotification}
         >
-          Simple notification
+          Simple notification (with timer)
         </Button>
 
         <Button
