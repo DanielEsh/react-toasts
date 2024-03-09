@@ -30,11 +30,12 @@ const fadeConfig = {
 const FadeTransitionImpl: ForwardRefRenderFunction<
   HTMLDivElement,
   TranstionVariantProps
-> = ({ children }, forwardedRef) => {
+> = ({ children, ...restProps }, forwardedRef) => {
   return (
     <motion.div
       ref={forwardedRef}
       {...fadeConfig}
+      {...restProps}
     >
       {children}
     </motion.div>

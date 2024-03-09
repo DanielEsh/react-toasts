@@ -1,8 +1,7 @@
-import { Button } from '@/shared/ui'
+import { Button, SlideDownTransition } from '@/shared/ui'
 import { createNotification, type NotificationRenderFn } from '@/notification'
 import { getUid } from '@/shared/utils'
 import { Icon } from '@/icon.tsx'
-import { SlideDown } from '@/components/framer/slide-down.tsx'
 
 const HeadlessToast2: NotificationRenderFn = (_, onRemove) => {
   return (
@@ -44,7 +43,7 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   }
 
   return (
-    <SlideDown>
+    <SlideDownTransition>
       <div className="flex rounded-lg border border-subtle p-4 drop-shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +89,7 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
           <Icon name="close" />
         </button>
       </div>
-    </SlideDown>
+    </SlideDownTransition>
   )
 }
 

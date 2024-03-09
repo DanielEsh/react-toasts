@@ -6,8 +6,8 @@ import {
 import { useEffect, useRef } from 'react'
 import { useTimer } from '@/use-timer.ts'
 import type { NotificationData } from '../types.ts'
-import { SlideDown } from '../../components/framer/slide-down.tsx'
 import { Icon } from '@/icon.tsx'
+import { ScaleDownTransition } from '@/shared/ui'
 
 interface Props {
   type: NotificationData['type']
@@ -78,7 +78,7 @@ export const NotificationItem = (props: Props) => {
   }
 
   return (
-    <SlideDown>
+    <ScaleDownTransition>
       <div
         className={`notification-item relative z-10 overflow-hidden rounded-lg`}
         onMouseEnter={handleHover}
@@ -99,6 +99,6 @@ export const NotificationItem = (props: Props) => {
           />
         )}
       </div>
-    </SlideDown>
+    </ScaleDownTransition>
   )
 }

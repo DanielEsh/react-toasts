@@ -1,6 +1,6 @@
 import type { NotificationHeightItem } from '../types.ts'
 import React, { type CSSProperties, useMemo } from 'react'
-import { SlideDown } from '../../components/framer/slide-down.tsx'
+import { FadeTransition } from '@/shared/ui'
 
 interface Props {
   count: number
@@ -30,7 +30,7 @@ export const QueueIndicator = (props: Props) => {
   )
 
   return (
-    <SlideDown>
+    <FadeTransition>
       <div
         className="toast-queue"
         style={
@@ -41,6 +41,6 @@ export const QueueIndicator = (props: Props) => {
       >
         <span>уведомлений в очереди: {count}</span>
       </div>
-    </SlideDown>
+    </FadeTransition>
   )
 }
