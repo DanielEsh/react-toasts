@@ -1,124 +1,15 @@
-import { Button } from '../../../shared/ui'
-import {
-  forwardRef,
-  type ReactNode,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react'
-import { Icon } from '../../../icon.tsx'
-import { createNotification } from '../../../notification'
-import { SlideDown } from '../../../components/framer/slide-down.tsx'
-import type { NotificationRenderFn } from '../../../notification/types.ts'
-
-interface ToastRootProps {
-  children?: ReactNode
-}
-
-interface ToastRootRef {
-  add: () => void
-}
-
-export const ToastRoot = forwardRef<ToastRootRef, ToastRootProps>(
-  function ToastRoot(_, forwardedRef) {
-    const customNotification: NotificationRenderFn = (toast, onRemove) => {
-      const handleClick = () => {
-        console.log('CLICK', toast)
-        onRemove()
-      }
-
-      return (
-        <SlideDown>
-          <div className="bg-blue-500">
-            <span>HEADLESS</span>
-
-            <Button
-              size="xs"
-              onClick={handleClick}
-            >
-              <Icon name="close" />
-            </Button>
-          </div>
-        </SlideDown>
-      )
-    }
-
-    const add = () => {
-      console.log('ADD')
-      createNotification({
-        id: `headless${new Date().getTime()}`,
-        duration: 5,
-        render: customNotification,
-      })
-    }
-
-    useImperativeHandle(forwardedRef, () => {
-      return {
-        add,
-      }
-    })
-
-    return (
-      <div>
-        <span>ToastRoot</span>
-      </div>
-    )
-  },
-)
-
-interface ListItem {
-  name: string
-}
+import { HeadlessVariant1 } from '@/routes/notifications-page/ui/headles/headless-variant-1.tsx'
+import { HeadlessVariant2 } from '@/routes/notifications-page/ui/headles/headless-variant-2.tsx'
 
 export const HeadlessExample = () => {
-  const ref = useRef<ToastRootRef>(null)
-  const [list, setList] = useState<ListItem[]>([])
-
-  const handleClick = () => {
-    if (ref.current) {
-      ref.current.add()
-    }
-
-    setList((prevState) => {
-      return [
-        ...prevState,
-        {
-          name: 'ListItem',
-        },
-      ]
-    })
-  }
-
-  const handleRemove = (index: number) => {
-    setList((prevState) => {
-      return prevState.filter((_, itemIdx) => itemIdx !== index)
-    })
-  }
-
   return (
-    <div>
-      <span>HEADLESS EXAMPLE</span>
+    <div className="my-6">
+      <h2 className="mb-6 text-2xl">Headless</h2>
 
-      <ToastRoot ref={ref} />
-
-      <Button onClick={handleClick}>Create Headless Toast</Button>
-
-      {list.map((item, idx) => {
-        return (
-          <div
-            key={idx}
-            className="flex w-[200px] items-center justify-center gap-3 rounded-md bg-amber-300"
-          >
-            <span>{item.name}</span>
-            <Button
-              size="xs"
-              onClick={() => handleRemove(idx)}
-            >
-              <Icon name="close" />
-            </Button>
-          </div>
-        )
-      })}
+      <div className="flex gap-3">
+        <HeadlessVariant1 />
+        <HeadlessVariant2 />
+      </div>
     </div>
   )
 }

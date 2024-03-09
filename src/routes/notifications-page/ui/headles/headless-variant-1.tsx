@@ -3,35 +3,6 @@ import { createNotification, type NotificationRenderFn } from '@/notification'
 import { getUid } from '@/shared/utils'
 import { Icon } from '@/icon.tsx'
 
-const HeadlessToast2: NotificationRenderFn = (_, onRemove) => {
-  return (
-    <div className="flex w-[434px] rounded-lg border border-subtle drop-shadow-md">
-      <div className="flex flex-col gap-2 p-4">
-        <p>Receive notifications</p>
-        <p>
-          Notifications may include alerts, sounds, <br />
-          and badges.
-        </p>
-      </div>
-
-      <div className="flex flex-col border-l border-subtle">
-        <button
-          className="flex-1 border-b border-subtle px-8"
-          onClick={onRemove}
-        >
-          Reply
-        </button>
-        <button
-          className="flex-1 rounded-br-md border border-gray-100 bg-gray-100 text-neutral-100"
-          onClick={onRemove}
-        >
-          {"Don't allow"}
-        </button>
-      </div>
-    </div>
-  )
-}
-
 const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   const handleUndoClick = () => {
     console.log('undo click')
@@ -100,26 +71,13 @@ const makeHeadlessNotification = (component: NotificationRenderFn) => {
   })
 }
 
-export const HeadlessExample2 = () => {
+export const HeadlessVariant1 = () => {
   return (
-    <div className="my-6">
-      <h2 className="mb-6 text-2xl">Headless</h2>
-
-      <div className="flex gap-3">
-        <Button
-          size="lg"
-          onClick={() => makeHeadlessNotification(HeadlessToast)}
-        >
-          Custom render with transition
-        </Button>
-
-        <Button
-          size="lg"
-          onClick={() => makeHeadlessNotification(HeadlessToast2)}
-        >
-          Custom render without transition
-        </Button>
-      </div>
-    </div>
+    <Button
+      size="lg"
+      onClick={() => makeHeadlessNotification(HeadlessToast)}
+    >
+      Custom render with transition
+    </Button>
   )
 }
