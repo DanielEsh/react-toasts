@@ -1,20 +1,17 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-// import {CategoriesPage} from "./routes/categories.tsx";
-import { CategoriesCreate } from './routes/categories-create.tsx'
-import { CategoriesDetails } from './routes/categories-details.tsx'
-import { RootLayout } from './layouts/root-layout.tsx'
-import { AuthLayout } from './layouts/auth-layout.tsx'
-import { Login } from './routes/login.tsx'
 import { lazy, Suspense } from 'react'
-import { PrivateRoute } from './components/PrivateRouter.tsx'
-import { ThemeProvider } from './modules/core/themes'
+import { createBrowserRouter } from 'react-router-dom'
+import { PrivateRoute } from '@/components/PrivateRouter.tsx'
+import { RootLayout } from '@/layouts/root-layout.tsx'
+import { CategoriesCreate } from '@/routes/categories-create.tsx'
+import { CategoriesDetails } from '@/routes/categories-details.tsx'
 import { NotificationsPage } from '@/routes/notifications-page'
+import { AuthLayout } from '@/layouts/auth-layout.tsx'
+import { Login } from '@/routes/login.tsx'
 import { SandboxPage } from '@/routes/sandbox-page'
 
-// const HomePage = lazy(() => import('./routes/home.tsx'))
 const HomePage = lazy(async () => {
   const [moduleExports] = await Promise.all([
-    import('./routes/home.tsx'),
+    import('@/routes/home.tsx'),
     new Promise((resolve) => setTimeout(resolve, 0)),
   ])
   return moduleExports
@@ -22,13 +19,13 @@ const HomePage = lazy(async () => {
 
 const CategoriesPage = lazy(async () => {
   const [moduleExports] = await Promise.all([
-    import('./routes/categories.tsx'),
+    import('@/routes/categories'),
     new Promise((resolve) => setTimeout(resolve, 0)),
   ])
   return moduleExports
 })
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: (
@@ -93,20 +90,3 @@ const router = createBrowserRouter([
     ),
   },
 ])
-
-const enum Theme {
-  light = 'light',
-  dark = 'dark',
-  system = 'system',
-}
-
-export const App = () => {
-  return (
-    <ThemeProvider themes={[Theme.light, Theme.dark, Theme.system]}>
-      <div className="flex gap-1">
-        <div></div>
-      </div>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  )
-}
