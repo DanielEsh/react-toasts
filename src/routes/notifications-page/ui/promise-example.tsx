@@ -18,6 +18,9 @@ const makePromiseSuccess = () => {
             title: 'Promise resolve success',
             type: NOTIFICATION_TYPE.SUCCESS,
             duration: 5,
+            onUpdate: (notification) => {
+              console.log('update [Success]', notification)
+            },
           }),
         PROMISE_TIMEOUT,
       ),
