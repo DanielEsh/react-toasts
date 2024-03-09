@@ -1,8 +1,6 @@
-import { AnimatePresence } from 'framer-motion'
 import { useToggle } from '@/hooks/use-toggle.ts'
 import { Button } from '@/shared/ui'
-import { FadeAnimation } from '@/components/framer/fade.tsx'
-import { Transition } from '@/components/framer/Transition.tsx'
+import { Transition } from '@/shared/ui'
 
 export const FadeDemo = () => {
   const [isToggled, toggle] = useToggle(true)
@@ -23,16 +21,6 @@ export const FadeDemo = () => {
           FADE MOTION EXAMPLE
         </div>
       </Transition>
-
-      <AnimatePresence>
-        {isToggled && (
-          <FadeAnimation key="fade">
-            <div className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
-              FADE MOTION EXAMPLE
-            </div>
-          </FadeAnimation>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
