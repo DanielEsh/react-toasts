@@ -4,10 +4,10 @@ import {
   type NotificationData,
 } from './types.ts'
 
-interface NotificationPayload {
-  action: 'create' | 'update'
+export interface NotificationPayload {
+  action: 'create' | 'update' | 'dismiss'
   id?: NotificationData['id']
-  data: NotificationData
+  data?: NotificationData
 }
 
 let toastsCounter = 1
@@ -39,7 +39,7 @@ class Observer {
     })
   }
 
-  update = (id: NotificationData['id'], data: NotificationData) => {
+  update = (id: NotificationData['id'], data?: NotificationData) => {
     this.publish({
       action: 'update',
       id,
@@ -66,6 +66,13 @@ class Observer {
       .catch((error) => {
         this.update(id, error)
       })
+  }
+
+  dismiss = (dismissedId: NotificationData['id']) => {
+    this.publish({
+      action: 'dismiss',
+      id: dismissedId,
+    })
   }
 }
 

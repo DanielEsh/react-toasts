@@ -4,8 +4,8 @@ import type {
   NotificationData,
 } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect } from 'react'
-import { NotificationObserver } from '../state.ts'
+import { useState, useEffect, useCallback } from 'react'
+import { NotificationObserver, NotificationPayload } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
@@ -26,6 +26,8 @@ export const Notifications = ({ position, limit }: Props) => {
   const [heights, setHeights] = useState<NotificationHeightItem[]>([])
 
   const removeToast = (notificationData: NotificationData) => {
+    console.log('remove', notificationData)
+
     update((notifications) =>
       notifications.filter((notification) => {
         return notification.id !== notificationData.id
@@ -51,7 +53,7 @@ export const Notifications = ({ position, limit }: Props) => {
         ReactDOM.flushSync(() => {
           add(notification.data)
 
-          if (notification.data.onCreate) {
+          if (notification?.data?.onCreate) {
             notification.data.onCreate(notification.data)
           }
         })
@@ -61,7 +63,7 @@ export const Notifications = ({ position, limit }: Props) => {
         update((state) => {
           return state.map((item) => {
             if (item.id === notification.id) {
-              if (notification.data.onUpdate) {
+              if (notification?.data?.onUpdate) {
                 notification.data.onUpdate({
                   id: item.id,
                   ...notification.data,
@@ -78,8 +80,14 @@ export const Notifications = ({ position, limit }: Props) => {
           })
         })
       }
+
+      if (notification.action === 'dismiss') {
+        const removed = state.find((item) => item.id === notification.id)
+        if (!removed) return
+        handleDismiss(removed)
+      }
     })
-  }, [])
+  }, [state, add, update])
 
   const handleAddHeightById = (height: number, id: NotificationData['id']) => {
     setHeights((heights) => [...heights, { toastId: id, height }])

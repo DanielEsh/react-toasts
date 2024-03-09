@@ -1,10 +1,13 @@
 import { createNotification } from '@/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
+import { NotificationObserver } from '@/notification/state.ts'
+
+const ID = 'SimpleID'
 
 const makeBaseNotificationInfinity = () => {
   createNotification({
-    id: getUid(),
+    id: ID,
     title: 'Simple notification',
     onCreate: (notification) => {
       console.log(`Notification with ID:${notification?.id} CREATED`)
@@ -13,6 +16,10 @@ const makeBaseNotificationInfinity = () => {
       console.log(`Notification with ID:${notification?.id} DISMISSED`)
     },
   })
+}
+
+const hDismiss = () => {
+  NotificationObserver.dismiss(ID)
 }
 
 const makeBaseNotification = () => {
@@ -44,6 +51,13 @@ export const BaseExample = () => {
           onClick={makeBaseNotificationInfinity}
         >
           Simple notification (infinity)
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={hDismiss}
+        >
+          Dismiss
         </Button>
 
         <Button
