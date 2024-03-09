@@ -33,10 +33,11 @@ const scaleConfig = {
 const ScaleTransitionImpl: ForwardRefRenderFunction<
   HTMLDivElement,
   TranstionVariantProps
-> = ({ children }, forwardedRef) => {
+> = ({ children, className }, forwardedRef) => {
   return (
     <motion.div
       ref={forwardedRef}
+      className={className}
       {...scaleConfig}
     >
       {children}

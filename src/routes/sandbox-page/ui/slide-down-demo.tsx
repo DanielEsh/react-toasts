@@ -1,7 +1,7 @@
 import { useToggle } from '@/hooks/use-toggle.ts'
 import { Button } from '@/shared/ui'
 import { AnimatePresence } from 'framer-motion'
-import { SlideDown } from '@/components/framer/slide-down.tsx'
+import { SlideDownTransition } from '@/shared/ui'
 
 export const SlideDownDemo = () => {
   const [isToggled, toggle] = useToggle(true)
@@ -15,9 +15,9 @@ export const SlideDownDemo = () => {
       <AnimatePresence>
         {isToggled && (
           <div className="h-[200px] w-[700px] overflow-hidden">
-            <SlideDown className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
-              FADE MOTION EXAMPLE
-            </SlideDown>
+            <SlideDownTransition className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
+              SLIDE DOWN MOTION EXAMPLE
+            </SlideDownTransition>
           </div>
         )}
       </AnimatePresence>

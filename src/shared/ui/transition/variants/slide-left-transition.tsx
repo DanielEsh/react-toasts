@@ -3,9 +3,9 @@ import { motion, type Variants } from 'framer-motion'
 import type { TranstionVariantProps } from '@/shared/ui/transition/variants/types.ts'
 
 const slideLeft: Variants = {
-  enter: { opacity: 0, x: '100%' },
+  enter: { opacity: 0, x: '-100%' },
   animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: '100%' },
+  exit: { opacity: 0, x: '-100%' },
 }
 
 const slideLeftConfig = {
@@ -19,11 +19,12 @@ const slideLeftConfig = {
 const SlideLeftTransitionImpl: ForwardRefRenderFunction<
   HTMLDivElement,
   TranstionVariantProps
-> = ({ children }, forwardedRef) => {
+> = ({ children, ...restProps }, forwardedRef) => {
   return (
     <motion.div
       ref={forwardedRef}
       {...slideLeftConfig}
+      {...restProps}
     >
       {children}
     </motion.div>

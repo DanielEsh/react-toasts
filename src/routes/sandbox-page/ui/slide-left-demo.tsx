@@ -1,7 +1,6 @@
 import { AnimatePresence } from 'framer-motion'
 import { useToggle } from '@/hooks/use-toggle.ts'
-import { Button } from '@/shared/ui'
-import { SlideLeft } from '@/components/framer/slide-left.tsx'
+import { Button, SlideLeftTransition } from '@/shared/ui'
 
 export const SlideLeftDemo = () => {
   const [isToggled, toggle] = useToggle(true)
@@ -15,9 +14,9 @@ export const SlideLeftDemo = () => {
       <AnimatePresence>
         {isToggled && (
           <div className="h-[200px] w-[700px] overflow-hidden">
-            <SlideLeft className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
-              FADE MOTION EXAMPLE
-            </SlideLeft>
+            <SlideLeftTransition className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
+              SLIDE LEFT MOTION EXAMPLE
+            </SlideLeftTransition>
           </div>
         )}
       </AnimatePresence>

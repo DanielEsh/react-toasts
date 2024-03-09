@@ -1,8 +1,6 @@
-import { AnimatePresence } from 'framer-motion'
 import { useToggle } from '@/hooks/use-toggle.ts'
 import { Button } from '@/shared/ui'
-import { ScaleAnimation } from '@/components/framer/scale.tsx'
-import { Transition } from '@/components/framer/Transition.tsx'
+import { Transition } from '@/shared/ui'
 
 export const ScaleDemo = () => {
   const [isToggled, toggle] = useToggle(true)

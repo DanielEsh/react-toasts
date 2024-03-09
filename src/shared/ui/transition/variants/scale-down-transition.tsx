@@ -52,11 +52,12 @@ const scaleDownConfig = {
 const ScaleDownTransitionImpl: ForwardRefRenderFunction<
   HTMLDivElement,
   TranstionVariantProps
-> = ({ children }, forwardedRef) => {
+> = ({ children, ...restProps }, forwardedRef) => {
   return (
     <motion.div
       ref={forwardedRef}
       {...scaleDownConfig}
+      {...restProps}
     >
       {children}
     </motion.div>

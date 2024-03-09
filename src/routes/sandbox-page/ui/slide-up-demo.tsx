@@ -1,7 +1,7 @@
 import { useToggle } from '@/hooks/use-toggle.ts'
 import { Button } from '@/shared/ui'
 import { AnimatePresence } from 'framer-motion'
-import { SlideUp } from '@/components/framer/slide-up.tsx'
+import { SlideUpTransition } from '@/shared/ui'
 
 export const SlideUpDemo = () => {
   const [isToggled, toggle] = useToggle(true)
@@ -15,9 +15,9 @@ export const SlideUpDemo = () => {
       <AnimatePresence>
         {isToggled && (
           <div className="h-[200px] w-[700px] overflow-hidden">
-            <SlideUp className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
-              FADE MOTION EXAMPLE
-            </SlideUp>
+            <SlideUpTransition className="flex h-[200px] w-[700px] items-center justify-center bg-[#ffd644]">
+              SLIDE UP MOTION EXAMPLE
+            </SlideUpTransition>
           </div>
         )}
       </AnimatePresence>

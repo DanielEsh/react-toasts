@@ -19,11 +19,12 @@ const slideDownConfig = {
 const SlideRightTransitionImpl: ForwardRefRenderFunction<
   HTMLDivElement,
   TranstionVariantProps
-> = ({ children }, forwardedRef) => {
+> = ({ children, ...restProps }, forwardedRef) => {
   return (
     <motion.div
       ref={forwardedRef}
       {...slideDownConfig}
+      {...restProps}
     >
       {children}
     </motion.div>
