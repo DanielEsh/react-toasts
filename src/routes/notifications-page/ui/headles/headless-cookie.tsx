@@ -1,6 +1,6 @@
 import { Button, FadeTransition } from '@/shared/ui'
-import { createNotification, type NotificationRenderFn } from '@/notification'
-import { getUid } from '@/shared/utils'
+import { type NotificationRenderFn } from '@/notification'
+import { makeHeadlessNotification } from './helpers.ts'
 
 const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   const handleMoreInfoClick = () => {
@@ -43,12 +43,6 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   )
 }
 
-const makeHeadlessNotification = (component: NotificationRenderFn) => {
-  createNotification({
-    id: getUid(),
-    render: component,
-  })
-}
 export const HeadlessCookie = () => {
   return (
     <Button

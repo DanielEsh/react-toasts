@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui'
-import { createNotification, type NotificationRenderFn } from '@/notification'
-import { getUid } from '@/shared/utils'
+import { type NotificationRenderFn } from '@/notification'
+import { makeHeadlessNotification } from './helpers.ts'
 
 const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   return (
@@ -29,13 +29,6 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
       </div>
     </div>
   )
-}
-
-const makeHeadlessNotification = (component: NotificationRenderFn) => {
-  createNotification({
-    id: getUid(),
-    render: component,
-  })
 }
 
 export const HeadlessVariant2 = () => {

@@ -1,7 +1,7 @@
 import { Button, SlideDownTransition } from '@/shared/ui'
-import { createNotification, type NotificationRenderFn } from '@/notification'
-import { getUid } from '@/shared/utils'
+import { type NotificationRenderFn } from '@/notification'
 import { Icon } from '@/icon.tsx'
+import { makeHeadlessNotification } from './helpers.ts'
 
 const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
   const handleUndoClick = () => {
@@ -62,13 +62,6 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
       </div>
     </SlideDownTransition>
   )
-}
-
-const makeHeadlessNotification = (component: NotificationRenderFn) => {
-  createNotification({
-    id: getUid(),
-    render: component,
-  })
 }
 
 export const HeadlessVariant1 = () => {
