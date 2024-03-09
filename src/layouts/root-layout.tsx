@@ -3,9 +3,12 @@ import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
 import type { NotificationsContainerPosition } from '../notification'
+import { NOTIFICATION_TYPE } from '../notification'
 import { Notifications } from '../notification/ui/notifications.tsx'
 import { Header } from './header.tsx'
-import { NotificationObserver } from '@/notification/state.ts'
+import { NotificationObserver, Observer } from '@/notification/state.ts'
+import { Button } from '@/shared/ui'
+import { getUid } from '@/shared/utils'
 
 const positions = [
   'top-left',
@@ -15,6 +18,17 @@ const positions = [
   'bottom-center',
   'bottom-right',
 ] as const
+
+const NotificationTopRightObserver = new Observer()
+
+const makeBaseNotification = () => {
+  NotificationTopRightObserver.create({
+    id: getUid(),
+    title: 'Simple notification',
+    type: NOTIFICATION_TYPE.DEFAULT,
+    duration: 5,
+  })
+}
 
 export const RootLayout = () => {
   const [activePosition, setActivePosition] =
@@ -44,12 +58,19 @@ export const RootLayout = () => {
             </button>
           ))}
         </Section>
+        <Button onClick={makeBaseNotification}>
+          Create Top Right Notification
+        </Button>
         <Outlet />
       </div>
       {/*<Toasts position={activePosition} />*/}
       <Notifications
         position={activePosition}
         observer={NotificationObserver}
+      />
+      <Notifications
+        position="top-right"
+        observer={NotificationTopRightObserver}
       />
     </div>
   )
