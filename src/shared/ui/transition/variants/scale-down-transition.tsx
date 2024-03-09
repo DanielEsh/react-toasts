@@ -4,7 +4,7 @@ import type { TranstionVariantProps } from '@/shared/ui/transition/variants/type
 
 const scaleDownVariant: Variants = {
   enter: {
-    scale: 0,
+    scale: 0.8,
     y: '100%',
     opacity: 0,
   },
@@ -14,10 +14,10 @@ const scaleDownVariant: Variants = {
     y: 0,
     transition: {
       scale: {
-        duration: 0.5,
+        duration: 0.3,
       },
       y: {
-        duration: 0.5,
+        duration: 0.3,
       },
       opacity: {
         duration: 0.3,
@@ -25,15 +25,15 @@ const scaleDownVariant: Variants = {
     },
   },
   exit: {
-    scale: 0.5,
+    scale: 0.8,
     opacity: 0,
     y: '100%',
     transition: {
       scale: {
-        duration: 0.5,
+        duration: 0.3,
       },
       y: {
-        duration: 0.5,
+        duration: 0.3,
       },
       opacity: {
         duration: 0.3,
