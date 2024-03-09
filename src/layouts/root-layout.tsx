@@ -26,7 +26,6 @@ export const RootLayout = () => {
 
   return (
     <div>
-      RootLayout
       <Header />
       <div className="p-4">
         <Section

@@ -1,5 +1,5 @@
-import { Button } from '@/shared/ui'
 import { Link } from 'react-router-dom'
+import { ThemeChanger } from '@/modules/core/themes/theme-changer.tsx'
 
 export const Header = () => {
   return (
@@ -9,8 +9,7 @@ export const Header = () => {
 
         <div>
           <Link to={'notifications'}>to notifications</Link>
-          <Button> Button 1</Button>
-          <Button> Button 2</Button>
+          <ThemeChanger />
         </div>
       </div>
     </div>

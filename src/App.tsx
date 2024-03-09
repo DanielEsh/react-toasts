@@ -8,7 +8,6 @@ import { Login } from './routes/login.tsx'
 import { lazy, Suspense } from 'react'
 import { PrivateRoute } from './components/PrivateRouter.tsx'
 import { ThemeProvider } from './modules/core/themes'
-import { DarkModeToggle } from './modules/core/themes/DarkModeToggle.tsx'
 import { NotificationsPage } from '@/routes/notifications-page'
 import { SandboxPage } from '@/routes/sandbox-page'
 
@@ -104,16 +103,10 @@ const enum Theme {
 export const App = () => {
   return (
     <ThemeProvider themes={[Theme.light, Theme.dark, Theme.system]}>
-      <>
-        <div className="bg-surface">TEST</div>
-
-        <DarkModeToggle />
-
-        <div className="flex gap-1">
-          <div></div>
-        </div>
-        <RouterProvider router={router} />
-      </>
+      <div className="flex gap-1">
+        <div></div>
+      </div>
+      <RouterProvider router={router} />
     </ThemeProvider>
   )
 }

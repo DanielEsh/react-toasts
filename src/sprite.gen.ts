@@ -5,10 +5,13 @@ export interface SpritesMap {
     | 'diamond'
     | 'error'
     | 'info'
+    | 'monitor'
+    | 'moon-stars'
     | 'react'
     | 'search'
     | 'shopping-bag'
     | 'success'
+    | 'sun'
     | 'warning'
 }
 export const SPRITES_META: {
@@ -18,10 +21,13 @@ export const SPRITES_META: {
     | 'diamond'
     | 'error'
     | 'info'
+    | 'monitor'
+    | 'moon-stars'
     | 'react'
     | 'search'
     | 'shopping-bag'
     | 'success'
+    | 'sun'
     | 'warning'
   >
 } = {
@@ -31,10 +37,13 @@ export const SPRITES_META: {
     'diamond',
     'error',
     'info',
+    'monitor',
+    'moon-stars',
     'react',
     'search',
     'shopping-bag',
     'success',
+    'sun',
     'warning',
   ],
 }
