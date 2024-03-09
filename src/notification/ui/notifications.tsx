@@ -36,6 +36,13 @@ export const Notifications = ({ position, limit }: Props) => {
     )
   }
 
+  const handleDismiss = (notificationData: NotificationData) => {
+    removeToast(notificationData)
+    if (notificationData.onDismiss) {
+      notificationData.onDismiss(notificationData)
+    }
+  }
+
   useEffect(() => {
     return NotificationObserver.subscribe((notification) => {
       console.log('SUB', notification)
@@ -43,6 +50,10 @@ export const Notifications = ({ position, limit }: Props) => {
       if (notification.action === 'create') {
         ReactDOM.flushSync(() => {
           add(notification.data)
+
+          if (notification.data.onCreate) {
+            notification.data.onCreate(notification.data)
+          }
         })
       }
 
@@ -50,6 +61,13 @@ export const Notifications = ({ position, limit }: Props) => {
         update((state) => {
           return state.map((item) => {
             if (item.id === notification.id) {
+              if (notification.data.onUpdate) {
+                notification.data.onUpdate({
+                  id: item.id,
+                  ...notification.data,
+                })
+              }
+
               return {
                 id: item.id,
                 ...notification.data,
@@ -97,7 +115,7 @@ export const Notifications = ({ position, limit }: Props) => {
         title={notification.title}
         description={notification.description}
         duration={notification.duration}
-        onDismiss={() => removeToast(notification)}
+        onDismiss={() => handleDismiss(notification)}
       />
     )
   }

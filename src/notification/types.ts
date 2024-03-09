@@ -31,6 +31,9 @@ export interface NotificationData {
   description?: string
   duration?: number
   render?: NotificationRenderFn
+  onCreate?: (notification?: NotificationData) => void
+  onUpdate?: (notification?: NotificationData) => void
+  onDismiss?: (notification?: NotificationData) => void
 }
 
 export interface NotificationHeightItem {

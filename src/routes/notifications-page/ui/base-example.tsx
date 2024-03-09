@@ -6,6 +6,12 @@ const makeBaseNotificationInfinity = () => {
   createNotification({
     id: getUid(),
     title: 'Simple notification',
+    onCreate: (notification) => {
+      console.log(`Notification with ID:${notification?.id} CREATED`)
+    },
+    onDismiss: (notification) => {
+      console.log(`Notification with ID:${notification?.id} DISMISSED`)
+    },
   })
 }
 
