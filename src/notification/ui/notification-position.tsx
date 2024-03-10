@@ -17,7 +17,7 @@ interface Props {
   children: ReactNode
   x: string
   y: string
-  heights: NotificationHeightItem[]
+  notificationHeightBefore: number
   onChangeHeight: (newHeight: number) => void
   onRemoveHeights: () => void
   onAddHeights: (height: number) => void
@@ -31,7 +31,7 @@ export const NotificationPosition = (props: Props) => {
     index,
     allNotificationsCount,
     children,
-    heights,
+    notificationHeightBefore,
     x,
     y,
     onAddHeights,
@@ -47,17 +47,6 @@ export const NotificationPosition = (props: Props) => {
   }, [])
 
   const heightIndex = index
-
-  const notificationHeightBefore = useMemo(() => {
-    return heights.reduce((prev, curr, reducerIndex) => {
-      // Calculate offset up until current  toast
-      if (reducerIndex >= heightIndex) {
-        return prev
-      }
-
-      return prev + curr.height
-    }, 0)
-  }, [heights, heightIndex])
 
   const offset = useRef(0)
   offset.current = useMemo(

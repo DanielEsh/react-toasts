@@ -1,6 +1,6 @@
 import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
@@ -149,6 +149,17 @@ export const NotificationsGroup = ({
     )
   }
 
+  const notificationHeightBefore = (heightIndex: number) => {
+    return heights.reduce((prev, curr, reducerIndex) => {
+      // Calculate offset up until current  toast
+      if (reducerIndex >= heightIndex) {
+        return prev
+      }
+
+      return prev + curr.height
+    }, 0)
+  }
+
   const [y, x] = position!.split('-')
 
   const classes = classNames(notificationGroupVariants({ position }))
@@ -173,7 +184,7 @@ export const NotificationsGroup = ({
             y={y}
             index={index}
             allNotificationsCount={state.length}
-            heights={heights}
+            notificationHeightBefore={notificationHeightBefore(index)}
             onChangeHeight={(newHeight) =>
               handleChangeHeight(newHeight, toast.id)
             }
