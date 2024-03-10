@@ -17,12 +17,12 @@ const notificationGroupVariants = cva(
   {
     variants: {
       position: {
-        'top-left': '',
-        'top-center': '',
+        'top-left': 'top-8 left-8 flex justify-start items-start',
+        'top-center': 'top-8 left-1/2 flex justify-center items-center',
         'top-right': 'top-8 right-8',
-        'bottom-left': '',
-        'bottom-center': '',
-        'bottom-right': 'right-8 bottom-8',
+        'bottom-left': 'left-8 bottom-8 flex justify-start items-star',
+        'bottom-center': 'bottom-8 left-1/2 flex justify-center items-center',
+        'bottom-right': 'right-8 bottom-8 flex justify-end items-end',
       },
     },
     defaultVariants: {

@@ -23,11 +23,47 @@ const positions = [
 ] as const
 
 const NotificationTopRightObserver = new NotificationGroupObserver()
+const NotificationTopLeftObserver = new NotificationGroupObserver()
+const NotificationTopCenterObserver = new NotificationGroupObserver()
+const NotificationBottomCenterObserver = new NotificationGroupObserver()
+const NotificationBottomLeftObserver = new NotificationGroupObserver()
 
-const makeBaseNotification = () => {
+const makeTopLeftNotification = () => {
+  NotificationTopLeftObserver.create({
+    id: getUid(),
+    title: 'Simple top left notification',
+    type: NOTIFICATION_TYPE.DEFAULT,
+  })
+}
+
+const makeTopRightNotification = () => {
   NotificationTopRightObserver.create({
     id: getUid(),
-    title: 'Simple notification',
+    title: 'Simple top right notification',
+    type: NOTIFICATION_TYPE.DEFAULT,
+  })
+}
+
+const makeTopCenterNotification = () => {
+  NotificationTopCenterObserver.create({
+    id: getUid(),
+    title: 'Simple top center notification',
+    type: NOTIFICATION_TYPE.DEFAULT,
+  })
+}
+
+const makeBottomLeftNotification = () => {
+  NotificationBottomLeftObserver.create({
+    id: getUid(),
+    title: 'Simple bottom left notification',
+    type: NOTIFICATION_TYPE.DEFAULT,
+  })
+}
+
+const makeBottomCenterNotification = () => {
+  NotificationBottomCenterObserver.create({
+    id: getUid(),
+    title: 'Simple bottom center notification',
     type: NOTIFICATION_TYPE.DEFAULT,
   })
 }
@@ -60,15 +96,52 @@ export const RootLayout = () => {
             </button>
           ))}
         </Section>
-        <Button onClick={makeBaseNotification}>
+
+        <Button onClick={makeTopLeftNotification}>
+          Create Top Left Notification
+        </Button>
+
+        <Button onClick={makeTopRightNotification}>
           Create Top Right Notification
         </Button>
+
+        <Button onClick={makeTopCenterNotification}>
+          Create Top Center Notification
+        </Button>
+
+        <Button onClick={makeBottomLeftNotification}>
+          Create Bottom Left Notification
+        </Button>
+
+        <Button onClick={makeBottomCenterNotification}>
+          Create Bottom Center Notification
+        </Button>
+
         <Outlet />
       </div>
       {/*<Toasts position={activePosition} />*/}
       <NotificationsGroup
         position={activePosition}
         observer={NotificationObserver}
+      />
+
+      <NotificationsGroup
+        position="bottom-left"
+        observer={NotificationBottomLeftObserver}
+      />
+
+      <NotificationsGroup
+        position="bottom-center"
+        observer={NotificationBottomCenterObserver}
+      />
+
+      <NotificationsGroup
+        position="top-left"
+        observer={NotificationTopLeftObserver}
+      />
+      <NotificationsGroup
+        position="top-center"
+        observer={NotificationTopCenterObserver}
       />
       <NotificationsGroup
         position="top-right"

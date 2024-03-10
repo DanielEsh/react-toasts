@@ -48,6 +48,11 @@ body {
   top: 0;
 }
 
+.testttttt {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .notification-position[data-position-y="bottom"] {
   --lift: -1;
   bottom: 0;
