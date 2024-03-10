@@ -1,8 +1,4 @@
-import type {
-  NotificationsContainerPosition,
-  NotificationHeightItem,
-  NotificationData,
-} from '../types.ts'
+import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
 import { useState, useEffect } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
@@ -11,14 +7,27 @@ import { NotificationPosition } from './notification-position.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
 import { NotificationItem } from './notification-item.tsx'
 import { AnimatePresence } from 'framer-motion'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { classNames } from '@/shared/utils'
 
-interface Props {
-  position: NotificationsContainerPosition
+const DEFAULT_LIMIT = 5
+
+const notificationGroupVariants = cva('fixed flex justify-end items-end', {
+  variants: {
+    position: {
+      'bottom-right': 'right-8 bottom-8',
+      'top-right': 'top-8 right-8',
+    },
+  },
+  defaultVariants: {
+    position: 'bottom-right',
+  },
+})
+
+interface Props extends VariantProps<typeof notificationGroupVariants> {
   observer: NotificationGroupObserver
   limit?: number
 }
-
-const DEFAULT_LIMIT = 5
 
 export const NotificationsGroup = ({ position, limit, observer }: Props) => {
   const { state, queue, add, update } = useQueue<NotificationData>({
@@ -129,8 +138,10 @@ export const NotificationsGroup = ({ position, limit, observer }: Props) => {
     )
   }
 
+  const classes = classNames(notificationGroupVariants({ position }))
+
   return (
-    <ol className={`toasts`}>
+    <ol className={classes}>
       <AnimatePresence>
         {queue.length >= 1 && (
           <QueueIndicator

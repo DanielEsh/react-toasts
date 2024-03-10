@@ -29,7 +29,6 @@ const makeBaseNotification = () => {
     id: getUid(),
     title: 'Simple notification',
     type: NOTIFICATION_TYPE.DEFAULT,
-    duration: 5,
   })
 }
 
