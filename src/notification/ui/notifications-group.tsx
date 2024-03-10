@@ -12,28 +12,35 @@ import { classNames } from '@/shared/utils'
 
 const DEFAULT_LIMIT = 5
 
-const notificationGroupVariants = cva('fixed flex justify-end items-end', {
-  variants: {
-    position: {
-      'top-left': '',
-      'top-center': '',
-      'top-right': 'top-8 right-8',
-      'bottom-left': '',
-      'bottom-center': '',
-      'bottom-right': 'right-8 bottom-8',
+const notificationGroupVariants = cva(
+  'notification-group fixed flex justify-end items-end',
+  {
+    variants: {
+      position: {
+        'top-left': '',
+        'top-center': '',
+        'top-right': 'top-8 right-8',
+        'bottom-left': '',
+        'bottom-center': '',
+        'bottom-right': 'right-8 bottom-8',
+      },
+    },
+    defaultVariants: {
+      position: 'bottom-right',
     },
   },
-  defaultVariants: {
-    position: 'bottom-right',
-  },
-})
+)
 
 interface Props extends VariantProps<typeof notificationGroupVariants> {
   observer: NotificationGroupObserver
   limit?: number
 }
 
-export const NotificationsGroup = ({ position, limit, observer }: Props) => {
+export const NotificationsGroup = ({
+  position = 'bottom-right',
+  limit,
+  observer,
+}: Props) => {
   const { state, queue, add, update } = useQueue<NotificationData>({
     limit: limit ?? DEFAULT_LIMIT,
   })
@@ -142,6 +149,8 @@ export const NotificationsGroup = ({ position, limit, observer }: Props) => {
     )
   }
 
+  const [y, x] = position!.split('-')
+
   const classes = classNames(notificationGroupVariants({ position }))
 
   return (
@@ -160,6 +169,8 @@ export const NotificationsGroup = ({ position, limit, observer }: Props) => {
           <NotificationPosition
             key={`${toast.id}${toast.type}`}
             id={toast.id}
+            x={x}
+            y={y}
             index={index}
             allNotificationsCount={state.length}
             heights={heights}

@@ -15,6 +15,8 @@ interface Props {
   index: number
   allNotificationsCount: number
   children: ReactNode
+  x: string
+  y: string
   heights: NotificationHeightItem[]
   onChangeHeight: (newHeight: number) => void
   onRemoveHeights: () => void
@@ -30,6 +32,8 @@ export const NotificationPosition = (props: Props) => {
     allNotificationsCount,
     children,
     heights,
+    x,
+    y,
     onAddHeights,
     onChangeHeight,
     onRemoveHeights,
@@ -88,6 +92,8 @@ export const NotificationPosition = (props: Props) => {
     <li
       ref={notificationRef}
       className={`notification-position`}
+      data-position-y={y}
+      data-position-x={x}
       style={
         {
           '--index': index,
