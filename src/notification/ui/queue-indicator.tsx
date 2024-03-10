@@ -32,7 +32,7 @@ export const QueueIndicator = (props: Props) => {
   return (
     <FadeTransition>
       <div
-        className="toast-queue"
+        className="toast-queue w-notification right-0"
         style={
           {
             '--offset': `${offset.current}px`,
