@@ -15,8 +15,12 @@ const DEFAULT_LIMIT = 5
 const notificationGroupVariants = cva('fixed flex justify-end items-end', {
   variants: {
     position: {
-      'bottom-right': 'right-8 bottom-8',
+      'top-left': '',
+      'top-center': '',
       'top-right': 'top-8 right-8',
+      'bottom-left': '',
+      'bottom-center': '',
+      'bottom-right': 'right-8 bottom-8',
     },
   },
   defaultVariants: {
