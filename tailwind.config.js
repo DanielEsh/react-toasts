@@ -11,6 +11,7 @@ export default {
         neutral: {
           100: 'var(--colors-neutral-1)',
           300: 'var(--colors-neutral-3)',
+          600: 'var(--colors-neutral-6)',
           900: 'var(--colors-neutral-12)',
         },
         white: 'var(--color-white)',
