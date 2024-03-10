@@ -5,7 +5,7 @@ import type {
 } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
 import { useState, useEffect } from 'react'
-import { type Observer } from '../state.ts'
+import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
 import { QueueIndicator } from './queue-indicator.tsx'
@@ -14,13 +14,13 @@ import { AnimatePresence } from 'framer-motion'
 
 interface Props {
   position: NotificationsContainerPosition
+  observer: NotificationGroupObserver
   limit?: number
-  observer: Observer
 }
 
 const DEFAULT_LIMIT = 5
 
-export const Notifications = ({ position, limit, observer }: Props) => {
+export const NotificationsGroup = ({ position, limit, observer }: Props) => {
   const { state, queue, add, update } = useQueue<NotificationData>({
     limit: limit ?? DEFAULT_LIMIT,
   })
@@ -130,38 +130,36 @@ export const Notifications = ({ position, limit, observer }: Props) => {
   }
 
   return (
-    <section className="toasts-section">
-      <ol className={`toasts`}>
-        <AnimatePresence>
-          {queue.length >= 1 && (
-            <QueueIndicator
-              count={queue.length}
-              heights={heights}
-            />
-          )}
-        </AnimatePresence>
+    <ol className={`toasts`}>
+      <AnimatePresence>
+        {queue.length >= 1 && (
+          <QueueIndicator
+            count={queue.length}
+            heights={heights}
+          />
+        )}
+      </AnimatePresence>
 
-        <AnimatePresence>
-          {state.map((toast, index) => (
-            <NotificationPosition
-              key={`${toast.id}${toast.type}`}
-              id={toast.id}
-              index={index}
-              allNotificationsCount={state.length}
-              heights={heights}
-              onChangeHeight={(newHeight) =>
-                handleChangeHeight(newHeight, toast.id)
-              }
-              onAddHeights={(newHeight) =>
-                handleAddHeightById(newHeight, toast.id)
-              }
-              onRemoveHeights={() => handleRemoveHeightById(toast.id)}
-            >
-              {renderNotification(toast)}
-            </NotificationPosition>
-          ))}
-        </AnimatePresence>
-      </ol>
-    </section>
+      <AnimatePresence>
+        {state.map((toast, index) => (
+          <NotificationPosition
+            key={`${toast.id}${toast.type}`}
+            id={toast.id}
+            index={index}
+            allNotificationsCount={state.length}
+            heights={heights}
+            onChangeHeight={(newHeight) =>
+              handleChangeHeight(newHeight, toast.id)
+            }
+            onAddHeights={(newHeight) =>
+              handleAddHeightById(newHeight, toast.id)
+            }
+            onRemoveHeights={() => handleRemoveHeightById(toast.id)}
+          >
+            {renderNotification(toast)}
+          </NotificationPosition>
+        ))}
+      </AnimatePresence>
+    </ol>
   )
 }

@@ -12,7 +12,7 @@ export interface NotificationPayload {
 
 let toastsCounter = 1
 
-export class Observer {
+export class NotificationGroupObserver {
   private subscribers: Array<(toast: NotificationPayload) => void>
 
   constructor() {
@@ -87,7 +87,7 @@ export class Observer {
   }
 }
 
-export const NotificationObserver = new Observer()
+export const NotificationObserver = new NotificationGroupObserver()
 
 export const createNotification = (data: CreateNotification) => {
   NotificationObserver.create(data)

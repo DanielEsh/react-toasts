@@ -4,9 +4,12 @@ import { useState } from 'react'
 import { Section } from '../components/Section.tsx'
 import type { NotificationsContainerPosition } from '../notification'
 import { NOTIFICATION_TYPE } from '../notification'
-import { Notifications } from '../notification/ui/notifications.tsx'
+import { NotificationsGroup } from '../notification/ui/notifications-group.tsx'
 import { Header } from './header.tsx'
-import { NotificationObserver, Observer } from '@/notification/state.ts'
+import {
+  NotificationGroupObserver,
+  NotificationObserver,
+} from '@/notification/state.ts'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
 
@@ -19,7 +22,7 @@ const positions = [
   'bottom-right',
 ] as const
 
-const NotificationTopRightObserver = new Observer()
+const NotificationTopRightObserver = new NotificationGroupObserver()
 
 const makeBaseNotification = () => {
   NotificationTopRightObserver.create({
@@ -64,11 +67,11 @@ export const RootLayout = () => {
         <Outlet />
       </div>
       {/*<Toasts position={activePosition} />*/}
-      <Notifications
+      <NotificationsGroup
         position={activePosition}
         observer={NotificationObserver}
       />
-      <Notifications
+      <NotificationsGroup
         position="top-right"
         observer={NotificationTopRightObserver}
       />
