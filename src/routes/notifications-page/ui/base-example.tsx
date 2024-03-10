@@ -3,11 +3,9 @@ import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
 import { NotificationObserver } from '@/notification/state.ts'
 
-const ID = 'SimpleID'
-
-const makeBaseNotificationInfinity = () => {
+const makeBaseNotificationInfinityUid = () => {
   createNotification({
-    id: ID,
+    id: getUid(),
     title: 'Simple notification',
     onCreate: (notification) => {
       console.log(`Notification with ID:${notification?.id} CREATED`)
@@ -17,6 +15,10 @@ const makeBaseNotificationInfinity = () => {
     },
   })
 }
+
+const ID = 'SimpleID'
+
+const makeBaseNotificationInfinity = () => {}
 
 const hDismiss = () => {
   NotificationObserver.dismiss(ID)
@@ -48,9 +50,16 @@ export const BaseExample = () => {
       <div className="flex gap-3">
         <Button
           size="lg"
+          onClick={makeBaseNotificationInfinityUid}
+        >
+          Simple notification (infinity) (uniq id)
+        </Button>
+
+        <Button
+          size="lg"
           onClick={makeBaseNotificationInfinity}
         >
-          Simple notification (infinity)
+          Simple notification (infinity) (const id)
         </Button>
 
         <Button

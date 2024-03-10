@@ -19,7 +19,11 @@ export class Observer {
     this.subscribers = []
   }
 
-  subscribe = (subscriber: (payload: NotificationPayload) => void) => {
+  private publish = (payload: NotificationPayload) => {
+    this.subscribers.forEach((subscriber) => subscriber(payload))
+  }
+
+  public subscribe = (subscriber: (payload: NotificationPayload) => void) => {
     this.subscribers.push(subscriber)
 
     return () => {
@@ -28,15 +32,22 @@ export class Observer {
     }
   }
 
-  publish = (payload: NotificationPayload) => {
-    this.subscribers.forEach((subscriber) => subscriber(payload))
-  }
+  public create = (data: CreateNotification) => {
+    const id = data?.id || toastsCounter++
 
-  create = (data: NotificationData) => {
+    const createdData: NotificationData = {
+      type: NOTIFICATION_TYPE.DEFAULT,
+      title: 'Created Title',
+      ...data,
+      id,
+    }
+
     this.publish({
       action: 'create',
-      data,
+      data: createdData,
     })
+
+    return id
   }
 
   update = (id: NotificationData['id'], data?: NotificationData) => {
@@ -79,14 +90,7 @@ export class Observer {
 export const NotificationObserver = new Observer()
 
 export const createNotification = (data: CreateNotification) => {
-  const id = data?.id || toastsCounter++
-
-  NotificationObserver.create(<NotificationData>{
-    type: NOTIFICATION_TYPE.DEFAULT,
-    ...data,
-    id,
-  })
-  return id
+  NotificationObserver.create(data)
 }
 
 export const updateNotification = (
