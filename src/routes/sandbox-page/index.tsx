@@ -5,11 +5,14 @@ import { SlideUpDemo } from '@/routes/sandbox-page/ui/slide-up-demo.tsx'
 import { SlideDownDemo } from '@/routes/sandbox-page/ui/slide-down-demo.tsx'
 import { SlideRightDemo } from '@/routes/sandbox-page/ui/slide-right-demo.tsx'
 import { SlideLeftDemo } from '@/routes/sandbox-page/ui/slide-left-demo.tsx'
+import { List } from '@/routes/sandbox-page/ui/list/list.tsx'
 
 export const SandboxPage = () => {
   return (
     <div>
       <h1>Sandbox Page</h1>
+
+      <List />
 
       <FadeDemo />
       <ScaleDemo />
