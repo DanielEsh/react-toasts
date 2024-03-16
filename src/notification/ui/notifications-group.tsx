@@ -1,6 +1,6 @@
 import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
@@ -9,6 +9,7 @@ import { NotificationItem } from './notification-item.tsx'
 import { AnimatePresence } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { classNames } from '@/shared/utils'
+import { MockNotificationItemType } from '@/routes/sandbox-page/ui/list/data.ts'
 
 const DEFAULT_LIMIT = 5
 
@@ -149,20 +150,50 @@ export const NotificationsGroup = ({
     )
   }
 
-  const notificationHeightBefore = (heightIndex: number) => {
-    return heights.reduce((prev, curr, reducerIndex) => {
-      // Calculate offset up until current  toast
-      if (reducerIndex >= heightIndex) {
-        return prev
-      }
-
-      return prev + curr.height
-    }, 0)
-  }
-
   const [y, x] = position!.split('-')
 
   const classes = classNames(notificationGroupVariants({ position }))
+
+  const addHeight = useCallback(
+    (id: NotificationData['id'], height: number) => {
+      setHeights((heights) => [...heights, { toastId: id, height }])
+    },
+    [],
+  )
+
+  const changeHeight = useCallback(
+    (id: NotificationData['id'], newHeight: number) => {
+      setHeights((heights) => {
+        const alreadyExists = heights.find((height) => height.toastId === id)
+        if (!alreadyExists) {
+          return [...heights, { toastId: id, height: newHeight }]
+        } else {
+          return heights.map((height) =>
+            height.toastId === id ? { ...height, height: newHeight } : height,
+          )
+        }
+      })
+    },
+    [],
+  )
+
+  const removeHeight = useCallback((id: NotificationData['id']) => {
+    setHeights((h) => h.filter((height) => height.toastId !== id))
+  }, [])
+
+  const notificationHeightBefore = useCallback(
+    (heightIndex: number) => {
+      return heights.reduce((prev, curr, reducerIndex) => {
+        // Calculate offset up until current  toast
+        if (reducerIndex >= heightIndex) {
+          return prev
+        }
+
+        return prev + curr.height
+      }, 0)
+    },
+    [heights],
+  )
 
   return (
     <ol className={classes}>
@@ -183,15 +214,10 @@ export const NotificationsGroup = ({
             x={x}
             y={y}
             index={index}
-            allNotificationsCount={state.length}
             notificationHeightBefore={notificationHeightBefore(index)}
-            onChangeHeight={(newHeight) =>
-              handleChangeHeight(newHeight, toast.id)
-            }
-            onAddHeights={(newHeight) =>
-              handleAddHeightById(newHeight, toast.id)
-            }
-            onRemoveHeights={() => handleRemoveHeightById(toast.id)}
+            onAddHeights={addHeight}
+            onChangeHeight={changeHeight}
+            onRemoveHeights={removeHeight}
           >
             {renderNotification(toast)}
           </NotificationPosition>

@@ -54,7 +54,7 @@ const ListItemImpl = ({
 
     console.log('CHANGE', newHeight)
     onChangeHeight(newHeight, notification.id)
-  }, [notification.id])
+  }, [notification.id, onChangeHeight])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -69,7 +69,7 @@ const ListItemImpl = ({
       console.log('REMOVE HEIGHT', height)
       onRemoveHeights(notification.id)
     }
-  }, [notification.id])
+  }, [notification.id, onAddHeights, onRemoveHeights])
 
   return (
     <motion.li

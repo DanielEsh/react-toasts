@@ -5,31 +5,30 @@ import {
   useLayoutEffect,
   type CSSProperties,
   type ReactNode,
-  useState,
+  memo,
 } from 'react'
-import type { NotificationHeightItem } from '../types.ts'
 import type { NotificationData } from '../types.ts'
 
 interface Props {
   id: NotificationData['id']
   index: number
-  allNotificationsCount: number
   children: ReactNode
   x: string
   y: string
   notificationHeightBefore: number
-  onChangeHeight: (newHeight: number) => void
-  onRemoveHeights: () => void
-  onAddHeights: (height: number) => void
+  onChangeHeight: (id: NotificationData['id'], newHeight: number) => void
+  onRemoveHeights: (id: NotificationData['id']) => void
+  onAddHeights: (id: NotificationData['id'], height: number) => void
 }
 
 const NOTIFICATIONS_GAP = 16
 
-export const NotificationPosition = (props: Props) => {
+const NotificationPositionImpl = (props: Props) => {
+  console.log('[POSITION] RERENDER')
+
   const {
     id,
-    index,
-    allNotificationsCount,
+    index: heightIndex,
     children,
     notificationHeightBefore,
     x,
@@ -38,15 +37,8 @@ export const NotificationPosition = (props: Props) => {
     onChangeHeight,
     onRemoveHeights,
   } = props
+
   const notificationRef = useRef<HTMLLIElement>(null)
-
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const heightIndex = index
 
   const offset = useRef(0)
   offset.current = useMemo(
@@ -56,15 +48,15 @@ export const NotificationPosition = (props: Props) => {
 
   useLayoutEffect(() => {
     const toastNode = notificationRef.current
-    if (!mounted || !toastNode) return
+    if (!toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
     const newHeight = toastNode.getBoundingClientRect().height
     toastNode.style.height = originalHeight
 
-    onChangeHeight(newHeight)
-  }, [mounted, id])
+    onChangeHeight(id, newHeight)
+  }, [id, onChangeHeight])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -72,10 +64,10 @@ export const NotificationPosition = (props: Props) => {
 
     const height = toastNode.getBoundingClientRect().height
 
-    onAddHeights(height)
+    onAddHeights(id, height)
 
-    return () => onRemoveHeights()
-  }, [id])
+    return () => onRemoveHeights(id)
+  }, [id, onAddHeights, onRemoveHeights])
 
   return (
     <li
@@ -85,9 +77,8 @@ export const NotificationPosition = (props: Props) => {
       data-position-x={x}
       style={
         {
-          '--index': index,
-          '--toasts-before': index,
-          '--z-index': allNotificationsCount - index,
+          '--index': heightIndex,
+          '--toasts-before': heightIndex,
           '--offset': `${offset.current}px`,
         } as CSSProperties
       }
@@ -96,3 +87,5 @@ export const NotificationPosition = (props: Props) => {
     </li>
   )
 }
+
+export const NotificationPosition = memo(NotificationPositionImpl)
