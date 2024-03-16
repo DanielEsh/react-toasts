@@ -8,6 +8,7 @@ interface Props {
   children: ReactNode
   notification: MockNotificationItemType
   onClick: () => void
+  notificationHeightBefore: number
   onChangeHeight: (
     newHeight: number,
     id: MockNotificationItemType['id'],
@@ -20,6 +21,7 @@ interface Props {
 const ListItemImpl = ({
   children,
   notification,
+  notificationHeightBefore,
   onClick,
   onAddHeights,
   onChangeHeight,
@@ -61,8 +63,11 @@ const ListItemImpl = ({
   return (
     <li
       ref={notificationRef}
-      className="relative flex w-[260px] bg-blue-500"
+      className="relative flex w-[560px] bg-blue-500"
     >
+      <div className="mr-5">
+        notificationHeightBefore: {notificationHeightBefore}
+      </div>
       <span>{children}</span>
 
       <Button

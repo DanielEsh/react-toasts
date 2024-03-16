@@ -74,16 +74,31 @@ export const List = () => {
     setHeights((h) => h.filter((height) => height.id !== id))
   }, [])
 
+  const notificationHeightBefore = useCallback(
+    (heightIndex: number) => {
+      return heights.reduce((prev, curr, reducerIndex) => {
+        // Calculate offset up until current  toast
+        if (reducerIndex >= heightIndex) {
+          return prev
+        }
+
+        return prev + curr.height
+      }, 0)
+    },
+    [heights],
+  )
+
   return (
     <div>
       <ListForm onSubmit={handleSubmit} />
 
       <div className="flex flex-col gap-3">
-        {state.map((notification) => {
+        {state.map((notification, index) => {
           return (
             <ListItem
               key={notification.id}
               notification={notification}
+              notificationHeightBefore={notificationHeightBefore(index)}
               onAddHeights={addHeightById}
               onChangeHeight={changeHeight}
               onRemoveHeights={removeHeightById}
