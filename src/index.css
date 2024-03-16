@@ -414,3 +414,15 @@ body {
 .dropdown-content[data-state='closed'] {
   animation: fadeOut 300ms ease-in;
 }
+
+.transition-list__item  {
+  --offset: 14;
+  --items-before: 0;
+  --lift: 1;
+  --y: translateY(calc(var(--lift) * var(--offset)));
+
+  position: absolute;
+  bottom: 0;
+  transform: var(--y);
+  transition: transform 0.3s;
+}

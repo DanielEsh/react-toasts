@@ -5,6 +5,7 @@ import {
 import { ListItem } from '@/routes/sandbox-page/ui/list/list-item.tsx'
 import { useCallback, useState } from 'react'
 import { ListForm } from '@/routes/sandbox-page/ui/list/list-form.tsx'
+import { AnimatePresence } from 'framer-motion'
 
 interface NotificationHeightItem {
   id: number
@@ -93,22 +94,25 @@ export const List = () => {
       <ListForm onSubmit={handleSubmit} />
 
       <div className="flex flex-col gap-3">
-        {state.map((notification, index) => {
-          return (
-            <ListItem
-              key={notification.id}
-              notification={notification}
-              notificationHeightBefore={notificationHeightBefore(index)}
-              onAddHeights={addHeightById}
-              onChangeHeight={changeHeight}
-              onRemoveHeights={removeHeightById}
-              onClick={handleClick}
-              onClose={handleClose}
-            >
-              {notification.title}
-            </ListItem>
-          )
-        })}
+        <AnimatePresence mode="popLayout">
+          {state.map((notification, index) => {
+            return (
+              <ListItem
+                key={notification.id}
+                notification={notification}
+                notificationHeightBefore={notificationHeightBefore(index)}
+                heightIndex={index}
+                onAddHeights={addHeightById}
+                onChangeHeight={changeHeight}
+                onRemoveHeights={removeHeightById}
+                onClick={handleClick}
+                onClose={handleClose}
+              >
+                {notification.title}
+              </ListItem>
+            )
+          })}
+        </AnimatePresence>
       </div>
     </div>
   )
