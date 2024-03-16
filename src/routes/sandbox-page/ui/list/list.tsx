@@ -29,6 +29,15 @@ export const List = () => {
     ID += 1
   }
 
+  const handleClose = useCallback(
+    (removedId: MockNotificationItemType['id']) => {
+      setState((prevState) => {
+        return prevState.filter((item) => item.id !== removedId)
+      })
+    },
+    [],
+  )
+
   return (
     <div>
       <ListForm onSubmit={handleSubmit} />
@@ -38,7 +47,9 @@ export const List = () => {
           return (
             <ListItem
               key={notification.id}
+              notification={notification}
               onClick={handleClick}
+              onClose={handleClose}
             >
               {notification.title}
             </ListItem>
