@@ -8,6 +8,7 @@ import {
   memo,
 } from 'react'
 import type { NotificationData } from '../types.ts'
+import { useIsMounted } from '@/hooks/use-is-mounted.ts'
 
 interface Props {
   id: NotificationData['id']
@@ -39,6 +40,7 @@ const NotificationPositionImpl = (props: Props) => {
   } = props
 
   const notificationRef = useRef<HTMLLIElement>(null)
+  const isMounted = useIsMounted()
 
   const offset = useRef(0)
   offset.current = useMemo(
@@ -48,7 +50,7 @@ const NotificationPositionImpl = (props: Props) => {
 
   useLayoutEffect(() => {
     const toastNode = notificationRef.current
-    if (!toastNode) return
+    if (!isMounted() || !toastNode) return
 
     const originalHeight = toastNode.style.height
     toastNode.style.height = 'auto'
