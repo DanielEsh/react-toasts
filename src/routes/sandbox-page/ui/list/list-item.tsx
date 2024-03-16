@@ -8,10 +8,24 @@ interface Props {
   children: ReactNode
   notification: MockNotificationItemType
   onClick: () => void
+  onChangeHeight: (
+    newHeight: number,
+    id: MockNotificationItemType['id'],
+  ) => void
+  onAddHeights: (height: number, id: MockNotificationItemType['id']) => void
+  onRemoveHeights: (id: MockNotificationItemType['id']) => void
   onClose: (id: MockNotificationItemType['id']) => void
 }
 
-const ListItemImpl = ({ children, notification, onClick, onClose }: Props) => {
+const ListItemImpl = ({
+  children,
+  notification,
+  onClick,
+  onAddHeights,
+  onChangeHeight,
+  onRemoveHeights,
+  onClose,
+}: Props) => {
   const notificationRef = useRef<HTMLLIElement>(null)
 
   console.log('list-item render')
@@ -26,7 +40,8 @@ const ListItemImpl = ({ children, notification, onClick, onClose }: Props) => {
     toastNode.style.height = originalHeight
 
     console.log('CHANGE', newHeight)
-  }, [])
+    onChangeHeight(newHeight, notification.id)
+  }, [notification.id])
 
   useEffect(() => {
     const toastNode = notificationRef.current
@@ -35,11 +50,13 @@ const ListItemImpl = ({ children, notification, onClick, onClose }: Props) => {
     const height = toastNode.getBoundingClientRect().height
 
     console.log('ADD HEIGHT', height)
+    onAddHeights(height, notification.id)
 
     return () => {
       console.log('REMOVE HEIGHT', height)
+      onRemoveHeights(notification.id)
     }
-  }, [])
+  }, [notification.id])
 
   return (
     <li

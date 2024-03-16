@@ -6,11 +6,19 @@ import { ListItem } from '@/routes/sandbox-page/ui/list/list-item.tsx'
 import { useCallback, useState } from 'react'
 import { ListForm } from '@/routes/sandbox-page/ui/list/list-form.tsx'
 
+interface NotificationHeightItem {
+  id: number
+  height: number
+}
+
 let ID = 101
 
 export const List = () => {
   const [state, setState] =
     useState<MockNotificationItemType[]>(notificationList)
+  const [heights, setHeights] = useState<NotificationHeightItem[]>([])
+
+  console.log('LIST RERENDER', heights)
 
   const handleClick = useCallback(() => {
     console.log('CLICK')
@@ -29,6 +37,13 @@ export const List = () => {
     ID += 1
   }
 
+  const addHeightById = useCallback(
+    (height: number, id: MockNotificationItemType['id']) => {
+      setHeights((heights) => [...heights, { id: id, height }])
+    },
+    [],
+  )
+
   const handleClose = useCallback(
     (removedId: MockNotificationItemType['id']) => {
       setState((prevState) => {
@@ -37,6 +52,27 @@ export const List = () => {
     },
     [],
   )
+
+  const changeHeight = useCallback(
+    (newHeight: number, id: MockNotificationItemType['id']) => {
+      setHeights((heights) => {
+        const alreadyExists = heights.find((height) => height.id === id)
+        if (!alreadyExists) {
+          return [...heights, { id: id, height: newHeight }]
+        } else {
+          return heights.map((height) =>
+            height.id === id ? { ...height, height: newHeight } : height,
+          )
+        }
+      })
+    },
+    [],
+  )
+
+  const removeHeightById = useCallback((id: MockNotificationItemType['id']) => {
+    console.log('removeHeightById', id)
+    setHeights((h) => h.filter((height) => height.id !== id))
+  }, [])
 
   return (
     <div>
@@ -48,6 +84,9 @@ export const List = () => {
             <ListItem
               key={notification.id}
               notification={notification}
+              onAddHeights={addHeightById}
+              onChangeHeight={changeHeight}
+              onRemoveHeights={removeHeightById}
               onClick={handleClick}
               onClose={handleClose}
             >
