@@ -58,7 +58,7 @@ const NotificationPositionImpl = (props: Props) => {
     toastNode.style.height = originalHeight
 
     onChangeHeight(id, newHeight)
-  }, [id, onChangeHeight])
+  }, [id, isMounted, onChangeHeight])
 
   useEffect(() => {
     const toastNode = notificationRef.current

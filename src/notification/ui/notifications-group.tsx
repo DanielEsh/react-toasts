@@ -1,6 +1,6 @@
 import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
@@ -9,7 +9,6 @@ import { NotificationItem } from './notification-item.tsx'
 import { AnimatePresence } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { classNames } from '@/shared/utils'
-import { MockNotificationItemType } from '@/routes/sandbox-page/ui/list/data.ts'
 
 const DEFAULT_LIMIT = 5
 
@@ -68,15 +67,17 @@ export const NotificationsGroup = ({
   }
 
   useEffect(() => {
-    return observer.subscribe((notification) => {
-      console.log('SUB', notification)
+    return observer.subscribe((payload) => {
+      console.log('SUB', payload)
 
-      if (notification.action === 'create') {
+      const notification = payload
+
+      if (payload.action === 'create') {
         ReactDOM.flushSync(() => {
-          add(notification.data)
+          add(payload.data)
 
-          if (notification?.data?.onCreate) {
-            notification.data.onCreate(notification.data)
+          if (payload?.data?.onCreate) {
+            payload.data.onCreate(payload.data)
           }
         })
       }
@@ -109,32 +110,7 @@ export const NotificationsGroup = ({
         handleDismiss(removed)
       }
     })
-  }, [state, add, update])
-
-  const handleAddHeightById = (height: number, id: NotificationData['id']) => {
-    setHeights((heights) => [...heights, { toastId: id, height }])
-  }
-
-  const handleChangeHeight = (
-    newHeight: number,
-    id: NotificationData['id'],
-  ) => {
-    setHeights((heights) => {
-      const alreadyExists = heights.find((height) => height.toastId === id)
-      if (!alreadyExists) {
-        return [...heights, { toastId: id, height: newHeight }]
-      } else {
-        return heights.map((height) =>
-          height.toastId === id ? { ...height, height: newHeight } : height,
-        )
-      }
-    })
-  }
-
-  const handleRemoveHeightById = (id: NotificationData['id']) => {
-    console.log('handleRemoveHeightById', id)
-    setHeights((h) => h.filter((height) => height.toastId !== id))
-  }
+  }, [])
 
   const renderNotification = (notification: NotificationData) => {
     return notification.render ? (

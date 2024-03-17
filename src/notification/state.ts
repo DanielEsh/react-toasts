@@ -4,11 +4,26 @@ import {
   type NotificationData,
 } from './types.ts'
 
-export interface NotificationPayload {
-  action: 'create' | 'update' | 'dismiss'
-  id?: NotificationData['id']
-  data?: NotificationData
+export interface NotificationCreatePayload {
+  action: 'create'
+  data: NotificationData
 }
+
+export interface NotificationUpdatePayload {
+  action: 'update'
+  id: NotificationData['id']
+  data: NotificationData
+}
+
+export interface NotificationDismissPayload {
+  action: 'dismiss'
+  id: NotificationData['id']
+}
+
+export type NotificationPayload =
+  | NotificationCreatePayload
+  | NotificationUpdatePayload
+  | NotificationDismissPayload
 
 let toastsCounter = 1
 
@@ -50,7 +65,7 @@ export class NotificationGroupObserver {
     return id
   }
 
-  update = (id: NotificationData['id'], data?: NotificationData) => {
+  update = (id: NotificationData['id'], data: NotificationData) => {
     this.publish({
       action: 'update',
       id,
