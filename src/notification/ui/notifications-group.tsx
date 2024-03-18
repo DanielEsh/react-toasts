@@ -114,14 +114,11 @@ export const NotificationsGroup = ({
 
   const renderNotification = (notification: NotificationData) => {
     return notification.render ? (
-      notification.render(notification, () => removeToast(notification))
+      notification.render(notification, removeToast)
     ) : (
       <NotificationItem
-        type={notification.type}
-        title={notification.title}
-        description={notification.description}
-        duration={notification.duration}
-        onDismiss={() => handleDismiss(notification)}
+        notification={notification}
+        onDismiss={handleDismiss}
       />
     )
   }

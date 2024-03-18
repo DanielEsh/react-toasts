@@ -10,19 +10,17 @@ import { Icon } from '@/icon.tsx'
 import { ScaleDownTransition } from '@/shared/ui'
 
 interface Props {
-  type: NotificationData['type']
-  title: string
-  description?: string
-  duration?: number
-  onDismiss: () => void
+  notification: NotificationData
+  onDismiss: (notification: NotificationData) => void
 }
 
 export const NotificationItem = (props: Props) => {
   const durationIndicatorRef = useRef<NotificationDurationRef>(null)
-  const { type, title, description, duration, onDismiss } = props
+  const { notification, onDismiss } = props
+  const { type, title, description, duration } = notification
 
   const handleRemove = () => {
-    onDismiss()
+    onDismiss(notification)
   }
 
   const realDuration = duration ? duration * 1000 : 0
@@ -80,7 +78,7 @@ export const NotificationItem = (props: Props) => {
   return (
     <ScaleDownTransition>
       <div
-        className={`notification-item w-notification relative z-10 overflow-hidden rounded-lg`}
+        className={`notification-item relative z-10 w-notification overflow-hidden rounded-lg`}
         onMouseEnter={handleHover}
         onMouseLeave={handleHoverLeave}
       >
