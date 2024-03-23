@@ -1,29 +1,9 @@
 import {
-  type CreateNotification,
   NOTIFICATION_TYPE,
+  type CreateNotification,
   type NotificationData,
+  type NotificationPayload,
 } from './types.ts'
-
-export interface NotificationCreatePayload {
-  action: 'create'
-  data: NotificationData
-}
-
-export interface NotificationUpdatePayload {
-  action: 'update'
-  id: NotificationData['id']
-  data: NotificationData
-}
-
-export interface NotificationDismissPayload {
-  action: 'dismiss'
-  id: NotificationData['id']
-}
-
-export type NotificationPayload =
-  | NotificationCreatePayload
-  | NotificationUpdatePayload
-  | NotificationDismissPayload
 
 let toastsCounter = 1
 
@@ -74,8 +54,6 @@ export class NotificationGroupObserver {
   }
 
   promise = (promise: Promise<NotificationData>) => {
-    console.log('LOADING...', promise)
-
     const id = toastsCounter++
 
     this.create({

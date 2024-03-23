@@ -1,14 +1,14 @@
-import type { NotificationHeightItem, NotificationData } from '../types.ts'
-import { useQueue } from '@/use-queue.ts'
 import { useState, useEffect, useCallback } from 'react'
+import { flushSync } from 'react-dom'
+import { AnimatePresence } from 'framer-motion'
+import { classNames } from '@/shared/utils'
+import { useQueue } from '@/use-queue.ts'
+import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { type NotificationGroupObserver } from '../state.ts'
-import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
 import { NotificationQueueIndicator } from './notification-queue-indicator.tsx'
 import { NotificationItem } from './notification-item.tsx'
-import { AnimatePresence } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { classNames } from '@/shared/utils'
 
 const DEFAULT_LIMIT = 5
 
@@ -46,37 +46,39 @@ export const NotificationsGroup = ({
   })
   const [heights, setHeights] = useState<NotificationHeightItem[]>([])
 
-  const removeToast = (notificationData: NotificationData) => {
-    console.log('remove', notificationData)
+  const removeToast = useCallback(
+    (notificationData: NotificationData) => {
+      update((notifications) =>
+        notifications.filter((notification) => {
+          return notification.id !== notificationData.id
+        }),
+      )
+      setHeights((h) =>
+        h.filter((height) => height.notificationId !== notificationData.id),
+      )
+    },
+    [update],
+  )
 
-    update((notifications) =>
-      notifications.filter((notification) => {
-        return notification.id !== notificationData.id
-      }),
-    )
-    setHeights((h) =>
-      h.filter((height) => height.toastId !== notificationData.id),
-    )
-  }
-
-  const handleDismiss = (notificationData: NotificationData) => {
-    removeToast(notificationData)
-    if (notificationData.onDismiss) {
-      notificationData.onDismiss(notificationData)
-    }
-  }
+  const handleDismiss = useCallback(
+    (notificationData: NotificationData) => {
+      removeToast(notificationData)
+      if (notificationData.onDismiss) {
+        notificationData.onDismiss(notificationData)
+      }
+    },
+    [removeToast],
+  )
 
   useEffect(() => {
     return observer.subscribe((payload) => {
-      console.log('SUB', payload)
-
       const notification = payload
 
       if (payload.action === 'create') {
-        ReactDOM.flushSync(() => {
+        flushSync(() => {
           add(payload.data)
 
-          if (payload?.data?.onCreate) {
+          if (payload.data?.onCreate) {
             payload.data.onCreate(payload.data)
           }
         })
@@ -110,7 +112,7 @@ export const NotificationsGroup = ({
         handleDismiss(removed)
       }
     })
-  }, [])
+  }, [add, handleDismiss, observer, state, update])
 
   const renderNotification = (notification: NotificationData) => {
     return notification.render ? (
@@ -129,7 +131,7 @@ export const NotificationsGroup = ({
 
   const addHeight = useCallback(
     (id: NotificationData['id'], height: number) => {
-      setHeights((heights) => [...heights, { toastId: id, height }])
+      setHeights((heights) => [...heights, { notificationId: id, height }])
     },
     [],
   )
@@ -137,12 +139,16 @@ export const NotificationsGroup = ({
   const changeHeight = useCallback(
     (id: NotificationData['id'], newHeight: number) => {
       setHeights((heights) => {
-        const alreadyExists = heights.find((height) => height.toastId === id)
+        const alreadyExists = heights.find(
+          (height) => height.notificationId === id,
+        )
         if (!alreadyExists) {
-          return [...heights, { toastId: id, height: newHeight }]
+          return [...heights, { notificationId: id, height: newHeight }]
         } else {
           return heights.map((height) =>
-            height.toastId === id ? { ...height, height: newHeight } : height,
+            height.notificationId === id
+              ? { ...height, height: newHeight }
+              : height,
           )
         }
       })
@@ -151,13 +157,12 @@ export const NotificationsGroup = ({
   )
 
   const removeHeight = useCallback((id: NotificationData['id']) => {
-    setHeights((h) => h.filter((height) => height.toastId !== id))
+    setHeights((h) => h.filter((height) => height.notificationId !== id))
   }, [])
 
   const notificationHeightBefore = useCallback(
     (heightIndex: number) => {
       return heights.reduce((prev, curr, reducerIndex) => {
-        // Calculate offset up until current  toast
         if (reducerIndex >= heightIndex) {
           return prev
         }

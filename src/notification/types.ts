@@ -15,6 +15,27 @@ export enum NOTIFICATION_TYPE {
   LOADING = 'loading',
 }
 
+export interface NotificationCreatePayload {
+  action: 'create'
+  data: NotificationData
+}
+
+export interface NotificationUpdatePayload {
+  action: 'update'
+  id: NotificationData['id']
+  data: NotificationData
+}
+
+export interface NotificationDismissPayload {
+  action: 'dismiss'
+  id: NotificationData['id']
+}
+
+export type NotificationPayload =
+  | NotificationCreatePayload
+  | NotificationUpdatePayload
+  | NotificationDismissPayload
+
 export interface NotificationRemoveFn {
   (notification: NotificationData): void
 }
@@ -37,7 +58,7 @@ export interface NotificationData {
 }
 
 export interface NotificationHeightItem {
-  toastId: NotificationData['id']
+  notificationId: NotificationData['id']
   height: number
 }
 
