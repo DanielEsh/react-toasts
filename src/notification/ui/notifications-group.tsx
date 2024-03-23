@@ -1,10 +1,10 @@
 import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
-import { QueueIndicator } from './queue-indicator.tsx'
+import { NotificationQueueIndicator } from './notification-queue-indicator.tsx'
 import { NotificationItem } from './notification-item.tsx'
 import { AnimatePresence } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -181,9 +181,7 @@ export const NotificationsGroup = ({
             onChangeHeight={changeHeight}
             onRemoveHeights={removeHeight}
           >
-            <span className="flex h-[56px] w-notification items-center justify-center rounded-lg border border-subtle bg-background p-4 drop-shadow-md">
-              уведомлений в очереди: {queue.length}
-            </span>
+            <NotificationQueueIndicator count={queue.length} />
           </NotificationPosition>
         )}
       </AnimatePresence>
