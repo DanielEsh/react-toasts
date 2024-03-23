@@ -17,9 +17,9 @@ interface Props {
   x: string
   y: string
   notificationHeightBefore: number
-  onChangeHeight: (id: NotificationData['id'], newHeight: number) => void
-  onRemoveHeights: (id: NotificationData['id']) => void
-  onAddHeights: (id: NotificationData['id'], height: number) => void
+  onChangeHeight?: (id: NotificationData['id'], newHeight: number) => void
+  onRemoveHeights?: (id: NotificationData['id']) => void
+  onAddHeights?: (id: NotificationData['id'], height: number) => void
 }
 
 const NOTIFICATIONS_GAP = 16
@@ -57,7 +57,7 @@ const NotificationPositionImpl = (props: Props) => {
     const newHeight = toastNode.getBoundingClientRect().height
     toastNode.style.height = originalHeight
 
-    onChangeHeight(id, newHeight)
+    onChangeHeight && onChangeHeight(id, newHeight)
   }, [id, isMounted, onChangeHeight])
 
   useEffect(() => {
@@ -66,10 +66,10 @@ const NotificationPositionImpl = (props: Props) => {
 
     const height = toastNode.getBoundingClientRect().height
 
-    onAddHeights(id, height)
+    onAddHeights && onAddHeights(id, height)
 
-    return () => onRemoveHeights(id)
-  }, [id, onAddHeights, onRemoveHeights])
+    return () => onRemoveHeights && onRemoveHeights(id)
+  }, [id])
 
   return (
     <li

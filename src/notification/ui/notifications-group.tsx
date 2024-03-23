@@ -177,9 +177,6 @@ export const NotificationsGroup = ({
             x={x}
             y={y}
             notificationHeightBefore={notificationHeightBefore(limit)}
-            onAddHeights={addHeight}
-            onChangeHeight={changeHeight}
-            onRemoveHeights={removeHeight}
           >
             <NotificationQueueIndicator count={queue.length} />
           </NotificationPosition>
