@@ -4,11 +4,13 @@ import { FadeTransition } from '@/shared/ui'
 
 interface Props {
   count: number
+  x: string
+  y: string
   heights: NotificationHeightItem[]
 }
 
 export const QueueIndicator = (props: Props) => {
-  const { count, heights } = props
+  const { count, heights, x, y } = props
 
   const heightIndex = heights.length
 
@@ -32,7 +34,9 @@ export const QueueIndicator = (props: Props) => {
   return (
     <FadeTransition>
       <div
-        className="toast-queue w-notification right-0"
+        className="toast-queue right-0 w-notification"
+        data-position-y={y}
+        data-position-x={x}
         style={
           {
             '--offset': `${offset.current}px`,

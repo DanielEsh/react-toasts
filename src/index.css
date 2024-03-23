@@ -58,6 +58,16 @@ body {
   bottom: 0;
 }
 
+.toast-queue[data-position-y="top"] {
+  --lift: 1;
+  top: 0;
+}
+
+.toast-queue[data-position-y="bottom"] {
+  --lift: -1;
+  bottom: 0;
+}
+
 .page {
   padding: 12px;
   border: 1px solid black;
@@ -168,13 +178,9 @@ body {
 .toast-queue {
   --offset: 0;
   --gap: 26px;
-  --lift: 1;
   --y: translateY(calc(var(--lift) * var(--offset)));
 
-  /*opacity: 0;*/
-
   position: absolute;
-  bottom: 0;
   transform: var(--y);
   border-radius: 8px;
   width: 100%;

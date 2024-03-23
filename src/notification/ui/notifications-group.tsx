@@ -175,6 +175,8 @@ export const NotificationsGroup = ({
           <QueueIndicator
             count={queue.length}
             heights={heights}
+            x={x}
+            y={y}
           />
         )}
       </AnimatePresence>
