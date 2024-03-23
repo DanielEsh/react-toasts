@@ -11,7 +11,7 @@ import type { NotificationData } from '../types.ts'
 import { useIsMounted } from '@/hooks/use-is-mounted.ts'
 
 interface Props {
-  id: NotificationData['id']
+  id?: NotificationData['id']
   index: number
   children: ReactNode
   x: string

@@ -1,6 +1,8 @@
 import type { NotificationHeightItem } from '../types.ts'
+import { NOTIFICATION_TYPE } from '../types.ts'
 import React, { type CSSProperties, useMemo } from 'react'
 import { FadeTransition } from '@/shared/ui'
+import { NotificationItem } from '@/notification/ui/notification-item.tsx'
 
 interface Props {
   count: number
@@ -31,10 +33,12 @@ export const QueueIndicator = (props: Props) => {
     [heightIndex, notificationHeightBefore],
   )
 
+  const handleDismiss = () => {}
+
   return (
     <FadeTransition>
       <div
-        className="toast-queue right-0 w-notification"
+        className="toast-queue"
         data-position-y={y}
         data-position-x={x}
         style={
@@ -43,7 +47,11 @@ export const QueueIndicator = (props: Props) => {
           } as CSSProperties
         }
       >
-        <span>уведомлений в очереди: {count}</span>
+        <div className="flex flex-col items-center justify-center">
+          <span className="w-notification bg-blue-500">
+            уведомлений в очереди: {count}
+          </span>
+        </div>
       </div>
     </FadeTransition>
   )

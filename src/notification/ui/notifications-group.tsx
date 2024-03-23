@@ -1,6 +1,6 @@
 import type { NotificationHeightItem, NotificationData } from '../types.ts'
 import { useQueue } from '@/use-queue.ts'
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { type NotificationGroupObserver } from '../state.ts'
 import ReactDOM from 'react-dom'
 import { NotificationPosition } from './notification-position.tsx'
@@ -38,11 +38,11 @@ interface Props extends VariantProps<typeof notificationGroupVariants> {
 
 export const NotificationsGroup = ({
   position = 'bottom-right',
-  limit,
+  limit = DEFAULT_LIMIT,
   observer,
 }: Props) => {
   const { state, queue, add, update } = useQueue<NotificationData>({
-    limit: limit ?? DEFAULT_LIMIT,
+    limit: limit,
   })
   const [heights, setHeights] = useState<NotificationHeightItem[]>([])
 
@@ -172,12 +172,19 @@ export const NotificationsGroup = ({
     <ol className={classes}>
       <AnimatePresence>
         {queue.length >= 1 && (
-          <QueueIndicator
-            count={queue.length}
-            heights={heights}
+          <NotificationPosition
+            index={limit}
             x={x}
             y={y}
-          />
+            notificationHeightBefore={notificationHeightBefore(limit)}
+            onAddHeights={addHeight}
+            onChangeHeight={changeHeight}
+            onRemoveHeights={removeHeight}
+          >
+            <span className="flex h-[56px] w-notification items-center justify-center rounded-lg border border-subtle bg-background p-4 drop-shadow-md">
+              уведомлений в очереди: {queue.length}
+            </span>
+          </NotificationPosition>
         )}
       </AnimatePresence>
 
