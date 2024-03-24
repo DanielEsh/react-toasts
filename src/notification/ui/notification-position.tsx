@@ -25,8 +25,6 @@ interface Props {
 const NOTIFICATIONS_GAP = 16
 
 const NotificationPositionImpl = (props: Props) => {
-  console.log('[POSITION] RERENDER')
-
   const {
     id,
     index: heightIndex,
@@ -69,7 +67,7 @@ const NotificationPositionImpl = (props: Props) => {
     onAddHeights && onAddHeights(id, height)
 
     return () => onRemoveHeights && onRemoveHeights(id)
-  }, [id])
+  }, [id, onAddHeights, onRemoveHeights])
 
   return (
     <li

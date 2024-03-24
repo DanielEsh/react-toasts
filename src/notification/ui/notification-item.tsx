@@ -31,12 +31,11 @@ export const NotificationItem = (props: Props) => {
   )
 
   useEffect(() => {
-    console.log('USE EFFECT', duration)
     if (duration) {
       startTimer()
     }
     return clearTimer
-  }, [duration])
+  }, [clearTimer, duration, startTimer])
 
   const handleResume = () => {
     if (!durationIndicatorRef.current) return

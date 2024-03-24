@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 export function useTimer(duration: number, timeoutCallback: () => void) {
   const closeTimerStartTimeRef = useRef(0)
@@ -6,31 +6,31 @@ export function useTimer(duration: number, timeoutCallback: () => void) {
 
   const closeTimerRef = useRef(0)
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     window.clearTimeout(closeTimerRef.current)
     closeTimerStartTimeRef.current = new Date().getTime()
     closeTimerRef.current = window.setTimeout(timeoutCallback, duration)
-  }
+  }, [])
 
-  const resumeTimer = () => {
+  const resumeTimer = useCallback(() => {
     window.clearTimeout(closeTimerRef.current)
     closeTimerStartTimeRef.current = new Date().getTime()
     closeTimerRef.current = window.setTimeout(
       timeoutCallback,
       closeTimerRemainingTimeRef.current,
     )
-  }
+  }, [timeoutCallback])
 
-  const pauseTimer = () => {
+  const pauseTimer = useCallback(() => {
     const elapsedTime = new Date().getTime() - closeTimerStartTimeRef.current
     closeTimerRemainingTimeRef.current =
       closeTimerRemainingTimeRef.current - elapsedTime
     window.clearTimeout(closeTimerRef.current)
-  }
+  }, [])
 
-  const clearTimer = () => {
+  const clearTimer = useCallback(() => {
     clearTimeout(closeTimerStartTimeRef.current)
-  }
+  }, [])
 
   return {
     startTimer,
