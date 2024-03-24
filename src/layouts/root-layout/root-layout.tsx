@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Section } from '../../components/Section.tsx'
-import type { NotificationsContainerPosition } from '../../modules/core/notification'
+import type { NotificationsContainerPosition } from '@/modules/core/notification'
 import { RootHeader } from './ui/root-header.tsx'
 import { RootNotifications } from './ui/root-notifications.tsx'
+import { ExampleSection } from '@/routes/notifications-page/ui/example-section.tsx'
+import { Button } from '@/shared/ui'
 
 const positions = [
   'top-left',
@@ -27,22 +28,21 @@ export const RootLayout = () => {
     <div>
       <RootHeader />
 
-      <div className="p-4">
-        <Section
-          title="Positions"
-          description="description"
-        >
-          {positions.map((position) => (
-            <button
-              data-active={basePosition === position}
-              className="button"
-              onClick={() => handlePositionChange(position)}
-              key={position}
-            >
-              {position}
-            </button>
-          ))}
-        </Section>
+      <div className="container">
+        <ExampleSection title="Positions">
+          <div className="flex gap-3">
+            {positions.map((position) => (
+              <Button
+                data-active={basePosition === position}
+                className="button"
+                onClick={() => handlePositionChange(position)}
+                key={position}
+              >
+                {position}
+              </Button>
+            ))}
+          </div>
+        </ExampleSection>
 
         <Outlet />
       </div>
