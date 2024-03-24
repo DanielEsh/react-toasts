@@ -1,13 +1,29 @@
 import type { SVGProps } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { classNames } from '@/shared/utils'
 
-export interface IconProps extends SVGProps<SVGSVGElement> {
+const iconVariant = cva('', {
+  variants: {
+    size: {
+      sm: 'h-[20px] w-[20px]',
+      md: 'h-[24px] w-[24px]',
+    },
+    defaultVariants: {
+      sie: 'md',
+    },
+  },
+})
+
+export interface IconProps
+  extends VariantProps<typeof iconVariant>,
+    SVGProps<SVGSVGElement> {
   name: string
 }
 
-export function Icon({ name, className, viewBox, ...props }: IconProps) {
+export function Icon({ name, className, viewBox, size, ...props }: IconProps) {
   return (
     <svg
-      className="h-[24px] w-[24px]"
+      className={classNames(className, iconVariant({ size }))}
       viewBox={viewBox}
       focusable="false"
       aria-hidden

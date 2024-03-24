@@ -53,7 +53,10 @@ export const Toast = ({
           className="toast-close"
           onClick={onCloseClick}
         >
-          <Icon name="close" />
+          <Icon
+            name="close"
+            size="sm"
+          />
         </button>
       </div>
     </div>
