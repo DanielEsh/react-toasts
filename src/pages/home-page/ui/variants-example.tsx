@@ -44,15 +44,57 @@ const makeErrorNotification = () => {
   })
 }
 
+const makeLoadingNotification = () => {
+  makeNotification({
+    type: NOTIFICATION_TYPE.LOADING,
+  })
+}
+
 export const VariantsExample = () => {
   return (
     <ExampleSection title="Variants">
       <div className="flex gap-3">
-        <Button onClick={makeDefaultNotification}>Default</Button>
-        <Button onClick={makeSuccessNotification}>Success</Button>
-        <Button onClick={makeInfoNotification}>Info</Button>
-        <Button onClick={makeWarningNotification}>Warning</Button>
-        <Button onClick={makeErrorNotification}>Error</Button>
+        <Button
+          size="lg"
+          onClick={makeDefaultNotification}
+        >
+          Default
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={makeSuccessNotification}
+        >
+          Success
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={makeInfoNotification}
+        >
+          Info
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={makeWarningNotification}
+        >
+          Warning
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={makeErrorNotification}
+        >
+          Error
+        </Button>
+
+        <Button
+          size="lg"
+          onClick={makeLoadingNotification}
+        >
+          Loading
+        </Button>
       </div>
     </ExampleSection>
   )
