@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Segoe UI'],
+        body: ['Inter'],
         logo: ['Stengazeta'],
       },
       colors: {

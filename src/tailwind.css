@@ -4,9 +4,9 @@
 
 @layer base {
   @font-face {
-    font-family: "Segoe UI";
+    font-family: "Inter";
     font-weight: 400;
-    src: local('Segoe-UI-Regular'), url('./assets/fonts/Segoe-UI-Regular.ttf') format('truetype');
+    src: local('Inter-Regular'), url('./assets/fonts/Inter-Regular.ttf') format('truetype');
   }
 
   @font-face {
