@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { ThemeChanger } from '@/modules/core/themes/theme-changer.tsx'
 
 export const RootHeader = () => {
