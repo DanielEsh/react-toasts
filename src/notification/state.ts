@@ -78,20 +78,3 @@ export class NotificationGroupObserver {
     })
   }
 }
-
-export const NotificationObserver = new NotificationGroupObserver()
-
-export const createNotification = (data: CreateNotification) => {
-  NotificationObserver.create(data)
-}
-
-export const updateNotification = (
-  id: NotificationData['id'],
-  data: NotificationData,
-) => {
-  NotificationObserver.update(id, data)
-}
-
-export const promiseNotification = (promise: Promise<NotificationData>) => {
-  NotificationObserver.promise(promise)
-}

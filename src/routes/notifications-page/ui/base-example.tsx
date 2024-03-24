@@ -1,7 +1,7 @@
 import { createNotification } from '@/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
-import { NotificationObserver } from '@/notification/state.ts'
+import { NotificationObserver } from '@/notification'
 
 const makeBaseNotificationInfinityUid = () => {
   createNotification({

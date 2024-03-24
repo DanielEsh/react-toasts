@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { PrivateRoute } from '@/components/PrivateRouter.tsx'
-import { RootLayout } from '@/layouts/root-layout.tsx'
+import { RootLayout } from '@/layouts/root-layout'
 import { CategoriesCreate } from '@/routes/categories-create.tsx'
 import { CategoriesDetails } from '@/routes/categories-details.tsx'
 import { NotificationsPage } from '@/routes/notifications-page'
