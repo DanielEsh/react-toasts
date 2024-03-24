@@ -2,7 +2,7 @@ import { Toast } from '@/components/toast.tsx'
 import {
   NotificationDurationIndicator,
   type NotificationDurationRef,
-} from '@/components/notification-duration-indicator.tsx'
+} from './notification-duration-indicator.tsx'
 import { useEffect, useRef } from 'react'
 import { useTimer } from '@/use-timer.ts'
 import type { NotificationData } from '../types.ts'
