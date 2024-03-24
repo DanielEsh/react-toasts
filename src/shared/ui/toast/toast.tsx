@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from '../icon/icon.tsx'
 import { classNames } from '../../utils'
 import { Loader } from '../loader/loader.tsx'
+import { Button } from '@/shared/ui'
 
 const toastVariants = cva('flex gap-3 border p-4 drop-shadow-md rounded-lg', {
   variants: {
@@ -53,10 +54,15 @@ export const Toast = ({
           className="toast-close"
           onClick={onCloseClick}
         >
-          <Icon
-            name="close"
-            size="sm"
-          />
+          <Button
+            variant="ghost"
+            size="xs"
+          >
+            <Icon
+              name="close"
+              size="sm"
+            />
+          </Button>
         </button>
       </div>
     </div>

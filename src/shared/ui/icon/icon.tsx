@@ -20,7 +20,13 @@ export interface IconProps
   name: string
 }
 
-export function Icon({ name, className, viewBox, size, ...props }: IconProps) {
+export function Icon({
+  name,
+  className,
+  viewBox,
+  size = 'md',
+  ...props
+}: IconProps) {
   return (
     <svg
       className={classNames(className, iconVariant({ size }))}
