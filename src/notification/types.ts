@@ -45,7 +45,6 @@ export interface NotificationRenderFn {
 }
 
 export interface NotificationData {
-  // TODO: должно быть обязательное
   id?: number | string
   type: NOTIFICATION_TYPE
   title: string
@@ -62,4 +61,6 @@ export interface NotificationHeightItem {
   height: number
 }
 
-export type CreateNotification = Partial<NotificationData>
+export type CreateNotification = Partial<NotificationData> & {
+  title: string
+}

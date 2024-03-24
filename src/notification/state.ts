@@ -32,7 +32,6 @@ export class NotificationGroupObserver {
 
     const createdData: NotificationData = {
       type: NOTIFICATION_TYPE.DEFAULT,
-      title: 'Created Title',
       ...data,
       id,
     }
@@ -58,7 +57,7 @@ export class NotificationGroupObserver {
 
     this.create({
       id: id,
-      title: 'promise',
+      title: 'Выполнение действия',
       type: NOTIFICATION_TYPE.LOADING,
       description: 'Loading...',
     })
