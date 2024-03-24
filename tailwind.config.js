@@ -4,6 +4,10 @@ export default {
   darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
+      fontFamily: {
+        body: ['Segoe UI'],
+        logo: ['Stengazeta'],
+      },
       colors: {
         gray: {
           100: 'var(--colors-gray-12)',

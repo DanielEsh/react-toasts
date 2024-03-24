@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "Segoe UI";
+    font-weight: 400;
+    src: local('Segoe-UI-Regular'), url('./assets/fonts/Segoe-UI-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: "Stengazeta";
+    font-weight: 400;
+    src: local('Stengazeta-Regular'), url('./assets/fonts/Stengazeta-Regular.ttf') format('truetype');
+  }
+
   :root {
     --colors-white: #fff;
 
