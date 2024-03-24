@@ -4,16 +4,7 @@ import type { NotificationsContainerPosition } from '@/modules/core/notification
 import { RootHeader } from './ui/root-header.tsx'
 import { RootNotifications } from './ui/root-notifications.tsx'
 import { ExampleSection } from '@/routes/notifications-page/ui/example-section.tsx'
-import { Button } from '@/shared/ui'
-
-const positions = [
-  'top-left',
-  'top-center',
-  'top-right',
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
-] as const
+import { NotificationPositionChanger } from './ui/notification-position-changer.tsx'
 
 export const RootLayout = () => {
   const [basePosition, setBasePosition] =
@@ -31,16 +22,10 @@ export const RootLayout = () => {
       <div className="container">
         <ExampleSection title="Positions">
           <div className="flex gap-3">
-            {positions.map((position) => (
-              <Button
-                data-active={basePosition === position}
-                className="button"
-                onClick={() => handlePositionChange(position)}
-                key={position}
-              >
-                {position}
-              </Button>
-            ))}
+            <NotificationPositionChanger
+              basePosition={basePosition}
+              onPositionChange={handlePositionChange}
+            />
           </div>
         </ExampleSection>
 
