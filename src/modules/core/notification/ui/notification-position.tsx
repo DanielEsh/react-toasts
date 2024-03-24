@@ -8,7 +8,7 @@ import {
   memo,
 } from 'react'
 import type { NotificationData } from '../types.ts'
-import { useIsMounted } from '@/hooks/use-is-mounted.ts'
+import { useIsMounted } from '@/shared/hooks/use-is-mounted.ts'
 
 interface Props {
   id?: NotificationData['id']

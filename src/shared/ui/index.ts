@@ -1,2 +1,5 @@
 export * from './button'
 export * from './transition'
+export * from './icon'
+export * from './toast'
+export * from './loader'

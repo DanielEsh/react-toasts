@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import type { NotificationsContainerPosition } from '@/modules/core/notification'
 import { RootHeader } from './ui/root-header.tsx'
 import { RootNotifications } from './ui/root-notifications.tsx'
-import { ExampleSection } from '@/routes/notifications-page/ui/example-section.tsx'
+import { ExampleSection } from '@/pages/home-page/ui/example-section.tsx'
 import { NotificationPositionChanger } from './ui/notification-position-changer.tsx'
 
 export const RootLayout = () => {

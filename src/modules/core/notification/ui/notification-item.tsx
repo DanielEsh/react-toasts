@@ -1,12 +1,12 @@
-import { Toast } from '@/components/toast.tsx'
+import { Toast } from '@/shared/ui/toast/toast.tsx'
 import {
   NotificationDurationIndicator,
   type NotificationDurationRef,
 } from './notification-duration-indicator.tsx'
 import { useEffect, useRef } from 'react'
-import { useTimer } from '@/use-timer.ts'
+import { useTimer } from '@/shared/hooks/use-timer.ts'
 import type { NotificationData } from '../types.ts'
-import { Icon } from '@/icon.tsx'
+import { Icon } from '@/shared/ui/icon/icon.tsx'
 import { ScaleDownTransition } from '@/shared/ui'
 
 interface Props {
