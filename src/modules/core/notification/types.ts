@@ -61,6 +61,4 @@ export interface NotificationHeightItem {
   height: number
 }
 
-export type CreateNotification = Partial<NotificationData> & {
-  title: string
-}
+export type CreateNotification = Partial<NotificationData>

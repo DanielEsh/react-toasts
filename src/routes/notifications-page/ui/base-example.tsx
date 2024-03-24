@@ -1,10 +1,9 @@
-import { createNotification } from '@/notification'
+import { Notification } from '@/modules/core/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
-import { NotificationObserver } from '@/notification'
 
 const makeBaseNotificationInfinityUid = () => {
-  createNotification({
+  Notification.create({
     id: getUid(),
     title: 'Simple notification',
     onCreate: (notification) => {
@@ -21,11 +20,11 @@ const ID = 'SimpleID'
 const makeBaseNotificationInfinity = () => {}
 
 const hDismiss = () => {
-  NotificationObserver.dismiss(ID)
+  Notification.dismiss(ID)
 }
 
 const makeBaseNotification = () => {
-  createNotification({
+  Notification.create({
     id: getUid(),
     title: 'Simple notification',
     duration: 5,
@@ -33,7 +32,7 @@ const makeBaseNotification = () => {
 }
 
 const makeBaseNotificationWithDescription = () => {
-  createNotification({
+  Notification.create({
     id: getUid(),
     title: 'Simple notification',
     description:

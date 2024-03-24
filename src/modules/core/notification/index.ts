@@ -1,3 +1,5 @@
+import { NotificationGroupObserver } from '@/modules/core/notification/state.ts'
+
 export {
   NOTIFICATION_TYPE,
   type CreateNotification,
@@ -12,3 +14,5 @@ export { NotificationsGroup } from './ui/notifications-group.tsx'
 export { NotificationPosition } from './ui/notification-position.tsx'
 export { NotificationItem } from './ui/notification-item.tsx'
 export { NotificationQueueIndicator } from './ui/notification-queue-indicator.tsx'
+
+export const Notification = new NotificationGroupObserver()

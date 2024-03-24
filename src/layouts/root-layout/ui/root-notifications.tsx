@@ -2,9 +2,9 @@ import {
   NotificationsGroup,
   NotificationGroupObserver,
   type NotificationsContainerPosition,
-} from '@/notification'
+  Notification,
+} from '@/modules/core/notification'
 
-export const BaseNotificationObserver = new NotificationGroupObserver()
 const NotificationTopRightObserver = new NotificationGroupObserver()
 const NotificationTopLeftObserver = new NotificationGroupObserver()
 const NotificationTopCenterObserver = new NotificationGroupObserver()
@@ -20,7 +20,7 @@ export const RootNotifications = ({ basePosition }: Props) => {
     <>
       <NotificationsGroup
         position={basePosition}
-        observer={BaseNotificationObserver}
+        observer={Notification}
       />
 
       <NotificationsGroup

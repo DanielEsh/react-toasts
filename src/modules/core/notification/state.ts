@@ -32,6 +32,7 @@ export class NotificationGroupObserver {
 
     const createdData: NotificationData = {
       type: NOTIFICATION_TYPE.DEFAULT,
+      title: 'FIX ME',
       ...data,
       id,
     }

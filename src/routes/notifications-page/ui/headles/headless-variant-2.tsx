@@ -1,8 +1,13 @@
 import { Button } from '@/shared/ui'
-import { type NotificationRenderFn } from '@/notification'
+import { type NotificationRenderFn } from '@/modules/core/notification'
 import { makeHeadlessNotification } from './helpers.ts'
 
-const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
+const HeadlessToast: NotificationRenderFn = (data, onRemove) => {
+  const handleRemove = () => {
+    console.log('dis click')
+    onRemove(data)
+  }
+
   return (
     <div className="flex w-[434px] rounded-lg border border-subtle drop-shadow-md">
       <div className="flex flex-col gap-2 p-4">
@@ -16,13 +21,13 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
       <div className="flex flex-col border-l border-subtle">
         <button
           className="flex-1 border-b border-subtle px-8"
-          onClick={onRemove}
+          onClick={handleRemove}
         >
           Reply
         </button>
         <button
           className="flex-1 rounded-br-md border border-gray-100 bg-gray-100 text-neutral-100"
-          onClick={onRemove}
+          onClick={handleRemove}
         >
           {"Don't allow"}
         </button>

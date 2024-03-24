@@ -1,8 +1,11 @@
-import { createNotification, type NotificationRenderFn } from '@/notification'
+import {
+  Notification,
+  type NotificationRenderFn,
+} from '@/modules/core/notification'
 import { getUid } from '@/shared/utils'
 
 export const makeHeadlessNotification = (component: NotificationRenderFn) => {
-  createNotification({
+  Notification.create({
     id: getUid(),
     render: component,
   })

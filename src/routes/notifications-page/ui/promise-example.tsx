@@ -2,8 +2,8 @@ import { Button } from '@/shared/ui'
 import {
   NOTIFICATION_TYPE,
   type NotificationData,
-  promiseNotification,
-} from '@/notification'
+  Notification,
+} from '@/modules/core/notification'
 import { getUid } from '@/shared/utils'
 
 const PROMISE_TIMEOUT = 2_000
@@ -26,7 +26,7 @@ const makePromiseSuccess = () => {
       ),
     )
 
-  promiseNotification(promise())
+  Notification.promise(promise())
 }
 
 const makePromiseError = () => {
@@ -45,7 +45,7 @@ const makePromiseError = () => {
       ),
     )
 
-  promiseNotification(promise())
+  Notification.promise(promise())
 }
 
 export const PromiseExample = () => {

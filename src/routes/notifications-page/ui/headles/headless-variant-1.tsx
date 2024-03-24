@@ -1,16 +1,16 @@
 import { Button, SlideDownTransition } from '@/shared/ui'
-import { type NotificationRenderFn } from '@/notification'
+import { type NotificationRenderFn } from '@/modules/core/notification'
 import { Icon } from '@/icon.tsx'
 import { makeHeadlessNotification } from './helpers.ts'
 
-const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
+const HeadlessToast: NotificationRenderFn = (data, onRemove) => {
   const handleUndoClick = () => {
     console.log('undo click')
   }
 
   const handleDismissClick = () => {
     console.log('dis click')
-    onRemove()
+    onRemove(data)
   }
 
   return (
@@ -55,7 +55,7 @@ const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
 
         <button
           className="toast-close"
-          onClick={onRemove}
+          onClick={handleDismissClick}
         >
           <Icon name="close" />
         </button>

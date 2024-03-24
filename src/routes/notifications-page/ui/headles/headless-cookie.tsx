@@ -1,15 +1,15 @@
 import { Button, FadeTransition } from '@/shared/ui'
-import { type NotificationRenderFn } from '@/notification'
+import { type NotificationRenderFn } from '@/modules/core/notification'
 import { makeHeadlessNotification } from './helpers.ts'
 
-const HeadlessToast: NotificationRenderFn = (_, onRemove) => {
+const HeadlessToast: NotificationRenderFn = (data, onRemove) => {
   const handleMoreInfoClick = () => {
     console.log('undo click')
   }
 
   const handleDismissClick = () => {
     console.log('dis click')
-    onRemove()
+    onRemove(data)
   }
 
   return (
