@@ -7,9 +7,11 @@ export default {
       colors: {
         gray: {
           100: 'var(--colors-gray-12)',
+          200: 'var(--colors-gray-11)',
         },
         neutral: {
           100: 'var(--colors-neutral-1)',
+          200: 'var(--colors-neutral-2)',
           300: 'var(--colors-neutral-3)',
           600: 'var(--colors-neutral-6)',
           900: 'var(--colors-neutral-12)',

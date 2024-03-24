@@ -8,12 +8,12 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import { classNames } from '../../utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-1 rounded-lg text-sm transition-colors disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center gap-1 rounded-lg text-sm transition-colors disabled:cursor-not-allowed transition-colors duration-300',
   {
     variants: {
       variant: {
         default:
-          'bg-gray-100 border border-gray-100 text-neutral-100 disabled:bg-slate-100 rounded-md shadow-sm',
+          'bg-gray-100 border border-gray-100 text-neutral-100 disabled:bg-slate-100 rounded-md shadow-sm hover:bg-gray-200 border-gray-200',
         ghost: 'bg-transparent border-none hover:bg-neutral-300',
         primary: 'bg-neutral-800 border border-neutral-800 text-white',
       },
