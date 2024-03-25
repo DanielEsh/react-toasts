@@ -4,7 +4,9 @@ export const RootHeader = () => {
   return (
     <div className="p-6">
       <div className="container flex items-center justify-between">
-        <div className="font-logo text-4xl font-bold">NOTIFICATION</div>
+        <div className="font-logo text-4xl font-bold">
+          HEADLESS NOTIFICATION
+        </div>
 
         <div>
           <ThemeChanger />

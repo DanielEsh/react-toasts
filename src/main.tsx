@@ -4,6 +4,8 @@ import { App } from '@/app'
 import './index.css'
 import './tailwind.css'
 
+import '@/plugins/i18n.ts'
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <App />,
