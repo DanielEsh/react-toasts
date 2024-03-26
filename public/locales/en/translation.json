@@ -1,5 +1,10 @@
 {
   "title": "Title",
+  "position": "Position",
+  "base": "Base",
+  "variants": "Variants",
+  "promise": "Promise",
+  "headless": "Headless",
   "lang": {
     "ru": "Russian",
     "en": "English"

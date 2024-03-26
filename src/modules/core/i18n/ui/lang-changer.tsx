@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Dropdown, Button } from '@/shared/ui'
-import { getSupportedLang } from '../constants.ts'
+import { getSupportedLang, getCurrentLangLabel } from '../constants.ts'
 import type { SupportedLang } from '../types.ts'
 
 export const LangChanger = () => {
@@ -13,7 +13,7 @@ export const LangChanger = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <Button>Open Menu</Button>
+        <Button>{getCurrentLangLabel(i18n.language)}</Button>
       </Dropdown.Trigger>
 
       <Dropdown.Content>

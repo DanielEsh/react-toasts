@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/shared/ui'
 import { ExampleSection } from './example-section.tsx'
 import { Notification, NOTIFICATION_TYPE } from '@/modules/core/notification'
@@ -51,8 +52,10 @@ const makeLoadingNotification = () => {
 }
 
 export const VariantsExample = () => {
+  const { t } = useTranslation()
+
   return (
-    <ExampleSection title="Variants">
+    <ExampleSection title={t('variants')}>
       <div className="flex gap-3">
         <Button
           size="lg"

@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import { Notification } from '@/modules/core/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
+import { ExampleSection } from './example-section'
 
 const makeBaseNotificationInfinityUid = () => {
   Notification.create({
@@ -42,10 +44,10 @@ const makeBaseNotificationWithDescription = () => {
 }
 
 export const BaseExample = () => {
-  return (
-    <div className="my-6">
-      <h2 className="mb-6 text-2xl">Base</h2>
+  const { t } = useTranslation()
 
+  return (
+    <ExampleSection title={t('base')}>
       <div className="flex gap-3">
         <Button
           size="lg"
@@ -82,6 +84,6 @@ export const BaseExample = () => {
           Notification with description
         </Button>
       </div>
-    </div>
+    </ExampleSection>
   )
 }

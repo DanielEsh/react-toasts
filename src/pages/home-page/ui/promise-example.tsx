@@ -5,6 +5,8 @@ import {
   Notification,
 } from '@/modules/core/notification'
 import { getUid } from '@/shared/utils'
+import { ExampleSection } from '@/pages/home-page/ui/example-section.tsx'
+import { useTranslation } from 'react-i18next'
 
 const PROMISE_TIMEOUT = 2_000
 
@@ -49,10 +51,10 @@ const makePromiseError = () => {
 }
 
 export const PromiseExample = () => {
-  return (
-    <div className="my-6">
-      <h2 className="mb-6 text-2xl">Promise</h2>
+  const { t } = useTranslation()
 
+  return (
+    <ExampleSection title={t('promise')}>
       <div className="flex gap-3">
         <Button
           size="lg"
@@ -67,6 +69,6 @@ export const PromiseExample = () => {
           Promise Error
         </Button>
       </div>
-    </div>
+    </ExampleSection>
   )
 }
