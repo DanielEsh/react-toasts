@@ -6,7 +6,7 @@ export const ThemeChanger = () => {
 
   return (
     <>
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <Button
           variant={theme === 'light' ? 'default' : 'ghost'}
           onClick={() => setTheme('light')}

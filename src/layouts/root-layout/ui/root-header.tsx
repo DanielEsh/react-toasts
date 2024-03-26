@@ -1,4 +1,5 @@
 import { ThemeChanger } from '@/modules/core/themes/theme-changer.tsx'
+import { LangChanger } from '@/modules/core/i18n'
 
 export const RootHeader = () => {
   return (
@@ -8,7 +9,8 @@ export const RootHeader = () => {
           HEADLESS NOTIFICATION
         </div>
 
-        <div>
+        <div className="flex gap-3">
+          <LangChanger />
           <ThemeChanger />
         </div>
       </div>
