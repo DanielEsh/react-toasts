@@ -1,5 +1,5 @@
-import type { Theme } from './types.ts'
 import { MEDIA } from './constants.ts'
+import type { Theme } from './types.ts'
 
 export const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
   if (!e) e = window.matchMedia(MEDIA)

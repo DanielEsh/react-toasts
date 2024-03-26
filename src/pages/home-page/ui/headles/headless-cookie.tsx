@@ -1,5 +1,6 @@
-import { Button, FadeTransition } from '@/shared/ui'
 import { type NotificationRenderFn } from '@/modules/core/notification'
+import { Button, FadeTransition } from '@/shared/ui'
+
 import { makeHeadlessNotification } from './helpers.ts'
 
 const HeadlessToast: NotificationRenderFn = (data, onRemove) => {

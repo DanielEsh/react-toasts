@@ -1,5 +1,7 @@
 import { forwardRef, type ForwardRefRenderFunction } from 'react'
+
 import { motion, type Variants } from 'framer-motion'
+
 import type { TranstionVariantProps } from './types.ts'
 
 const fade: Variants = {

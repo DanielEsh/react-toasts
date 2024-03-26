@@ -1,5 +1,7 @@
 import { forwardRef, type ForwardRefRenderFunction } from 'react'
+
 import { motion, type Variants } from 'framer-motion'
+
 import type { TranstionVariantProps } from '@/shared/ui/transition/variants/types.ts'
 
 const slideRight: Variants = {

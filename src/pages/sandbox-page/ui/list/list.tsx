@@ -1,11 +1,13 @@
+import { useCallback, useState } from 'react'
+
+import { AnimatePresence } from 'framer-motion'
+
 import {
   notificationList,
   type MockNotificationItemType,
 } from '@/pages/sandbox-page/ui/list/data.ts'
-import { ListItem } from '@/pages/sandbox-page/ui/list/list-item.tsx'
-import { useCallback, useState } from 'react'
 import { ListForm } from '@/pages/sandbox-page/ui/list/list-form.tsx'
-import { AnimatePresence } from 'framer-motion'
+import { ListItem } from '@/pages/sandbox-page/ui/list/list-item.tsx'
 
 interface NotificationHeightItem {
   id: number

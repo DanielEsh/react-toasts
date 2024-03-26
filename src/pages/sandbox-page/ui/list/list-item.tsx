@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react'
-import { Button } from '@/shared/ui'
 import { memo, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
-import { CloseButton } from '@/shared/ui/button/close-button.tsx'
-import type { MockNotificationItemType } from '@/pages/sandbox-page/ui/list/data.ts'
+
 import { motion } from 'framer-motion'
+
+import type { MockNotificationItemType } from '@/pages/sandbox-page/ui/list/data.ts'
+import { Button } from '@/shared/ui'
+import { CloseButton } from '@/shared/ui/button/close-button.tsx'
 
 const NOTIFICATIONS_GAP = 16
 

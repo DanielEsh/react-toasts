@@ -8,9 +8,10 @@ import {
   useMemo,
   useState,
 } from 'react'
-import type { Theme } from './types.ts'
-import { getSystemTheme, getThemeFromLs } from './helpers.ts'
+
 import { MEDIA } from './constants.ts'
+import { getSystemTheme, getThemeFromLs } from './helpers.ts'
+import type { Theme } from './types.ts'
 
 export interface UseThemeProps {
   theme: Theme

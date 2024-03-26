@@ -1,14 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import { flushSync } from 'react-dom'
+
+import { cva, type VariantProps } from 'class-variance-authority'
 import { AnimatePresence } from 'framer-motion'
-import { classNames } from '@/shared/utils'
+
 import { useQueue } from '@/shared/hooks/use-queue.ts'
-import type { NotificationHeightItem, NotificationData } from '../types.ts'
+import { classNames } from '@/shared/utils'
+
 import { type NotificationGroupObserver } from '../state.ts'
+import type { NotificationHeightItem, NotificationData } from '../types.ts'
+import { NotificationItem } from './notification-item.tsx'
 import { NotificationPosition } from './notification-position.tsx'
 import { NotificationQueueIndicator } from './notification-queue-indicator.tsx'
-import { NotificationItem } from './notification-item.tsx'
-import { cva, type VariantProps } from 'class-variance-authority'
 
 const DEFAULT_LIMIT = 5
 

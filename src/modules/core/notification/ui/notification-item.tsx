@@ -1,13 +1,15 @@
+import { useEffect, useRef } from 'react'
+
+import { useTimer } from '@/shared/hooks/use-timer.ts'
+import { ScaleDownTransition } from '@/shared/ui'
+import { Icon } from '@/shared/ui/icon/icon.tsx'
 import { Toast } from '@/shared/ui/toast/toast.tsx'
+
+import type { NotificationData } from '../types.ts'
 import {
   NotificationDurationIndicator,
   type NotificationDurationRef,
 } from './notification-duration-indicator.tsx'
-import { useEffect, useRef } from 'react'
-import { useTimer } from '@/shared/hooks/use-timer.ts'
-import type { NotificationData } from '../types.ts'
-import { Icon } from '@/shared/ui/icon/icon.tsx'
-import { ScaleDownTransition } from '@/shared/ui'
 
 interface Props {
   notification: NotificationData

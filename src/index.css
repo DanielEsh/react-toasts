@@ -43,7 +43,7 @@ body {
   padding-bottom: 500px;
 }
 
-.notification-position[data-position-y="top"] {
+.notification-position[data-position-y='top'] {
   --lift: 1;
   top: 0;
 }
@@ -53,17 +53,17 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.notification-position[data-position-y="bottom"] {
+.notification-position[data-position-y='bottom'] {
   --lift: -1;
   bottom: 0;
 }
 
-.toast-queue[data-position-y="top"] {
+.toast-queue[data-position-y='top'] {
   --lift: 1;
   top: 0;
 }
 
-.toast-queue[data-position-y="bottom"] {
+.toast-queue[data-position-y='bottom'] {
   --lift: -1;
   bottom: 0;
 }
@@ -421,7 +421,7 @@ body {
   animation: fadeOut 300ms ease-in;
 }
 
-.transition-list__item  {
+.transition-list__item {
   --offset: 14;
   --items-before: 0;
   --lift: 1;

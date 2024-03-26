@@ -1,5 +1,5 @@
-import { ThemeChanger } from '@/modules/core/themes/theme-changer.tsx'
 import { LangChanger } from '@/modules/core/i18n'
+import { ThemeChanger } from '@/modules/core/themes/theme-changer.tsx'
 
 export const RootHeader = () => {
   return (

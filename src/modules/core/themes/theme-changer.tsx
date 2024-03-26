@@ -1,6 +1,8 @@
-import { useTheme } from './index.ts'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui/icon/icon.tsx'
+
+import { useTheme } from './index.ts'
+
 export const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
 

@@ -1,5 +1,5 @@
-import type { NotificationsContainerPosition } from '@/modules/core/notification'
 import { NotificationPositionChangerButton } from '@/layouts/root-layout/ui/notification-position-changer-button.tsx'
+import type { NotificationsContainerPosition } from '@/modules/core/notification'
 
 const positions = [
   'top-left',

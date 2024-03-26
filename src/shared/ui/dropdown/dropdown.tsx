@@ -1,8 +1,10 @@
+import type { ReactNode } from 'react'
+
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { DropdownTrigger } from './dropdown-trigger.tsx'
+
 import { DropdownContent } from './dropdown-content.tsx'
 import { DropdownItem } from './dropdown-item.tsx'
-import type { ReactNode } from 'react'
+import { DropdownTrigger } from './dropdown-trigger.tsx'
 
 type Props = {
   children: ReactNode

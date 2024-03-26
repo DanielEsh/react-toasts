@@ -9,5 +9,9 @@ export default {
   trailingComma: 'all',
   endOfLine: 'auto',
 
-  plugins: [tailwindcssPlugin],
+  plugins: [tailwindcssPlugin, '@trivago/prettier-plugin-sort-imports'],
+
+  // sort order
+  importOrder: ['^react(.*)', '<THIRD_PARTY_MODULES>', '@/(.*)', '^[./]'],
+  importOrderSeparation: true,
 }

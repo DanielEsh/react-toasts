@@ -4,15 +4,19 @@
 
 @layer base {
   @font-face {
-    font-family: "Inter";
+    font-family: 'Inter';
     font-weight: 400;
-    src: local('Inter-Regular'), url('./assets/fonts/Inter-Regular.ttf') format('truetype');
+    src:
+      local('Inter-Regular'),
+      url('./assets/fonts/Inter-Regular.ttf') format('truetype');
   }
 
   @font-face {
-    font-family: "Stengazeta";
+    font-family: 'Stengazeta';
     font-weight: 400;
-    src: local('Stengazeta-Regular'), url('./assets/fonts/Stengazeta-Regular.ttf') format('truetype');
+    src:
+      local('Stengazeta-Regular'),
+      url('./assets/fonts/Stengazeta-Regular.ttf') format('truetype');
   }
 
   :root {

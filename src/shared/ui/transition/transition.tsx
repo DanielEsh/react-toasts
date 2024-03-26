@@ -5,7 +5,9 @@ import {
   type ReactNode,
   type RefAttributes,
 } from 'react'
+
 import { AnimatePresence } from 'framer-motion'
+
 import {
   FadeTransition,
   ScaleTransition,

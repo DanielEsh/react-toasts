@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+
 import { RootLayout } from '@/layouts/root-layout'
 import { SandboxPage } from '@/pages/sandbox-page'
 

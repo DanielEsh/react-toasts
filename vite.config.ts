@@ -1,7 +1,7 @@
-import { defineConfig, loadEnv } from 'vite'
-import { fileURLToPath, URL } from 'url'
-import react from '@vitejs/plugin-react-swc'
 import svg from '@neodx/svg/vite'
+import react from '@vitejs/plugin-react-swc'
+import { fileURLToPath, URL } from 'url'
+import { defineConfig, loadEnv } from 'vite'
 
 const DEFAULT_PORT = 5173
 

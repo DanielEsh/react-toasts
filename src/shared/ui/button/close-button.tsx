@@ -1,5 +1,5 @@
-import { Icon } from '@/shared/ui/icon/icon.tsx'
 import { Button } from '@/shared/ui'
+import { Icon } from '@/shared/ui/icon/icon.tsx'
 
 interface Props {
   onClose: () => void

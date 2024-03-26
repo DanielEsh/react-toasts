@@ -1,6 +1,7 @@
-import { Button } from '@/shared/ui'
 import type { NotificationsContainerPosition } from '@/modules/core/notification'
+import { Button } from '@/shared/ui'
 import { classNames } from '@/shared/utils'
+
 interface Props {
   active: boolean
   position: NotificationsContainerPosition

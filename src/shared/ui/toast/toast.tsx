@@ -1,9 +1,12 @@
 import type { ReactNode } from 'react'
+
 import { cva, type VariantProps } from 'class-variance-authority'
-import { Icon } from '../icon/icon.tsx'
-import { classNames } from '../../utils'
-import { Loader } from '../loader/loader.tsx'
+
 import { Button } from '@/shared/ui'
+
+import { classNames } from '../../utils'
+import { Icon } from '../icon/icon.tsx'
+import { Loader } from '../loader/loader.tsx'
 
 const toastVariants = cva('flex gap-3 border p-4 drop-shadow-md rounded-lg', {
   variants: {

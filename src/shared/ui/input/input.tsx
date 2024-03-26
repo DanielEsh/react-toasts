@@ -1,4 +1,5 @@
 import { forwardRef, type InputHTMLAttributes } from 'react'
+
 import { classNames } from '../../utils'
 
 const COMPONENT_NAME = 'Input'

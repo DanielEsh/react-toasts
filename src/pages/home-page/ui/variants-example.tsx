@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/shared/ui'
-import { ExampleSection } from './example-section.tsx'
+
 import { Notification, NOTIFICATION_TYPE } from '@/modules/core/notification'
+import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
+
+import { ExampleSection } from './example-section.tsx'
 
 const makeNotification = ({ type = NOTIFICATION_TYPE.DEFAULT }) => {
   Notification.create({

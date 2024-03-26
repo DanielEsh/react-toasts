@@ -1,5 +1,7 @@
 import type { SVGProps } from 'react'
+
 import { cva, type VariantProps } from 'class-variance-authority'
+
 import { classNames } from '@/shared/utils'
 
 const iconVariant = cva('', {

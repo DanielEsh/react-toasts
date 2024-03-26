@@ -1,6 +1,7 @@
-import { Button, SlideDownTransition } from '@/shared/ui'
 import { type NotificationRenderFn } from '@/modules/core/notification'
+import { Button, SlideDownTransition } from '@/shared/ui'
 import { Icon } from '@/shared/ui/icon/icon.tsx'
+
 import { makeHeadlessNotification } from './helpers.ts'
 
 const HeadlessToast: NotificationRenderFn = (data, onRemove) => {

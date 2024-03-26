@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
+
 import { Dropdown, Button } from '@/shared/ui'
+
 import { getSupportedLang, getCurrentLangLabel } from '../constants.ts'
 import type { SupportedLang } from '../types.ts'
 

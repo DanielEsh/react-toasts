@@ -1,5 +1,5 @@
-import { ThemeProvider } from '@/modules/core/themes'
 import { AppRouter } from '@/app/router/app-router.tsx'
+import { ThemeProvider } from '@/modules/core/themes'
 
 const enum Theme {
   light = 'light',

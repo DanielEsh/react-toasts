@@ -1,12 +1,13 @@
-import { Button } from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
+
 import {
   NOTIFICATION_TYPE,
   type NotificationData,
   Notification,
 } from '@/modules/core/notification'
-import { getUid } from '@/shared/utils'
 import { ExampleSection } from '@/pages/home-page/ui/example-section.tsx'
-import { useTranslation } from 'react-i18next'
+import { Button } from '@/shared/ui'
+import { getUid } from '@/shared/utils'
 
 const PROMISE_TIMEOUT = 2_000
 

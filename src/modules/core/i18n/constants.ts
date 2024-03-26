@@ -1,4 +1,5 @@
 import { i18n } from '@/plugins/i18n.ts'
+
 import type { Lang } from './types.ts'
 
 const { t } = i18n

@@ -1,4 +1,5 @@
 import { AnimatePresence } from 'framer-motion'
+
 import { useToggle } from '@/shared/hooks/use-toggle.ts'
 import { Button } from '@/shared/ui'
 import { ScaleDownTransition } from '@/shared/ui'

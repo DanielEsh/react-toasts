@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next'
+
 import { Notification } from '@/modules/core/notification'
 import { Button } from '@/shared/ui'
 import { getUid } from '@/shared/utils'
+
 import { ExampleSection } from './example-section'
 
 const makeBaseNotificationInfinityUid = () => {

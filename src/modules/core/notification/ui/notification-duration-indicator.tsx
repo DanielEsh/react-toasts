@@ -5,7 +5,9 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react'
+
 import { cva, type VariantProps } from 'class-variance-authority'
+
 import { classNames } from '@/shared/utils'
 
 const notificationDurationVariants = cva(
